@@ -1,6 +1,6 @@
 # Perumda BPR Majalengka (Bank Majalengka) - Web Portal & Admin Management System
 
-Aplikasi Web Resmi & Sistem Manajemen Dinamis **Perumda BPR Majalengka** berbasis **Laravel 11**, arsitektur database relasional **MySQL** (kompatibel penuh dengan **SQLite** untuk testing lokal), dan antarmuka korporat modern (BCA style) yang responsif dan interaktif.
+Aplikasi Web Resmi & Sistem Manajemen Dinamis **Perumda BPR Majalengka** berbasis **Laravel 13**, arsitektur database relasional **MySQL** (kompatibel penuh dengan **SQLite** untuk testing lokal), dan antarmuka korporat modern (BCA style) yang responsif dan interaktif.
 
 Aplikasi ini mengintegrasikan seluruh data profil perusahaan secara dinamis:
 - **24 Katalog Produk Perbankan**: 10 Tabungan, 2 Deposito Berjangka LPS, 12 Skema Kredit UMKM & Konsumer.
@@ -15,11 +15,11 @@ Aplikasi ini mengintegrasikan seluruh data profil perusahaan secara dinamis:
 
 ## ⚡ Prasyarat Sistem & Panduan Setup Native (NO DOCKER)
 
-Aplikasi dirancang untuk berjalan **secara native dan sangat mudah disetup** tanpa Docker pada lingkungan Windows/Linux/macOS dengan **Laragon**, **XAMPP**, atau **Native PHP 8.2+**.
+Aplikasi dirancang untuk berjalan **secara native dan sangat mudah disetup** tanpa Docker pada lingkungan Windows/Linux/macOS dengan **Laragon**, **XAMPP**, atau **Native PHP 8.3+**.
 
 ### 1. Kebutuhan Sistem
-- **PHP**: Versi `>= 8.2` (PHP 8.2 atau 8.3 direkomendasikan)
-- **Ekstensi PHP**: `pdo`, `pdo_mysql` (atau `pdo_sqlite`), `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `fileinfo`
+- **PHP**: Versi `>= 8.3`
+- **Ekstensi PHP**: `pdo`, `pdo_mysql` (atau `pdo_sqlite`), `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `fileinfo`, `intl`
 - **Database**: MySQL 8.x / MariaDB 10.x atau SQLite 3
 - **Composer**: Versi `2.x`
 - **Node.js**: Opsional (hanya jika ingin menjalankan suite pengujian static `verify.js` atau build Tailwind)
@@ -96,13 +96,44 @@ Akses aplikasi melalui browser:
 
 ---
 
+## 🚀 Deployment ke cPanel
+
+Versi Laravel 13 ini memerlukan PHP 8.3 atau lebih baru. Pastikan ekstensi `ctype`, `curl`, `fileinfo`, `intl`, `mbstring`, `openssl`, `pdo_mysql`, `tokenizer`, dan `xml` aktif pada PHP yang dipakai domain.
+
+1. Backup file aplikasi dan database produksi sebelum deployment. Deploy branch `main` ke direktori aplikasi di luar document root, misalnya `~/apps/kp-amel`.
+2. Atur document root domain agar mengarah ke direktori `~/apps/kp-amel/public`. Jangan menjadikan root proyek Laravel sebagai document root karena file `.env` dan kode aplikasi tidak boleh bisa diakses publik.
+3. Gunakan database produksi yang sudah ada atau siapkan database MySQL serta user khusus melalui cPanel. Jangan menimpa `.env` produksi yang sudah ada.
+4. Atur `.env` pada server dengan `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL=https://bprmajalengka.id`, koneksi MySQL, serta kredensial SMTP resmi. Jangan menyimpan `.env`, kredensial, atau `APP_KEY` di Git.
+5. Untuk instalasi baru saja, buat `APP_KEY` satu kali dengan `php artisan key:generate`. Jangan mengganti `APP_KEY` pada situs produksi yang sudah berjalan.
+6. Jalankan perintah berikut dari direktori aplikasi melalui Terminal cPanel:
+
+   ```bash
+   composer install --no-dev --optimize-autoloader
+   php artisan migrate --force
+   php artisan storage:link
+   php artisan optimize:clear
+   php artisan config:cache
+   php artisan route:cache
+   php artisan view:cache
+   ```
+
+7. Pastikan direktori `storage` dan `bootstrap/cache` dapat ditulis oleh PHP. Uji halaman utama, login admin, form pengaduan, form pengajuan kredit, unggah lampiran, dan pengiriman email setelah deployment.
+
+**Penting untuk database produksi:** Jalankan migrasi saja, bukan `php artisan migrate --seed`. Seeder berisi data contoh dan kredensial admin default untuk instalasi lokal; jangan gunakan atau mengaktifkan kredensial default di server publik. Simpan backup database sebelum migrasi dan jangan menghapus file upload produksi saat memperbarui kode.
+
+Jika cPanel tidak mengizinkan document root diarahkan ke folder `public`, minta penyedia hosting mengaturnya atau gunakan konfigurasi front controller khusus yang menjaga seluruh file aplikasi tetap di luar document root.
+
+---
+
 ## 🔑 Kredensial Login Admin
 
-Setelah database di-seed, akun administrator default yang dapat langsung digunakan adalah:
+Untuk instalasi lokal setelah database di-seed, akun administrator default yang dapat digunakan adalah:
 - **URL Login**: `http://localhost:8000/admin/login`
 - **Email**: `admin@bankmajalengka.co.id`
 - **Password**: `password`
 - **Hak Akses**: Administrator Penuh
+
+Kredensial tersebut hanya untuk pengembangan lokal. Jangan jalankan seeder pada database produksi; pastikan akun admin produksi memakai kata sandi kuat yang unik.
 
 ---
 
@@ -155,7 +186,7 @@ Backend menyediakan endpoint API publik dalam format JSON yang bersih:
 
 Proyek ini telah dilengkapi dengan rangkaian pengujian berlapis:
 
-### 1. Backend PHPUnit Feature & Unit Tests (27 Tests, 90 Assertions)
+### 1. Backend PHPUnit Feature & Unit Tests (48 Tests, 208 Assertions)
 Jalankan seluruh pengujian backend Laravel:
 ```bash
 php artisan test

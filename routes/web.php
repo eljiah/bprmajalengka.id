@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/pengaduan', [HomeController::class, 'pengaduan'])->name('pengaduan.page');
+Route::get('/pengajuan-kredit', [HomeController::class, 'pengajuanKredit'])->name('pengajuan.form');
 Route::post('/pengajuan-kredit', [PublicApiController::class, 'submitLoan'])->name('pengajuan.submit');
 Route::get('/captcha/generate', [PublicApiController::class, 'captcha'])->name('captcha.generate');
 Route::post('/pengaduan', [PublicApiController::class, 'submitComplaint'])->name('pengaduan.submit');

@@ -37,7 +37,7 @@
   <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-bpr-blue selection:text-white">
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-bpr-blue selection:text-white" data-active-page="{{ $activePage ?? '' }}">
 
   <!-- =====================================================================
        TOP NOTIFICATION / COMPLIANCE STRIP
@@ -1601,7 +1601,7 @@
             <!-- Anti-Fraud CAPTCHA Challenge -->
             <div class="p-4 rounded-2xl bg-slate-100/80 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div class="flex items-center gap-3">
-                <span class="text-xs font-bold text-slate-700">Verifikasi Anti-Fraud:</span>
+                <span class="text-xs font-bold text-slate-700">Berapakah hasil dari:</span>
                 <span id="complaint-captcha-question" class="px-3 py-1.5 bg-bpr-navy text-amber-300 font-extrabold text-sm rounded-xl tracking-wider font-mono">
                   {{ $complaintCaptcha['question'] ?? '8 + 5 = ?' }}
                 </span>
@@ -1704,12 +1704,13 @@
           <div class="p-4 rounded-xl bg-blue-50 border border-blue-200 text-xs text-blue-900 flex items-start gap-3">
             <svg class="w-5 h-5 text-bpr-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             <div>
-              <p>
-                Tanda terima resmi dan informasi status telah dikirimkan ke email: <strong id="result-email-text" class="text-bpr-navy">...</strong>.
+              <p id="result-email-notice" role="status" aria-live="polite">
+                Status pengiriman tanda terima ke email: <strong id="result-email-text" class="text-bpr-navy">...</strong>.
               </p>
               <p class="text-blue-700 mt-0.5">
                 Setiap perkembangan tindak lanjut dari petugas Bank Majalengka akan diberitahukan kembali melalui email tersebut.
               </p>
+              <p id="result-bank-email-notice" class="mt-1 text-blue-700" role="status" aria-live="polite"></p>
             </div>
           </div>
 
@@ -1941,6 +1942,14 @@
           </div>
         </div>
 
+        <div>
+          <label for="form-email" class="block text-xs font-bold text-slate-700 uppercase mb-1">
+            Alamat Email Aktif <span class="text-red-500">*</span>
+          </label>
+          <input type="email" id="form-email" required maxlength="150" autocomplete="email" placeholder="alamat.email@anda.com" class="w-full py-2.5 px-3.5 rounded-xl bg-slate-100/75 focus:bg-white text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-bpr-blue/20 transition-all font-medium">
+          <span class="text-[10px] text-slate-400 mt-1 block">Tanda terima pengajuan akan dikirim ke alamat email ini.</span>
+        </div>
+
         <!-- 5. Besar Pengajuan & Jangka Waktu -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -2077,6 +2086,7 @@
       </div>
 
       <div id="success-details-summary"></div>
+      <p id="success-email-notice" class="text-xs text-slate-600" role="status" aria-live="polite"></p>
 
       <p class="text-[11px] text-slate-400">
         Petugas analis kredit resmi kami akan menghubungi nomor WhatsApp Anda dalam 1x24 jam kerja untuk penjadwalan verifikasi berkas dan survei lapangan.

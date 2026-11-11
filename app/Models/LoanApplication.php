@@ -15,6 +15,7 @@ class LoanApplication extends Model
         'nama',
         'alamat',
         'hp',
+        'email',
         'afiliasi',
         'nominal',
         'tenor',

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('pendapatan_lain')->nullable();
             $table->text('deskripsi_lain')->nullable();
             $table->text('agunan');
-            $table->enum('status', ['pending', 'contacted', 'surveyed', 'approved', 'rejected'])->default('pending')->index();
+            $table->enum('status', ['pending', 'contacted', 'approved', 'rejected'])->default('pending')->index();
             $table->text('notes')->nullable();
             $table->timestamps();
         });

@@ -4,7 +4,9 @@ namespace Tests\Feature;
 
 use App\Mail\ComplaintStatusUpdatedMail;
 use App\Mail\ComplaintSubmittedMail;
+use App\Mail\ComplaintSubmittedNotificationMail;
 use App\Models\Complaint;
+use App\Models\Setting;
 use App\Models\User;
 use App\Services\AntiFraudService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -90,6 +92,7 @@ class ComplaintTest extends TestCase
     public function test_successful_complaint_submission_generates_unique_code_and_dispatches_email(): void
     {
         Mail::fake();
+        Setting::set('email_official', 'kontak@bankmajalengka.co.id');
 
         $captcha = $this->antiFraud->generateCaptcha();
         $token = $captcha['token'];
@@ -143,6 +146,10 @@ class ComplaintTest extends TestCase
             return $mail->complaint->ticket_code === $ticketCode
                 && $mail->complaint->status === 'diproses'
                 && $mail->hasTo('ahmad.fauzi@example.com');
+        });
+        Mail::assertSent(ComplaintSubmittedNotificationMail::class, function ($mail) use ($ticketCode) {
+            return $mail->complaint->ticket_code === $ticketCode
+                && $mail->hasTo('kontak@bankmajalengka.co.id');
         });
     }
 

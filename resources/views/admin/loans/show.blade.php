@@ -16,7 +16,6 @@
           $statusStyles = [
             'pending' => 'bg-amber-50 text-amber-700 border-amber-200',
             'contacted' => 'bg-blue-50 text-blue-700 border-blue-200',
-            'surveyed' => 'bg-purple-50 text-purple-700 border-purple-200',
             'approved' => 'bg-emerald-50 text-emerald-700 border-emerald-200',
             'rejected' => 'bg-red-50 text-red-700 border-red-200',
           ];
@@ -69,6 +68,10 @@
           <div>
             <span class="text-slate-400 block mb-0.5">Nomor HP / WhatsApp Aktif</span>
             <span class="font-mono font-semibold text-emerald-700">{{ $loan->hp }}</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block mb-0.5">Email</span>
+            <a href="mailto:{{ $loan->email }}" class="font-semibold text-bpr-blue hover:underline">{{ $loan->email ?: '-' }}</a>
           </div>
           <div>
             <span class="text-slate-400 block mb-0.5">Kode Afiliasi / Referal</span>
@@ -150,7 +153,6 @@
             <select name="status" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-bpr-blue">
               <option value="pending" {{ $loan->status === 'pending' ? 'selected' : '' }}>Pending (Menunggu Verifikasi)</option>
               <option value="contacted" {{ $loan->status === 'contacted' ? 'selected' : '' }}>Contacted (Sudah Dihubungi)</option>
-              <option value="surveyed" {{ $loan->status === 'surveyed' ? 'selected' : '' }}>Surveyed (Dalam Proses Survei)</option>
               <option value="approved" {{ $loan->status === 'approved' ? 'selected' : '' }}>Approved (Pengajuan Disetujui)</option>
               <option value="rejected" {{ $loan->status === 'rejected' ? 'selected' : '' }}>Rejected (Pengajuan Ditolak)</option>
             </select>

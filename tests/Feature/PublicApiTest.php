@@ -5,6 +5,9 @@ namespace Tests\Feature;
 use App\Models\LoanApplication;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LoanApplicationReceivedMail;
+use App\Mail\LoanApplicationSubmittedNotificationMail;
 use Tests\TestCase;
 
 class PublicApiTest extends TestCase
@@ -71,11 +74,14 @@ class PublicApiTest extends TestCase
 
     public function test_submitting_loan_application_persists_to_database(): void
     {
+        Mail::fake();
+
         $payload = [
             'nik' => '3210123456789012',
             'nama' => 'Budi Santoso',
             'alamat' => 'Jl. Pemuda No. 10 Majalengka',
             'hp' => '081299887766',
+            'email' => 'budi@example.com',
             'afiliasi' => 'KAS-KADIPATEN',
             'nominal' => '25000000',
             'tenor' => '24',
@@ -99,7 +105,17 @@ class PublicApiTest extends TestCase
             'reference_code' => $refCode,
             'nik' => '3210123456789012',
             'nama' => 'Budi Santoso',
+            'email' => 'budi@example.com',
         ]);
+
+        Mail::assertSent(LoanApplicationReceivedMail::class, function ($mail) use ($refCode) {
+            return $mail->loan->reference_code === $refCode
+                && $mail->hasTo('budi@example.com');
+        });
+        Mail::assertSent(LoanApplicationSubmittedNotificationMail::class, function ($mail) use ($refCode) {
+            return $mail->loan->reference_code === $refCode
+                && $mail->hasTo('kontak@bankmajalengka.co.id');
+        });
     }
 
     public function test_submitting_loan_application_rejects_invalid_nik(): void
@@ -109,6 +125,7 @@ class PublicApiTest extends TestCase
             'nama' => 'Budi Santoso',
             'alamat' => 'Jl. Pemuda No. 10 Majalengka',
             'hp' => '081299887766',
+            'email' => 'budi@example.com',
             'nominal' => '25000000',
             'tenor' => '24',
             'tujuan' => 'Modal Usaha',
@@ -122,12 +139,31 @@ class PublicApiTest extends TestCase
             ->assertJsonValidationErrors(['nik']);
     }
 
+    public function test_submitting_loan_application_rejects_invalid_email(): void
+    {
+        $response = $this->postJson('/api/pengajuan-kredit', [
+            'nik' => '3210123456789012',
+            'nama' => 'Budi Santoso',
+            'alamat' => 'Jl. Pemuda No. 10 Majalengka',
+            'hp' => '081299887766',
+            'email' => 'not-an-email',
+            'nominal' => '25000000',
+            'tenor' => '24',
+            'tujuan' => 'Modal Usaha',
+            'pendapatan_tetap' => '7000000',
+            'agunan' => 'BPKB',
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['email']);
+    }
+
     public function test_submitting_loan_application_rejects_missing_required_fields(): void
     {
         $response = $this->postJson('/api/pengajuan-kredit', []);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors(['nik', 'nama', 'alamat', 'hp', 'nominal', 'tenor', 'tujuan', 'agunan']);
+            ->assertJsonValidationErrors(['nik', 'nama', 'alamat', 'hp', 'email', 'nominal', 'tenor', 'tujuan', 'agunan']);
     }
 
     public function test_products_api_can_filter_by_category(): void

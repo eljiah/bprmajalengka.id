@@ -14,6 +14,35 @@ class HomeController extends Controller
 {
     public function index(AntiFraudService $antiFraud): View
     {
+        return $this->renderLanding($antiFraud);
+    }
+
+    public function pengaduan(AntiFraudService $antiFraud): View
+    {
+        $settings = Setting::getAllKeyValues();
+        $complaintCaptcha = $antiFraud->generateCaptcha();
+        $complaintFormLoadToken = $antiFraud->generateFormLoadToken();
+
+        return view('pengaduan', compact(
+            'settings',
+            'complaintCaptcha',
+            'complaintFormLoadToken'
+        ));
+    }
+
+    public function pengajuanKredit(): View
+    {
+        $settings = Setting::getAllKeyValues();
+        $creditProducts = Product::active()->where('category', 'kredit')->get();
+
+        return view('pengajuan-kredit', compact(
+            'settings',
+            'creditProducts'
+        ));
+    }
+
+    private function renderLanding(AntiFraudService $antiFraud, string $activePage = ''): View
+    {
         $settings = Setting::getAllKeyValues();
 
         $allProducts = Product::active()->get();
@@ -38,7 +67,8 @@ class HomeController extends Controller
             'articles',
             'reports',
             'complaintCaptcha',
-            'complaintFormLoadToken'
+            'complaintFormLoadToken',
+            'activePage'
         ));
     }
 }

@@ -34,7 +34,6 @@ class LoanApplicationController extends Controller
             'all' => LoanApplication::count(),
             'pending' => LoanApplication::where('status', 'pending')->count(),
             'contacted' => LoanApplication::where('status', 'contacted')->count(),
-            'surveyed' => LoanApplication::where('status', 'surveyed')->count(),
             'approved' => LoanApplication::where('status', 'approved')->count(),
             'rejected' => LoanApplication::where('status', 'rejected')->count(),
         ];
@@ -50,7 +49,7 @@ class LoanApplicationController extends Controller
     public function updateStatus(Request $request, LoanApplication $loan): RedirectResponse
     {
         $validated = $request->validate([
-            'status' => ['required', 'in:pending,contacted,surveyed,approved,rejected'],
+            'status' => ['required', 'in:pending,contacted,approved,rejected'],
             'notes' => ['nullable', 'string'],
         ]);
 

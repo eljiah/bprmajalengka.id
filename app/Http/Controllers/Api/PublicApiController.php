@@ -12,6 +12,9 @@ use App\Models\PublicationReport;
 use App\Models\Setting;
 use App\Services\AntiFraudService;
 use App\Mail\ComplaintSubmittedMail;
+use App\Mail\ComplaintSubmittedNotificationMail;
+use App\Mail\LoanApplicationReceivedMail;
+use App\Mail\LoanApplicationSubmittedNotificationMail;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -228,6 +231,7 @@ class PublicApiController extends Controller
             'nama' => ['required', 'string', 'max:150'],
             'alamat' => ['required', 'string'],
             'hp' => ['required', 'string', 'max:25'],
+            'email' => ['required', 'email:rfc,filter', 'max:150'],
             'nominal' => ['required', 'numeric', 'min:500000'],
             'tenor' => ['required', 'integer', 'min:1', 'max:120'],
             'tujuan' => ['required', 'string'],
@@ -270,6 +274,7 @@ class PublicApiController extends Controller
             'nama' => $request->input('nama'),
             'alamat' => $request->input('alamat'),
             'hp' => $request->input('hp'),
+            'email' => strtolower(trim($request->input('email'))),
             'afiliasi' => $afiliasi,
             'nominal' => $nominalClean,
             'tenor' => $tenorClean,
@@ -283,9 +288,32 @@ class PublicApiController extends Controller
             'notes' => 'Pengajuan online via Website Portal BPR Majalengka.',
         ]);
 
+        $applicantEmailNotified = false;
+        try {
+            Mail::to($loan->email)->send(new LoanApplicationReceivedMail($loan));
+            $applicantEmailNotified = true;
+        } catch (\Throwable $e) {
+            Log::error("Failed to send loan application receipt to {$loan->email}: " . $e->getMessage());
+        }
+
+        $bankEmailNotified = false;
+        $bankEmail = Setting::get('email_official');
+        if (is_string($bankEmail) && filter_var($bankEmail, FILTER_VALIDATE_EMAIL)) {
+            try {
+                Mail::to($bankEmail)->send(new LoanApplicationSubmittedNotificationMail($loan));
+                $bankEmailNotified = true;
+            } catch (\Throwable $e) {
+                Log::error("Failed to send loan application notification to {$bankEmail}: " . $e->getMessage());
+            }
+        } else {
+            Log::error("Unable to send loan application notification: valid email_official setting is missing for {$loan->reference_code}.");
+        }
+
         return response()->json([
             'success' => true,
-            'message' => 'Pengajuan pinjaman berhasil dikirim dan tersimpan di sistem.',
+            'message' => $applicantEmailNotified && $bankEmailNotified
+                ? 'Pengajuan pinjaman berhasil dikirim dan email konfirmasi telah dikirim.'
+                : 'Pengajuan pinjaman berhasil tersimpan, tetapi sebagian email notifikasi gagal dikirim. Simpan nomor tiket Anda.',
             'data' => [
                 'reference_code' => $loan->reference_code,
                 'nama' => $loan->nama,
@@ -293,6 +321,8 @@ class PublicApiController extends Controller
                 'tenor' => $loan->tenor,
                 'tanggal' => $loan->created_at->format('d/m/Y H:i'),
                 'status' => $loan->status,
+                'applicant_email_notified' => $applicantEmailNotified,
+                'bank_email_notified' => $bankEmailNotified,
             ],
         ], 201);
     }
@@ -428,9 +458,24 @@ class PublicApiController extends Controller
             Log::error("Failed to send complaint confirmation email to {$complaint->email}: " . $e->getMessage());
         }
 
+        $bankEmailNotified = false;
+        $bankEmail = Setting::get('email_official');
+        if (is_string($bankEmail) && filter_var($bankEmail, FILTER_VALIDATE_EMAIL)) {
+            try {
+                Mail::to($bankEmail)->send(new ComplaintSubmittedNotificationMail($complaint));
+                $bankEmailNotified = true;
+            } catch (\Throwable $e) {
+                Log::error("Failed to send complaint notification to {$bankEmail}: " . $e->getMessage());
+            }
+        } else {
+            Log::error("Unable to send complaint notification: valid email_official setting is missing for {$complaint->ticket_code}.");
+        }
+
         return response()->json([
             'success' => true,
-            'message' => 'Pengaduan berhasil dikirim! Kode unik pengaduan telah diterbitkan dan dikirimkan ke email Anda.',
+            'message' => $emailSent && $bankEmailNotified
+                ? 'Pengaduan berhasil dikirim dan email konfirmasi telah dikirim.'
+                : 'Pengaduan berhasil tersimpan, tetapi sebagian email notifikasi gagal dikirim. Simpan kode tiket Anda.',
             'data' => [
                 'ticket_code' => $complaint->ticket_code,
                 'nama' => $complaint->nama,
@@ -441,6 +486,7 @@ class PublicApiController extends Controller
                 'status_label' => $complaint->status_label,
                 'tanggal' => $complaint->created_at->format('d/m/Y H:i'),
                 'email_notified' => $emailSent,
+                'bank_email_notified' => $bankEmailNotified,
             ],
         ], 201);
     }

@@ -1336,6 +1336,7 @@ function initFormPengajuan() {
       nama: document.getElementById('form-nama').value.trim(),
       alamat: document.getElementById('form-alamat').value.trim(),
       hp: document.getElementById('form-hp').value.trim(),
+      email: document.getElementById('form-email').value.trim(),
       afiliasi: document.getElementById('form-afiliasi').value.trim() || '-',
       nominal: document.getElementById('form-nominal').value.trim(),
       tenor: document.getElementById('form-tenor').value.trim(),
@@ -1370,16 +1371,15 @@ function initFormPengajuan() {
       }
       closeModal();
       const serverRefCode = data?.data?.reference_code;
-      showPengajuanSuccessModal(formData, serverRefCode);
+      showPengajuanSuccessModal(formData, serverRefCode, {
+        applicant: data?.data?.applicant_email_notified,
+        bank: data?.data?.bank_email_notified
+      });
       form.reset();
       generateCaptcha();
     })
     .catch(() => {
-      // Graceful fallback for offline / standalone preview
-      closeModal();
-      showPengajuanSuccessModal(formData);
-      form.reset();
-      generateCaptcha();
+      alert('Tidak dapat terhubung ke server. Pengajuan belum dapat dikonfirmasi; silakan coba kembali.');
     });
   });
 }
@@ -1407,17 +1407,29 @@ function openFormPengajuan(defaultPlafond, defaultTenor, defaultProduct) {
 }
 
 // Success Modal Handler
-function showPengajuanSuccessModal(data, serverRefCode) {
+function showPengajuanSuccessModal(data, serverRefCode, emailStatus = {}) {
   const successModal = document.getElementById('modal-pengajuan-success');
   if (!successModal) return;
 
-  const refCode = serverRefCode || `BPR-MJL-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}-${Math.floor(1000 + Math.random() * 9000)}`;
+  const refCode = serverRefCode;
+  if (!refCode) return;
   
   const refCodeEl = document.getElementById('success-ref-code');
   const detailsEl = document.getElementById('success-details-summary');
   const waBtnEl = document.getElementById('success-btn-wa-confirm');
+  const emailNoticeEl = document.getElementById('success-email-notice');
 
   if (refCodeEl) refCodeEl.textContent = refCode;
+  if (emailNoticeEl) {
+    const applicantNotice = emailStatus.applicant
+      ? `Tanda terima dikirim ke ${data.email}.`
+      : `Tanda terima belum berhasil dikirim ke ${data.email}; silakan simpan nomor referensi ini.`;
+    const bankNotice = emailStatus.bank
+      ? ' Bank juga telah menerima notifikasi.'
+      : ' Notifikasi bank belum berhasil dikirim.';
+    emailNoticeEl.textContent = applicantNotice + bankNotice;
+    emailNoticeEl.className = `text-xs ${emailStatus.applicant && emailStatus.bank ? 'text-emerald-700' : 'text-amber-700'}`;
+  }
   if (detailsEl) {
     detailsEl.innerHTML = `
       <div class="grid grid-cols-2 gap-2.5 text-sm text-left p-4 rounded-2xl bg-slate-50">
@@ -3251,9 +3263,25 @@ function initPengaduanNasabah() {
       const resultBox = document.getElementById('complaint-success-result');
       const ticketCodeEl = document.getElementById('result-ticket-code');
       const emailEl = document.getElementById('result-email-text');
+      const emailNoticeEl = document.getElementById('result-email-notice');
+      const bankEmailNoticeEl = document.getElementById('result-bank-email-notice');
 
       if (ticketCodeEl) ticketCodeEl.textContent = data.data.ticket_code;
-      if (emailEl) emailEl.textContent = data.data.email;
+      if (emailEl) {
+        emailEl.textContent = data.data.email;
+        emailEl.className = data.data.email_notified ? 'text-bpr-navy' : 'font-bold text-amber-700';
+      }
+      if (emailNoticeEl) {
+        const applicantNotice = data.data.email_notified
+          ? 'Tanda terima telah dikirim ke email: '
+          : 'Tanda terima belum berhasil dikirim ke email: ';
+        const bankNotice = data.data.bank_email_notified
+          ? 'Notifikasi pengaduan juga telah dikirim ke bank.'
+          : 'Notifikasi bank belum berhasil dikirim.';
+        emailNoticeEl.firstChild.textContent = `${applicantNotice}`;
+        emailNoticeEl.setAttribute('aria-label', `${applicantNotice}${data.data.email}. ${bankNotice}`);
+        if (bankEmailNoticeEl) bankEmailNoticeEl.textContent = bankNotice;
+      }
 
       if (resultBox) {
         resultBox.classList.remove('hidden');
@@ -3264,47 +3292,10 @@ function initPengaduanNasabah() {
       refreshComplaintCaptcha();
     })
     .catch(() => {
-      // Graceful standalone fallback (e.g., offline or static index.html preview)
       if (submitBtn) submitBtn.disabled = false;
       if (spinner) spinner.classList.add('hidden');
       if (submitText) submitText.textContent = 'Kirim Pengaduan Nasabah';
-
-      const mockTicket = 'ADU-' + new Date().getFullYear() + '-' + Math.floor(100000 + Math.random() * 900000);
-      const emailVal = document.getElementById('complaint-email')?.value || 'email.nasabah@example.com';
-      const namaVal = document.getElementById('complaint-nama')?.value || 'Pelapor';
-      const katVal = document.getElementById('complaint-kategori')?.value || 'Pelayanan Teller / Kantor Kas';
-      const judulVal = document.getElementById('complaint-judul')?.value || 'Pengaduan Layanan';
-
-      // Store in localStorage for the Tracking tab to find
-      try {
-        const stored = JSON.parse(localStorage.getItem('bank_majalengka_complaints') || '{}');
-        stored[mockTicket] = {
-          ticket_code: mockTicket,
-          nama: namaVal,
-          email: emailVal,
-          kategori: katVal,
-          judul: judulVal,
-          status: 'diproses',
-          status_label: 'Sedang Diproses oleh Manajemen',
-          tanggal_lapor: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })
-        };
-        localStorage.setItem('bank_majalengka_complaints', JSON.stringify(stored));
-      } catch (e) {}
-
-      const resultBox = document.getElementById('complaint-success-result');
-      const ticketCodeEl = document.getElementById('result-ticket-code');
-      const emailEl = document.getElementById('result-email-text');
-
-      if (ticketCodeEl) ticketCodeEl.textContent = mockTicket;
-      if (emailEl) emailEl.textContent = emailVal;
-
-      if (resultBox) {
-        resultBox.classList.remove('hidden');
-        resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-
-      form.reset();
-      refreshComplaintCaptcha();
+      alert('Tidak dapat terhubung ke server. Pengaduan belum dapat dikonfirmasi; silakan coba kembali.');
     });
   });
 }
