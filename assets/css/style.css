@@ -22,7 +22,14 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
   font-family: var(--font-sans);
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: 7.5rem;
+  }
 }
 
 body {

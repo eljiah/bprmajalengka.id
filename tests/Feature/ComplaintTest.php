@@ -45,6 +45,51 @@ class ComplaintTest extends TestCase
             ]);
     }
 
+    public function test_captcha_supports_all_basic_arithmetic_operators(): void
+    {
+        $operators = [];
+
+        for ($attempt = 0; $attempt < 100; $attempt++) {
+            $captcha = $this->antiFraud->generateCaptcha();
+            preg_match('/^(\d+) ([+\-×÷]) (\d+) = \?$/u', $captcha['question'], $matches);
+
+            $this->assertCount(4, $matches);
+            [, $left, $operator, $right] = $matches;
+            $left = (int) $left;
+            $right = (int) $right;
+            $operators[$operator] = true;
+
+            if ($operator === '÷') {
+                $this->assertSame(0, $left % $right);
+            }
+
+            $answer = match ($operator) {
+                '+' => $left + $right,
+                '-' => $left - $right,
+                '×' => $left * $right,
+                '÷' => intdiv($left, $right),
+            };
+
+            $this->assertTrue($this->antiFraud->verifyCaptcha($captcha['token'], (string) $answer));
+        }
+
+        $this->assertEqualsCanonicalizing(['+', '-', '×', '÷'], array_keys($operators));
+    }
+
+    public function test_complaint_form_has_matching_refreshable_captcha(): void
+    {
+        $response = $this->get('/pengaduan');
+
+        $response->assertOk()
+            ->assertSee('<strong class="font-bold">Konfirmasi Keamanan.</strong>', false)
+            ->assertSee('Mohon selesaikan hitungan sederhana di samping ini untuk melanjutkan.')
+            ->assertSee('id="complaint-captcha-refresh"')
+            ->assertSee('id="complaint-captcha-answer" name="captcha_answer" type="number" required', false)
+            ->assertSee('id="complaint-captcha-token" type="hidden" name="captcha_token"', false)
+            ->assertSee('id="complaint-form-load-token" type="hidden" name="form_load_token"', false)
+            ->assertSee(route('captcha.generate'));
+    }
+
     public function test_complaint_submission_fails_if_captcha_invalid(): void
     {
         $response = $this->postJson('/pengaduan', [

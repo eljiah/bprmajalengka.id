@@ -109,7 +109,7 @@ class AdminCrudTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->get('/admin/branches');
         $response->assertStatus(200);
-        $response->assertSee('Kantor Kas Kadipaten');
+        $response->assertSee('Kantor Cabang Kadipaten');
 
         // Create branch
         $createResponse = $this->actingAs($this->admin)->post('/admin/branches', [

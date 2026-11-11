@@ -77,7 +77,7 @@
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-2 lg:gap-4">
       
       <!-- Bank Brand Logo: Clean framed badge on Navy -->
-      <a href="#" class="flex items-center gap-2 group flex-shrink-0">
+      <a href="{{ route('home') }}#beranda" class="flex items-center gap-2 group flex-shrink-0">
         <div class="bg-white px-2.5 py-1 rounded-xl shadow-sm flex items-center justify-center">
           <img src="assets/img/logo.png" alt="Logo Perumda BPR Majalengka" class="h-8 sm:h-9 w-auto object-contain">
         </div>
@@ -85,8 +85,9 @@
 
       <!-- Desktop Navigation Menu (Single Line - whitespace-nowrap) -->
       <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
-        <a href="#beranda" class="text-white hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Beranda</a>
-        <a href="#tentang-kami" class="text-white/90 hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Tentang</a>
+        <a href="{{ route('home') }}#beranda" class="text-white hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Beranda</a>
+        <a href="{{ route('home') }}#simulasi-kredit" class="text-white/90 hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Simulasi Kredit</a>
+        <a href="{{ route('home') }}#tentang-kami" class="text-white/90 hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Tentang</a>
         
         <!-- Dropdown Produk & Layanan -->
         <div class="relative group">
@@ -120,18 +121,17 @@
           </div>
         </div>
 
-        <a href="#simulasi-kredit" class="text-white/90 hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Simulasi Kredit</a>
-        <a href="#laporan-publikasi" class="text-white/90 hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Laporan</a>
-        <a href="#informasi-berita" class="text-white/90 hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Informasi Berita</a>
-        <a href="#pengaduan-nasabah" class="text-amber-300 hover:text-amber-400 font-bold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap flex items-center gap-1">Pengaduan</a>
+        <a href="{{ route('home') }}#informasi-berita" class="text-white/90 hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Informasi Berita</a>
+        <a href="{{ route('home') }}#laporan-publikasi" class="text-white/90 hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Laporan</a>
+        <a href="{{ route('pengaduan.page') }}" class="text-amber-300 hover:text-amber-400 font-bold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap flex items-center gap-1">Form Pengaduan</a>
       </nav>
 
       <!-- Action Button / Header CTA (Single Line - whitespace-nowrap) -->
       <div class="hidden sm:flex items-center flex-shrink-0">
-        <button onclick="openFormPengajuan()" class="whitespace-nowrap px-4 py-2 bg-amber-400 hover:bg-amber-300 text-bpr-navy-dark font-bold text-xs uppercase rounded-xl shadow-md transition-all transform active:scale-95 flex items-center gap-1.5">
+        <a href="{{ route('pengajuan.form') }}" class="whitespace-nowrap px-4 py-2 bg-amber-400 hover:bg-amber-300 text-bpr-navy-dark font-bold text-xs uppercase rounded-xl shadow-md transition-all transform active:scale-95 flex items-center gap-1.5">
           <svg class="w-3.5 h-3.5 text-bpr-navy-dark flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
           <span>Ajukan Pinjaman</span>
-        </button>
+        </a>
       </div>
 
       <!-- Mobile Hamburger Button -->
@@ -155,26 +155,29 @@
         </button>
       </div>
       <nav class="mt-6 flex flex-col gap-2">
-        <a href="#beranda" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Beranda</a>
-        <a href="#tentang-kami" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Tentang</a>
+        <a href="{{ route('home') }}#beranda" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Beranda</a>
+        <a href="{{ route('home') }}#simulasi-kredit" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Simulasi Kredit</a>
+        <a href="{{ route('home') }}#tentang-kami" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Tentang</a>
         <a href="javascript:void(0)" onclick="openProductCatalog('all')" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100 flex items-center justify-between">
           <span>Produk & Layanan</span>
           <span class="text-xs bg-bpr-blue text-white px-2 py-0.5 rounded-md font-bold">24 Produk</span>
         </a>
-        <a href="#simulasi-kredit" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Simulasi Kredit</a>
-        <a href="#laporan-publikasi" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Laporan</a>
-        <a href="#informasi-berita" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Informasi Berita</a>
-        <a href="#kantor-kas" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Jaringan 12 Kantor Kas</a>
-        <a href="#pengaduan-nasabah" class="mobile-nav-link py-2.5 px-3 rounded-lg text-amber-900 bg-amber-50 font-bold hover:bg-amber-100 flex items-center justify-between">
+        <a href="{{ route('home') }}#informasi-berita" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Informasi Berita</a>
+        <a href="{{ route('home') }}#laporan-publikasi" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Laporan</a>
+        <a href="{{ route('home') }}#kantor-kas" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Jaringan 12 Kantor Kas</a>
+        <a href="{{ route('pengaduan.page') }}" class="mobile-nav-link py-2.5 px-3 rounded-lg text-amber-900 bg-amber-50 font-bold hover:bg-amber-100 flex items-center justify-between">
           <span>Pengaduan Nasabah</span>
           <span class="text-[10px] bg-amber-500 text-slate-900 px-2 py-0.5 rounded font-extrabold uppercase">Online</span>
         </a>
       </nav>
     </div>
     <div class="pt-6 space-y-3">
-      <button onclick="openFormPengajuan()" class="w-full py-3 bg-amber-400 hover:bg-amber-300 text-bpr-navy-dark font-bold text-sm rounded-xl text-center shadow-md">
+      <a href="{{ route('pengajuan.form') }}" class="w-full py-3 bg-amber-400 hover:bg-amber-300 text-bpr-navy-dark font-bold text-sm rounded-xl text-center shadow-md">
         Ajukan Pinjaman Online
-      </button>
+      </a>
+      <a href="{{ route('admin.login') }}" class="block w-full py-3 bg-bpr-navy hover:bg-bpr-blue text-white font-bold text-sm rounded-xl text-center">
+        Login Admin
+      </a>
       <a href="https://wa.me/6281111116526" target="_blank" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl text-center flex items-center justify-center gap-2">
         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
         Chat WhatsApp CS
@@ -233,24 +236,24 @@
             
             <div id="hero-product-carousel" class="relative rounded-2xl overflow-hidden shadow-2xl bg-slate-900/90 border border-white/15 backdrop-blur-md transition-all">
               
-              <!-- Carousel Header Badge & Navigation Arrows -->
+              <!-- Carousel Header Badge -->
               <div class="p-4 sm:p-5 pb-2 flex items-center justify-between border-b border-white/10">
                 <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-400 text-bpr-navy-dark text-[11px] font-bold uppercase tracking-wider">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
                   <span>Pilihan Produk Unggulan</span>
                 </div>
-                <div class="flex items-center gap-1.5">
-                  <button type="button" id="hero-carousel-prev" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" title="Produk Sebelumnya" aria-label="Produk Sebelumnya">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                  </button>
-                  <button type="button" id="hero-carousel-next" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" title="Produk Selanjutnya" aria-label="Produk Selanjutnya">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                  </button>
-                </div>
               </div>
 
               <!-- Carousel Slides Track -->
               <div class="relative h-80 sm:h-88 overflow-hidden">
+                <div class="absolute top-[106px] inset-x-2 z-10 flex items-center justify-between pointer-events-none">
+                  <button type="button" id="hero-carousel-prev" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors pointer-events-auto" title="Produk Sebelumnya" aria-label="Produk Sebelumnya">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                  </button>
+                  <button type="button" id="hero-carousel-next" class="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors pointer-events-auto" title="Produk Selanjutnya" aria-label="Produk Selanjutnya">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                  </button>
+                </div>
                 
                 <!-- Slide 1: TAHARA -->
                 <div class="hero-carousel-slide absolute inset-0 p-5 flex flex-col justify-between transition-all duration-500 opacity-100 translate-x-0" data-code="TAB-01">
@@ -277,57 +280,7 @@
                   </div>
                 </div>
 
-                <!-- Slide 2: TIARA -->
-                <div class="hero-carousel-slide absolute inset-0 p-5 flex flex-col justify-between transition-all duration-500 opacity-0 pointer-events-none translate-x-4" data-code="TAB-02" aria-hidden="true">
-                  <div>
-                    <div class="flex items-center justify-between gap-2 mb-2">
-                      <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">Tabungan Idul Adha</span>
-                      <span class="text-xs font-mono text-slate-400">TAB-02</span>
-                    </div>
-                    <div class="h-32 rounded-xl bg-white/5 flex items-center justify-center p-2 mb-3">
-                      <img src="{{ asset('assets/img/produk/design_tabungan_tapaqur-removebg-preview.png') }}" alt="Tabungan Idul Adha (TIARA)" class="object-contain max-h-full" onerror="this.src='{{ asset('assets/img/logo.png') }}'">
-                    </div>
-                    <h4 class="text-white font-extrabold text-lg sm:text-xl leading-snug">Tabungan Idul Adha (TIARA)</h4>
-                    <p class="text-slate-300 text-xs mt-1.5 leading-relaxed line-clamp-2">Wujudkan niat suci ibadah qurban setiap tahun dengan angsuran ringan teratur tanpa beban.</p>
-                  </div>
-                  <div class="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
-                    <span class="text-[11px] text-amber-300 font-semibold flex items-center gap-1">
-                      <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                      Ibadah Qurban Terencana
-                    </span>
-                    <button type="button" onclick="showProductDetail('TAB-02')" class="px-4 py-2 bg-bpr-blue hover:bg-bpr-blue-hover text-white text-xs font-bold rounded-lg transition-colors flex items-center gap-1">
-                      <span>Detail</span>
-                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Slide 3: KOTAK MAS -->
-                <div class="hero-carousel-slide absolute inset-0 p-5 flex flex-col justify-between transition-all duration-500 opacity-0 pointer-events-none translate-x-4" data-code="TAB-03" aria-hidden="true">
-                  <div>
-                    <div class="flex items-center justify-between gap-2 mb-2">
-                      <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30">Tabungan Berhadiah</span>
-                      <span class="text-xs font-mono text-slate-400">TAB-03</span>
-                    </div>
-                    <div class="h-32 rounded-xl bg-white/5 flex items-center justify-center p-2 mb-3">
-                      <img src="{{ asset('assets/img/produk/IMG_2909.jpeg') }}" alt="Tabungan KOTAK MAS" class="object-contain max-h-full" onerror="this.src='{{ asset('assets/img/logo.png') }}'">
-                    </div>
-                    <h4 class="text-white font-extrabold text-lg sm:text-xl leading-snug">Tabungan KOTAK MAS</h4>
-                    <p class="text-slate-300 text-xs mt-1.5 leading-relaxed line-clamp-2">Program tabungan berhadiah langsung peralatan usaha, elektronik, dan logam mulia tanpa diundi.</p>
-                  </div>
-                  <div class="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
-                    <span class="text-[11px] text-amber-300 font-semibold flex items-center gap-1">
-                      <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                      Hadiah Langsung Di Muka
-                    </span>
-                    <button type="button" onclick="showProductDetail('TAB-03')" class="px-4 py-2 bg-bpr-blue hover:bg-bpr-blue-hover text-white text-xs font-bold rounded-lg transition-colors flex items-center gap-1">
-                      <span>Detail</span>
-                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Slide 4: DEPOSITO BERJANGKA -->
+                <!-- Slide 2: DEPOSITO BERJANGKA -->
                 <div class="hero-carousel-slide absolute inset-0 p-5 flex flex-col justify-between transition-all duration-500 opacity-0 pointer-events-none translate-x-4" data-code="DEP-01" aria-hidden="true">
                   <div>
                     <div class="flex items-center justify-between gap-2 mb-2">
@@ -352,50 +305,25 @@
                   </div>
                 </div>
 
-                <!-- Slide 5: KREDIT MODAL KERJA -->
+                <!-- Slide 3: KAPESTA -->
                 <div class="hero-carousel-slide absolute inset-0 p-5 flex flex-col justify-between transition-all duration-500 opacity-0 pointer-events-none translate-x-4" data-code="KRD-01" aria-hidden="true">
                   <div>
                     <div class="flex items-center justify-between gap-2 mb-2">
-                      <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">Kredit Usaha UMKM</span>
+                      <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">Kredit Pegawai Swasta</span>
                       <span class="text-xs font-mono text-slate-400">KRD-01</span>
                     </div>
                     <div class="h-32 rounded-xl bg-white/5 flex items-center justify-center p-2 mb-3">
-                      <img src="{{ asset('assets/img/produk/KAN.png') }}" alt="Kredit Modal Kerja" class="object-contain max-h-full" onerror="this.src='{{ asset('assets/img/logo.png') }}'">
+                      <img src="{{ asset('assets/img/produk/KAPESTA.png') }}" alt="KAPESTA (Kredit Pegawai Swasta)" class="object-contain max-h-full" onerror="this.src='{{ asset('assets/img/logo.png') }}'">
                     </div>
-                    <h4 class="text-white font-extrabold text-lg sm:text-xl leading-snug">Kredit Modal Kerja (KMK)</h4>
-                    <p class="text-slate-300 text-xs mt-1.5 leading-relaxed line-clamp-2">Tambahan likuiditas usaha perdagangan, pertanian, dan industri mikro dengan proses cepat & angsuran bersahabat.</p>
+                    <h4 class="text-white font-extrabold text-lg sm:text-xl leading-snug">KAPESTA (Kredit Pegawai Swasta)</h4>
+                    <p class="text-slate-300 text-xs mt-1.5 leading-relaxed line-clamp-2">Pinjaman kebutuhan keluarga atau modal sampingan bagi karyawan swasta dengan proses cepat dan angsuran bersahabat.</p>
                   </div>
                   <div class="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
                     <span class="text-[11px] text-amber-300 font-semibold flex items-center gap-1">
                       <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                      Proses Cepat & Mudah
+                      Bunga Ringan & Proses Cepat
                     </span>
                     <button type="button" onclick="showProductDetail('KRD-01')" class="px-4 py-2 bg-bpr-blue hover:bg-bpr-blue-hover text-white text-xs font-bold rounded-lg transition-colors flex items-center gap-1">
-                      <span>Detail</span>
-                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Slide 6: KSG -->
-                <div class="hero-carousel-slide absolute inset-0 p-5 flex flex-col justify-between transition-all duration-500 opacity-0 pointer-events-none translate-x-4" data-code="KRD-05" aria-hidden="true">
-                  <div>
-                    <div class="flex items-center justify-between gap-2 mb-2">
-                      <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-400/30">Kredit Pegawai</span>
-                      <span class="text-xs font-mono text-slate-400">KRD-05</span>
-                    </div>
-                    <div class="h-32 rounded-xl bg-white/5 flex items-center justify-center p-2 mb-3">
-                      <img src="{{ asset('assets/img/produk/KSG.png') }}" alt="Kredit Sertifikasi Guru" class="object-contain max-h-full" onerror="this.src='{{ asset('assets/img/logo.png') }}'">
-                    </div>
-                    <h4 class="text-white font-extrabold text-lg sm:text-xl leading-snug">KSG (Kredit Sertifikasi Guru)</h4>
-                    <p class="text-slate-300 text-xs mt-1.5 leading-relaxed line-clamp-2">Fasilitas kredit khusus guru dan tenaga pendidik bersertifikasi dengan suku bunga sangat kompetitif.</p>
-                  </div>
-                  <div class="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
-                    <span class="text-[11px] text-amber-300 font-semibold flex items-center gap-1">
-                      <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-                      Khusus Pendidik Majalengka
-                    </span>
-                    <button type="button" onclick="showProductDetail('KRD-05')" class="px-4 py-2 bg-bpr-blue hover:bg-bpr-blue-hover text-white text-xs font-bold rounded-lg transition-colors flex items-center gap-1">
                       <span>Detail</span>
                       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </button>
@@ -409,9 +337,6 @@
                 <button type="button" class="hero-carousel-dot w-8 h-2 rounded-full bg-amber-400 transition-all duration-300" aria-label="Slide 1"></button>
                 <button type="button" class="hero-carousel-dot w-2.5 h-2 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300" aria-label="Slide 2"></button>
                 <button type="button" class="hero-carousel-dot w-2.5 h-2 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300" aria-label="Slide 3"></button>
-                <button type="button" class="hero-carousel-dot w-2.5 h-2 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300" aria-label="Slide 4"></button>
-                <button type="button" class="hero-carousel-dot w-2.5 h-2 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300" aria-label="Slide 5"></button>
-                <button type="button" class="hero-carousel-dot w-2.5 h-2 rounded-full bg-white/40 hover:bg-white/70 transition-all duration-300" aria-label="Slide 6"></button>
               </div>
 
             </div>
@@ -1065,7 +990,7 @@
 
   <!-- =====================================================================
        SECTION 9: ALAMAT KANTOR PUSAT & DIREKTORI KANTOR CABANG LAINNYA
-       (Headline Kantor Pusat & File System Directory 11 Kantor Kas)
+       (Headline Kantor Pusat & Direktori Kantor Cabang)
        ===================================================================== -->
   <section id="kantor-kas" class="py-16 sm:py-20 bg-slate-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1075,7 +1000,7 @@
         <span class="text-xs font-bold text-bpr-blue uppercase tracking-wider bg-blue-50 px-3.5 py-1.5 rounded-full inline-block mb-2">Dekat & Terjangkau</span>
         <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Jaringan Layanan & Kantor Operasional</h2>
         <p class="text-slate-600 text-sm sm:text-base mt-2.5 leading-relaxed">
-          Kunjungi Kantor Pusat Operasional atau 11 jaringan kantor kas kami yang tersebar strategis di setiap kecamatan Kabupaten Majalengka.
+          Kunjungi Kantor Pusat Operasional atau 8 jaringan kantor cabang kami yang tersebar strategis di Kabupaten Majalengka.
         </p>
       </div>
 
@@ -1163,9 +1088,9 @@
             <div>
               <div class="flex items-center gap-2">
                 <span class="font-mono text-[11px] text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">root/jaringan-kantor-kas/</span>
-                <span class="text-xs font-semibold text-bpr-blue">11 Kantor Kas</span>
+                <span class="text-xs font-semibold text-bpr-blue">8 Kantor Cabang</span>
               </div>
-              <h4 class="text-base sm:text-lg font-bold text-slate-900 mt-0.5">Direktori Kantor Kas & Cabang Wilayah</h4>
+              <h4 class="text-base sm:text-lg font-bold text-slate-900 mt-0.5">Kantor cabang Bank Majalengka</h4>
             </div>
           </div>
 
@@ -1185,14 +1110,14 @@
 
         </div>
 
-        <!-- Directory Content (Grid of 11 Kantor Kas) -->
+        <!-- Directory Content (Grid of 8 Kantor Cabang) -->
         <div id="branches-directory-content" class="p-6 sm:p-8 bg-slate-50/50">
           <div class="mb-4 flex items-center justify-between text-xs text-slate-500 border-b border-slate-200/80 pb-3">
             <div class="flex items-center gap-1.5 font-medium">
               <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span>11 Jaringan Kantor Kas Tersebar di Seluruh Kabupaten Majalengka</span>
+              <span>8 Jaringan Kantor Cabang Tersebar di Seluruh Kabupaten Majalengka</span>
             </div>
-            <span class="font-mono text-[11px] text-slate-400">File System: 11 Units Active</span>
+            <span class="font-mono text-[11px] text-slate-400">8 Cabang Aktif</span>
           </div>
 
           <!-- Kantor Kas Cards Grid -->
@@ -1230,8 +1155,9 @@
                     <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                     Hubungi Kas
                   </a>
-                  <a href="https://maps.google.com/?q={{ urlencode($branch->address) }}" target="_blank" class="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs rounded-xl flex items-center justify-center transition-colors" title="Buka di Google Maps">
+                  <a href="https://www.google.com/maps/search/?api=1&amp;query={{ urlencode($branch->name . ' ' . $branch->address) }}" target="_blank" rel="noopener noreferrer" aria-label="Lihat lokasi {{ $branch->name }} di Google Maps" class="flex-1 py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors">
                     <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                    <span>Lihat Peta</span>
                   </a>
                 </div>
               </div>
@@ -1394,7 +1320,7 @@
                 <p class="text-xs text-slate-300 mt-0.5">Kanal pelaporan independen dan saluran keluhan transaksi perbankan.</p>
               </div>
             </div>
-            <a href="#pengaduan-nasabah" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-bpr-navy-dark text-xs font-extrabold rounded-xl flex-shrink-0 transition-colors shadow">
+            <a href="{{ route('pengaduan.page') }}" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-bpr-navy-dark text-xs font-extrabold rounded-xl flex-shrink-0 transition-colors shadow">
               Form Pengaduan &rarr;
             </a>
           </div>
@@ -1428,6 +1354,7 @@
        SECTION: PENGADUAN NASABAH & ANTI-FRAUD PORTAL
        (Form Pengaduan Online, Kode Unik Otomatis, & Lacak Status)
        ===================================================================== -->
+  @if($activePage === 'legacy-complaint-section')
   <section id="pengaduan-nasabah" class="py-16 sm:py-24 bg-slate-50 border-t border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
@@ -1796,6 +1723,7 @@
 
     </div>
   </section>
+  @endif
 
   <!-- =====================================================================
        SECTION 12: COMPREHENSIVE CORPORATE FOOTER
@@ -1844,7 +1772,7 @@
             <li><a href="#tentang-kami" onclick="openProfilBpr()" class="hover:text-white transition-colors">Tentang Kami / Profil Perusahaan</a></li>
             <li><a href="#tentang-kami" class="hover:text-white transition-colors">Visi & Misi</a></li>
             <li><a href="#informasi-berita" class="hover:text-white transition-colors">Berita & Edukasi</a></li>
-            <li><a href="#pengaduan-nasabah" class="hover:text-white transition-colors">Pengaduan Nasabah</a></li>
+            <li><a href="{{ route('pengaduan.page') }}" class="hover:text-white transition-colors">Pengaduan Nasabah</a></li>
           </ul>
         </div>
 
@@ -2493,7 +2421,7 @@
           </div>
 
           <!-- Year Filter Pills -->
-          <div class="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl mb-3 flex-shrink-0">
+          <div id="report-year-filter-tabs" class="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl mb-3 flex-shrink-0">
             <button type="button" onclick="filterReportArchiveYear('all')" data-year="all" class="report-year-tab flex-1 py-1.5 px-2 text-center text-xs rounded-lg font-bold bg-white text-bpr-blue shadow-sm transition-all">Semua</button>
             <button type="button" onclick="filterReportArchiveYear('2024')" data-year="2024" class="report-year-tab flex-1 py-1.5 px-2 text-center text-xs rounded-lg font-medium text-slate-600 hover:text-slate-900 transition-all">2024</button>
             <button type="button" onclick="filterReportArchiveYear('2023')" data-year="2023" class="report-year-tab flex-1 py-1.5 px-2 text-center text-xs rounded-lg font-medium text-slate-600 hover:text-slate-900 transition-all">2023</button>
@@ -2511,8 +2439,8 @@
           </div>
         </div>
 
-        <!-- Right Column: Document Details & Interactive PDF Preview -->
-        <div class="lg:col-span-7 p-4 sm:p-6 flex flex-col justify-between bg-slate-50 min-h-[460px]">
+        <!-- Right Column: Document Details -->
+        <div class="lg:col-span-7 p-4 sm:p-6 flex flex-col justify-between bg-slate-50">
           
           <!-- Document Header Card -->
           <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-sm mb-4">
@@ -2533,25 +2461,10 @@
             </p>
           </div>
 
-          <!-- PDF Preview Frame / Viewer -->
-          <div class="flex-1 bg-slate-900 rounded-2xl overflow-hidden shadow-inner border border-slate-300 relative min-h-[300px] flex flex-col">
-            <div class="bg-slate-800 text-white px-3.5 py-2 text-[11px] font-semibold flex items-center justify-between border-b border-slate-700">
-              <span class="flex items-center gap-1.5 text-slate-300">
-                <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                Pratinjau Lembar Dokumen Resmi
-              </span>
-              <a id="preview-open-tab-btn" href="#" target="_blank" class="text-blue-300 hover:text-white flex items-center gap-1 transition-colors">
-                <span>Buka di Tab Baru</span>
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-              </a>
-            </div>
-            <iframe id="preview-pdf-iframe" src="" class="w-full flex-1 min-h-[260px] bg-white border-0" title="Pratinjau PDF Laporan Publikasi"></iframe>
-          </div>
-
           <!-- Bottom Actions / Download Bar -->
           <div class="mt-4 pt-3 flex flex-col sm:flex-row items-center justify-between gap-3">
             <button type="button" onclick="closeReportArchiveModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold transition-colors text-center order-2 sm:order-1">
-              Tutup Pratinjau
+              Tutup
             </button>
             <a id="preview-download-btn" href="#" download class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-bpr-blue hover:bg-bpr-blue-dark text-white text-xs font-extrabold shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 order-1 sm:order-2">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
@@ -2575,6 +2488,7 @@
     };
     window.DYNAMIC_BRANCHES = {!! json_encode($branches ?? []) !!};
     window.DYNAMIC_ARTICLES = {!! json_encode($articles ?? []) !!};
+    window.DYNAMIC_REPORTS = @json($publicReports ?? []);
     window.DYNAMIC_SETTINGS = {!! json_encode($settings ?? []) !!};
   </script>
 

@@ -12,9 +12,9 @@ use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function index(AntiFraudService $antiFraud): View
+    public function index(): View
     {
-        return $this->renderLanding($antiFraud);
+        return $this->renderLanding();
     }
 
     public function pengaduan(AntiFraudService $antiFraud): View
@@ -41,7 +41,7 @@ class HomeController extends Controller
         ));
     }
 
-    private function renderLanding(AntiFraudService $antiFraud, string $activePage = ''): View
+    private function renderLanding(string $activePage = ''): View
     {
         $settings = Setting::getAllKeyValues();
 
@@ -55,9 +55,15 @@ class HomeController extends Controller
         $branches = Branch::active()->get();
         $articles = Article::published()->take(6)->get();
         $reports = PublicationReport::active()->get();
-
-        $complaintCaptcha = $antiFraud->generateCaptcha();
-        $complaintFormLoadToken = $antiFraud->generateFormLoadToken();
+        $publicReports = $reports->map(fn (PublicationReport $report) => [
+            'id' => (string) $report->id,
+            'title' => $report->title,
+            'category' => $report->category,
+            'period' => $report->period,
+            'size' => $report->file_size,
+            'summary' => $report->description,
+            'filePath' => $report->file_path ? asset(ltrim($report->file_path, '/')) : null,
+        ])->values();
 
         return view('landing', compact(
             'settings',
@@ -66,8 +72,7 @@ class HomeController extends Controller
             'branches',
             'articles',
             'reports',
-            'complaintCaptcha',
-            'complaintFormLoadToken',
+            'publicReports',
             'activePage'
         ));
     }

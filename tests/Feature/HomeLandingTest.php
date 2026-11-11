@@ -28,11 +28,25 @@ class HomeLandingTest extends TestCase
         $response->assertSee('Perumda BPR Majalengka');
         $response->assertSee('KAPESTA');
         $response->assertSee('TAHARA');
-        $response->assertSee('Kantor Kas Kadipaten');
+        $response->assertSee('Kantor Cabang Kadipaten');
+        $response->assertSee('Kantor Cabang Jatitujuh');
+        $response->assertSee('Kantor Cabang Cikijing');
+        $response->assertSee('Kantor Cabang Rajagaluh');
+        $response->assertSee('Kantor Cabang Bantarujeg');
+        $response->assertSee('Kantor Cabang Sukahaji');
+        $response->assertSee('Kantor Cabang Kertajati');
+        $response->assertSee('Kantor Cabang Ligung');
+        $response->assertSee('8 Kantor Cabang');
+        $this->assertSame(8, Branch::active()->where('is_main', false)->count());
         $response->assertSee('Dana Darurat');
         $response->assertSee('Laporan Publikasi 30 September 2024');
         $response->assertSee('Laporan Penerapan GCG 2023');
+        $response->assertSee(route('home'));
         $response->assertSee(route('admin.login'));
+        $response->assertSee(route('pengaduan.page'));
+        $response->assertSee(route('pengajuan.form'));
+        $response->assertDontSee('Formulir Pengaduan Nasabah Bank Majalengka');
+        $response->assertDontSee('form-pengaduan-nasabah');
     }
 
     public function test_home_page_reflects_updated_settings_dynamically(): void

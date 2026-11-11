@@ -58,6 +58,7 @@
 
       <!-- Navigation -->
       <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+        @php $pendingCount = \App\Models\LoanApplication::where('status', 'pending')->count(); @endphp
         <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold text-white/90 hover:bg-white/10 transition-colors {{ request()->routeIs('admin.dashboard') ? 'sidebar-active text-white' : '' }}">
           <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
           Ringkasan Dashboard
@@ -68,9 +69,8 @@
         <a href="{{ route('admin.loans.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-white/90 hover:bg-white/10 transition-colors {{ request()->routeIs('admin.loans.*') ? 'sidebar-active text-white' : '' }}">
           <div class="flex items-center gap-3">
             <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            Pengajuan Pinjaman
+            Daftar Pengajuan Pinjaman Masuk
           </div>
-          @php $pendingCount = \App\Models\LoanApplication::where('status', 'pending')->count(); @endphp
           @if($pendingCount > 0)
             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-slate-900">{{ $pendingCount }}</span>
           @endif
@@ -244,7 +244,12 @@
 
       <nav class="space-y-1 overflow-y-auto">
         <a href="{{ route('admin.dashboard') }}" class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold text-white/90 hover:bg-white/10">Dashboard</a>
-        <a href="{{ route('admin.loans.index') }}" class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold text-white/90 hover:bg-white/10">Pengajuan Pinjaman</a>
+        <a href="{{ route('admin.loans.index') }}" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-white/90 hover:bg-white/10 {{ request()->routeIs('admin.loans.*') ? 'sidebar-active text-white' : '' }}">
+          <span>Daftar Pengajuan Pinjaman Masuk</span>
+          @if($pendingCount > 0)
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-slate-900">{{ $pendingCount }}</span>
+          @endif
+        </a>
         <a href="{{ route('admin.complaints.index') }}" class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold text-white/90 hover:bg-white/10">Pengaduan Nasabah</a>
         <a href="{{ route('admin.products.index') }}" class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold text-white/90 hover:bg-white/10">Produk</a>
         <a href="{{ route('admin.branches.index') }}" class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold text-white/90 hover:bg-white/10">12 Kantor Kas</a>

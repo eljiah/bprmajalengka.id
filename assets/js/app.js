@@ -919,7 +919,7 @@ const PRODUCTS_DATA = {
 };
 
 /* ==========================================================================
-   2. DATABASE KANTOR KAS & LOKASI (12 KANTOR KAS)
+   2. DATABASE KANTOR CABANG & LOKASI
    ========================================================================== */
 const BRANCHES_DATA = [
   {
@@ -932,93 +932,69 @@ const BRANCHES_DATA = [
     isMain: true
   },
   {
-    name: 'Kantor Kas Kadipaten',
-    type: 'Kas',
+    name: 'Kantor Cabang Kadipaten',
+    type: 'Cabang',
     address: 'Jl. Raya Kadipaten No. 45, Kec. Kadipaten (Dekat Pasar Kadipaten)',
     phone: '(0233) 282510',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Jatiwangi',
-    type: 'Kas',
-    address: 'Jl. Pos No. 12, Sutawangi, Kec. Jatiwangi (Kawasan Genteng & Keramik)',
-    phone: '(0233) 881230',
+    name: 'Kantor Cabang Jatitujuh',
+    type: 'Cabang',
+    address: 'Jl. Raya Utara No.113 Jatitujuh',
+    phone: '(0233) 8888211',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Talaga',
-    type: 'Kas',
-    address: 'Jl. Jenderal Ahmad Yani No. 88, Talaga Kulon, Kec. Talaga',
-    phone: '(0233) 811090',
-    whatsapp: '0811-1111-6526',
-    hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
-  },
-  {
-    name: 'Kantor Kas Cikijing',
-    type: 'Kas',
+    name: 'Kantor Cabang Cikijing',
+    type: 'Cabang',
     address: 'Jl. Raya Kasturi No. 15, Kec. Cikijing (Pusat Konveksi Celana Jeans)',
     phone: '(0233) 891340',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Rajagaluh',
-    type: 'Kas',
+    name: 'Kantor Cabang Rajagaluh',
+    type: 'Cabang',
     address: 'Jl. Pangeran Muhamad No. 34, Kec. Rajagaluh (Sentra Anyaman Bambu)',
     phone: '(0233) 511450',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Leuwimunding',
-    type: 'Kas',
-    address: 'Jl. Raya Mirat No. 22, Kec. Leuwimunding (Dekat Pertigaan Parapatan)',
-    phone: '(0233) 512670',
+    name: 'Kantor Cabang Bantarujeg',
+    type: 'Cabang',
+    address: 'Jl. Siliwangi No.91 Bantarujeg',
+    phone: '(0233) 8316346',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Sukahaji',
-    type: 'Kas',
+    name: 'Kantor Cabang Sukahaji',
+    type: 'Cabang',
     address: 'Jl. Raya Sukahaji No. 10, Cikalong, Kec. Sukahaji',
     phone: '(0233) 882190',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Maja',
-    type: 'Kas',
-    address: 'Jl. Pasukan Sindangkasih No. 05, Kec. Maja (Akses Wisata Panyaweuyan)',
-    phone: '(0233) 283450',
-    whatsapp: '0811-1111-6526',
-    hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
-  },
-  {
-    name: 'Kantor Kas Kertajati',
-    type: 'Kas',
+    name: 'Kantor Cabang Kertajati',
+    type: 'Cabang',
     address: 'Jl. Kertajati-Kadipaten Km 3, Kec. Kertajati (Kawasan Bandara Internasional Kertajati)',
     phone: '(0233) 883100',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Ligung',
-    type: 'Kas',
+    name: 'Kantor Cabang Ligung',
+    type: 'Cabang',
     address: 'Jl. Raya Ligung No. 78, Kec. Ligung (Sentra Industri Pabrik)',
     phone: '(0233) 884520',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
-  {
-    name: 'Kantor Kas Sumberjaya',
-    type: 'Kas',
-    address: 'Jl. Raya Cirebon-Bandung Km 28, Kec. Sumberjaya (Gerbang Perbatasan Timur)',
-    phone: '(0233) 885670',
-    whatsapp: '0811-1111-6526',
-    hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
-  }
 ];
 
 /* ==========================================================================
@@ -1284,11 +1260,27 @@ function initFormPengajuan() {
   let currentCaptchaResult = 0;
 
   const generateCaptcha = () => {
-    const num1 = Math.floor(Math.random() * 8) + 2; // 2 - 9
-    const num2 = Math.floor(Math.random() * 8) + 1; // 1 - 8
-    currentCaptchaResult = num1 + num2;
+    let num1 = Math.floor(Math.random() * 16) + 3;
+    let num2 = Math.floor(Math.random() * 11) + 2;
+    const operator = ['+', '-', '×', '÷'][Math.floor(Math.random() * 4)];
+
+    if (operator === '-') {
+      if (num1 < num2) [num1, num2] = [num2, num1];
+      currentCaptchaResult = num1 - num2;
+    } else if (operator === '×') {
+      num1 = Math.floor(Math.random() * 8) + 2;
+      num2 = Math.floor(Math.random() * 8) + 2;
+      currentCaptchaResult = num1 * num2;
+    } else if (operator === '÷') {
+      num2 = Math.floor(Math.random() * 8) + 2;
+      currentCaptchaResult = Math.floor(Math.random() * 8) + 2;
+      num1 = num2 * currentCaptchaResult;
+    } else {
+      currentCaptchaResult = num1 + num2;
+    }
+
     if (captchaQuestion) {
-      captchaQuestion.textContent = `${num1} + ${num2} = ?`;
+      captchaQuestion.textContent = `${num1} ${operator} ${num2} = ?`;
     }
     if (captchaAnswerInput) captchaAnswerInput.value = '';
   };
@@ -1475,7 +1467,7 @@ function showPengajuanSuccessModal(data, serverRefCode, emailStatus = {}) {
 }
 
 /* ==========================================================================
-   2B. HERO PRODUCT CAROUSEL (MENAMPILKAN SEMUA PRODUK)
+   2B. HERO PRODUCT CAROUSEL (PRODUK UNGGULAN)
    ========================================================================== */
 function initHeroCarousel() {
   const container = document.getElementById('hero-product-carousel');
@@ -2083,7 +2075,7 @@ function initKantorKas() {
         noResultsEl = document.createElement('div');
         noResultsEl.id = 'kantor-kas-no-results';
         noResultsEl.className = 'col-span-1 sm:col-span-2 lg:col-span-3 text-center py-12 text-slate-400 text-sm';
-        noResultsEl.textContent = 'Tidak ditemukan kantor kas untuk pencarian "' + query + '".';
+        noResultsEl.textContent = 'Tidak ditemukan kantor cabang untuk pencarian "' + query + '".';
         container.appendChild(noResultsEl);
       }
       noResultsEl.style.display = '';
@@ -2094,7 +2086,7 @@ function initKantorKas() {
 
   const renderFromData = (query = '') => {
     container.innerHTML = '';
-    // Kantor Pusat ditampilkan khusus di Headline, grid menampilkan 11 kantor kas cabang
+    // Kantor Pusat ditampilkan khusus di Headline; grid menampilkan kantor cabang lainnya.
     let branchesToRender = BRANCHES_DATA.filter(b => !(b.isMain || b.is_main));
     if (branchesToRender.length === 0) branchesToRender = BRANCHES_DATA;
 
@@ -2109,7 +2101,7 @@ function initKantorKas() {
     }
 
     if (filtered.length === 0) {
-      container.innerHTML = `<div class="col-span-1 sm:col-span-2 lg:col-span-3 text-center py-12 text-slate-400 text-sm">Tidak ditemukan kantor kas untuk pencarian "${query}".</div>`;
+      container.innerHTML = `<div class="col-span-1 sm:col-span-2 lg:col-span-3 text-center py-12 text-slate-400 text-sm">Tidak ditemukan kantor cabang untuk pencarian "${query}".</div>`;
       return;
     }
 
@@ -2151,8 +2143,9 @@ function initKantorKas() {
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
             Hubungi Kas
           </a>
-          <a href="https://maps.google.com/?q=${encodeURIComponent(branch.address)}" target="_blank" class="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs rounded-xl flex items-center justify-center transition-colors" title="Buka di Google Maps">
+          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branch.name + ' ' + branch.address)}" target="_blank" rel="noopener noreferrer" aria-label="Lihat lokasi ${branch.name} di Google Maps" class="flex-1 py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors">
             <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            <span>Lihat Peta</span>
           </a>
         </div>
       `;
@@ -2601,6 +2594,35 @@ function resolveArchiveGroup(keyOrId) {
   if (!keyOrId) return { group: REPORT_ARCHIVES_DATA.triwulan, defaultFileId: 'triwulan-2024-q3' };
   const str = String(keyOrId).toLowerCase().trim();
 
+  const dynamicReport = Array.isArray(window.DYNAMIC_REPORTS)
+    ? window.DYNAMIC_REPORTS.find(report => String(report.id) === str)
+    : null;
+  if (dynamicReport) {
+    const period = dynamicReport.period || dynamicReport.category || 'Periode tidak dicantumkan';
+    const year = period.match(/\b20\d{2}\b/)?.[0] || '';
+    return {
+      group: {
+        categoryName: dynamicReport.category || 'Laporan Publikasi',
+        badge: dynamicReport.category || 'Laporan Publikasi',
+        isDynamic: true,
+        files: [{
+          id: `report-${dynamicReport.id}`,
+          month: period,
+          quarter: period,
+          year,
+          title: dynamicReport.title,
+          period,
+          size: dynamicReport.size || 'Ukuran tidak diketahui',
+          filePath: dynamicReport.filePath || '',
+          pages: 'Format PDF Resmi',
+          datePublished: 'tanggal tidak dicantumkan',
+          summary: dynamicReport.summary || 'Ringkasan laporan belum tersedia.'
+        }]
+      },
+      defaultFileId: `report-${dynamicReport.id}`
+    };
+  }
+
   if (str === '1' || str.includes('september') || str.includes('triwulan iii') || str.includes('q3')) {
     return { group: REPORT_ARCHIVES_DATA.triwulan, defaultFileId: 'triwulan-2024-q3' };
   }
@@ -2639,6 +2661,8 @@ function openReportArchive(reportIdOrKey, specificFileId = null) {
   const mainTitle = document.getElementById('report-modal-main-title');
   if (catBadge) catBadge.textContent = currentArchiveGroup.badge;
   if (mainTitle) mainTitle.textContent = currentArchiveGroup.categoryName;
+  const yearFilter = document.getElementById('report-year-filter-tabs');
+  if (yearFilter) yearFilter.classList.toggle('hidden', Boolean(currentArchiveGroup.isDynamic));
 
   // Reset year filter tabs
   const tabs = document.querySelectorAll('.report-year-tab');
@@ -2779,6 +2803,7 @@ function selectReportArchiveFile(fileId, updateList = true) {
   const pDownloadBtn = document.getElementById('preview-download-btn');
   const pDownloadText = document.getElementById('preview-download-text');
   const pOpenTabBtn = document.getElementById('preview-open-tab-btn');
+  const pUnavailable = document.getElementById('preview-pdf-unavailable');
 
   if (pBadge) pBadge.textContent = file.period || file.quarter;
   if (pTitle) pTitle.textContent = file.title;
@@ -2787,12 +2812,14 @@ function selectReportArchiveFile(fileId, updateList = true) {
   if (pSummary) pSummary.textContent = file.summary;
   if (pPages) pPages.textContent = file.pages || 'Format PDF Resmi';
 
-  const docUrl = file.filePath.startsWith('/') ? file.filePath : '/' + file.filePath;
+  const docUrl = file.filePath ? new URL(file.filePath, window.location.origin).href : '';
   if (pIframe) {
-    pIframe.src = `${docUrl}#toolbar=0&navpanes=0`;
+    pIframe.src = docUrl ? `${docUrl}#toolbar=0&navpanes=0` : 'about:blank';
   }
+  if (pUnavailable) pUnavailable.classList.toggle('hidden', Boolean(docUrl));
   if (pDownloadBtn) {
     pDownloadBtn.href = docUrl;
+    pDownloadBtn.classList.toggle('hidden', !docUrl);
     pDownloadBtn.setAttribute('download', file.title.replace(/[^a-zA-Z0-9_-]/g, '_') + '.pdf');
   }
   if (pDownloadText) {
@@ -2800,6 +2827,7 @@ function selectReportArchiveFile(fileId, updateList = true) {
   }
   if (pOpenTabBtn) {
     pOpenTabBtn.href = docUrl;
+    pOpenTabBtn.classList.toggle('hidden', !docUrl);
   }
 }
 

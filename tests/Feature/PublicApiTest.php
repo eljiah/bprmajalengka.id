@@ -72,6 +72,40 @@ class PublicApiTest extends TestCase
             ->assertJsonPath('data.company_name', 'Perumda BPR Majalengka');
     }
 
+    public function test_credit_application_form_offers_hosted_income_source_options(): void
+    {
+        $response = $this->get('/pengajuan-kredit');
+
+        $response->assertOk()
+            ->assertSee('<select id="credit-income-source" name="sumber" required', false)
+            ->assertSee('<select id="credit-tenor" name="tenor" required', false)
+            ->assertSee('<select id="credit-collateral" name="agunan" required', false)
+            ->assertSee('id="credit-amount" name="nominal" type="number" min="1000000" step="500000" value="25000000" required', false)
+            ->assertSee('Konfirmasi Keamanan. Mohon selesaikan hitungan sederhana di samping ini untuk melanjutkan.')
+            ->assertSee('id="credit-captcha-question"')
+            ->assertSee('id="credit-captcha-refresh"')
+            ->assertSee('id="credit-captcha-answer" type="number" required', false)
+            ->assertSee('6 Bulan')
+            ->assertSee('12 Bulan (1 Tahun)')
+            ->assertSee('24 Bulan (2 Tahun)')
+            ->assertSee('36 Bulan (3 Tahun)')
+            ->assertSee('48 Bulan (4 Tahun)')
+            ->assertSee('60 Bulan (5 Tahun)')
+            ->assertSee('BPKB Sepeda Motor')
+            ->assertSee('BPKB Mobil / Armada Niaga')
+            ->assertSee('Sertifikat Hak Milik (SHM) / SHGB Tanah-Bangunan')
+            ->assertSee('Akta Jual Beli (AJB) Terverifikasi')
+            ->assertSee('SK Pengangkatan Asli (Khusus ASN/PPPK)')
+            ->assertSee('Bilyet Deposito BPR Majalengka')
+            ->assertSee('Hak Pemakaian Tempat Dasaran (Kios/Los Pasar)')
+            ->assertSee('Usaha Perdagangan / UMKM')
+            ->assertSee('Gaji Pegawai Swasta / Pabrik')
+            ->assertSee('Gaji ASN / PPPK / Honorer')
+            ->assertSee('Hasil Pertanian / Perkebunan')
+            ->assertSee('Uang Pensiun')
+            ->assertSee('Lainnya');
+    }
+
     public function test_submitting_loan_application_persists_to_database(): void
     {
         Mail::fake();
@@ -116,6 +150,27 @@ class PublicApiTest extends TestCase
             return $mail->loan->reference_code === $refCode
                 && $mail->hasTo('kontak@bankmajalengka.co.id');
         });
+    }
+
+    public function test_loan_receipt_email_uses_branded_confirmation_layout(): void
+    {
+        $loan = new LoanApplication([
+            'reference_code' => 'BM-20261111-ABCD',
+            'nama' => 'Budi Santoso',
+            'nominal' => 25000000,
+            'tenor' => 24,
+            'tujuan' => 'Modal Usaha',
+        ]);
+        $loan->created_at = now();
+
+        $html = (new LoanApplicationReceivedMail($loan))->render();
+
+        $this->assertStringContainsString('background-color: #f1f5f9', $html);
+        $this->assertStringContainsString('background-color: #002D62', $html);
+        $this->assertStringContainsString('Konfirmasi Penerimaan Pengajuan Kredit', $html);
+        $this->assertStringContainsString('BM-20261111-ABCD', $html);
+        $this->assertStringContainsString('bukan persetujuan kredit', $html);
+        $this->assertStringContainsString('PERUMDA BPR MAJALENGKA', $html);
     }
 
     public function test_submitting_loan_application_rejects_invalid_nik(): void

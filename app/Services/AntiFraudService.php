@@ -14,14 +14,30 @@ class AntiFraudService
     {
         $num1 = rand(3, 18);
         $num2 = rand(2, 12);
-        $operator = rand(0, 1) === 0 ? '+' : '-';
+        $operator = ['+', '-', '×', '÷'][rand(0, 3)];
 
-        if ($operator === '-' && $num1 < $num2) {
-            // Swap to prevent negative numbers
-            [$num1, $num2] = [$num2, $num1];
+        switch ($operator) {
+            case '-':
+                if ($num1 < $num2) {
+                    [$num1, $num2] = [$num2, $num1];
+                }
+                $answer = $num1 - $num2;
+                break;
+            case '×':
+                $num1 = rand(2, 9);
+                $num2 = rand(2, 9);
+                $answer = $num1 * $num2;
+                break;
+            case '÷':
+                $num2 = rand(2, 9);
+                $answer = rand(2, 9);
+                $num1 = $num2 * $answer;
+                break;
+            default:
+                $answer = $num1 + $num2;
+                break;
         }
 
-        $answer = $operator === '+' ? ($num1 + $num2) : ($num1 - $num2);
         $question = "{$num1} {$operator} {$num2} = ?";
 
         $payload = [
