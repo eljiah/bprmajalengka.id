@@ -134,7 +134,7 @@
               <table width="100%" cellpadding="0" cellspacing="0" style="margin: 28px 0;">
                 <tr>
                   <td align="center">
-                    <a href="{{ url('/#cek-pengaduan') }}?code={{ $complaint->ticket_code }}" style="background-color: #0066CC; color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 10px; font-size: 13px; font-weight: 700; display: inline-block; letter-spacing: 0.5px;">
+                    <a href="{{ route('pengaduan.page', ['code' => $complaint->ticket_code]) }}" style="background-color: #0066CC; color: #ffffff; text-decoration: none; padding: 14px 28px; border-radius: 10px; font-size: 13px; font-weight: 700; display: inline-block; letter-spacing: 0.5px;">
                       Lacak Status Pengaduan Saya &rarr;
                     </a>
                   </td>

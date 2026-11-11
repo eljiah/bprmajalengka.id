@@ -273,5 +273,20 @@
         statusMessage.className = 'text-sm text-red-700';
       }
     });
+
+    // Detect URL parameter ?code= or hash #cek-pengaduan for seamless tracking from email
+    const urlParams = new URLSearchParams(window.location.search);
+    const codeParam = urlParams.get('code');
+    const isStatusHash = window.location.hash === '#cek-pengaduan';
+    if (codeParam || isStatusHash) {
+      showComplaintPanel(true);
+      if (codeParam) {
+        const ticketInput = document.getElementById('ticket-code');
+        if (ticketInput) {
+          ticketInput.value = codeParam;
+          statusForm.dispatchEvent(new Event('submit'));
+        }
+      }
+    }
   </script>
 @endsection

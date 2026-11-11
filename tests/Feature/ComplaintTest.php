@@ -291,4 +291,46 @@ class ComplaintTest extends TestCase
                 && $mail->hasTo('budi@example.com');
         });
     }
+
+    public function test_complaint_emails_render_valid_branded_html_and_tracking_links(): void
+    {
+        $complaint = Complaint::create([
+            'ticket_code' => 'BM-ADU-20261111-9988',
+            'nama' => 'Ratna Sari',
+            'email' => 'ratna@example.com',
+            'telepon' => '081399887766',
+            'nomor_rekening' => '5544332211',
+            'kategori' => 'pelayanan',
+            'judul' => 'Antrean Teller Terlalu Panjang',
+            'isi_pengaduan' => 'Mohon penambahan petugas teller pada saat jam istirahat siang.',
+            'status' => 'diproses',
+            'ip_address' => '127.0.0.1',
+            'fraud_risk_level' => 'low',
+        ]);
+
+        // Customer Confirmation Email
+        $customerHtml = (new ComplaintSubmittedMail($complaint))->render();
+        $this->assertStringContainsString('BM-ADU-20261111-9988', $customerHtml);
+        $this->assertStringContainsString('Ratna Sari', $customerHtml);
+        $this->assertStringContainsString(route('pengaduan.page', ['code' => 'BM-ADU-20261111-9988']), $customerHtml);
+
+        // Internal Bank Notification Email
+        $internalHtml = (new ComplaintSubmittedNotificationMail($complaint))->render();
+        $this->assertStringContainsString('Notifikasi Pengaduan Nasabah Baru', $internalHtml);
+        $this->assertStringContainsString('BM-ADU-20261111-9988', $internalHtml);
+        $this->assertStringContainsString('081399887766', $internalHtml);
+        $this->assertStringContainsString(route('admin.complaints.show', $complaint), $internalHtml);
+    }
+
+    public function test_mail_test_artisan_command_executes_successfully(): void
+    {
+        Mail::fake();
+
+        $this->artisan('mail:test', ['to' => 'test@bankmajalengka.co.id'])
+            ->expectsOutputToContain('Menguji koneksi SMTP')
+            ->expectsOutputToContain('BERHASIL!')
+            ->assertExitCode(0);
+
+        Mail::assertSent(\Illuminate\Mail\Mailable::class, 0); // Sent via Mail::raw
+    }
 }
