@@ -15,7 +15,12 @@ define('LARAVEL_START', microtime(true));
 require __DIR__ . '/../vendor/autoload.php';
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
+// Bootstrap Console Kernel agar Facades, Config, dan Providers aktif penuh
+$kernel = $app->make(\Illuminate\Contracts\Console\Kernel::class);
+$kernel->bootstrap();
+
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 
 echo "<pre style='background:#0f172a; color:#f8fafc; padding:24px; font-family:monospace; border-radius:12px; line-height:1.6; font-size:13px;'>";
@@ -23,7 +28,7 @@ echo "========================================================\n";
 echo "🚀 WEB DEPLOYMENT & MAINTENANCE RUNNER - BPR MAJALENGKA\n";
 echo "========================================================\n\n";
 
-// 1. Coba Git Pull
+// 1. Coba Git Pull jika didukung oleh server
 if (function_exists('shell_exec')) {
     echo "--- [1/4] GIT PULL DARI REPOSITORI GITHUB ---\n";
     $appDir = dirname(__DIR__);
@@ -53,6 +58,16 @@ try {
 } catch (\Throwable $e) {
     echo "Peringatan saat cache: " . $e->getMessage() . "\n";
 }
+
+// Tampilkan Konfigurasi Mail yang Terbaca oleh Laravel
+echo "\n--- INFORMASI SMTP YANG SEDANG AKTIF ---\n";
+echo "Default Mailer : " . Config::get('mail.default') . "\n";
+echo "SMTP Host      : " . Config::get('mail.mailers.smtp.host') . "\n";
+echo "SMTP Port      : " . Config::get('mail.mailers.smtp.port') . "\n";
+echo "SMTP Scheme    : " . (Config::get('mail.mailers.smtp.scheme') ?: '(default)') . "\n";
+echo "SMTP Username  : " . Config::get('mail.mailers.smtp.username') . "\n";
+echo "From Address   : " . Config::get('mail.from.address') . "\n";
+echo "From Name      : " . Config::get('mail.from.name') . "\n";
 
 // 4. Test Pengiriman Email SMTP
 $testEmail = $_GET['test_email'] ?? 'kamelianisaaa@gmail.com';
