@@ -49,7 +49,7 @@ try {
 }
 
 // 3. Rebuild Config & View Cache
-echo "\n--- [3/4] MEMBANGUN CACHE BARU ---\n";
+echo "\n--- [3/5] MEMBANGUN CACHE BARU ---\n";
 try {
     Artisan::call('config:cache');
     echo htmlspecialchars(Artisan::output());
@@ -57,6 +57,20 @@ try {
     echo htmlspecialchars(Artisan::output());
 } catch (\Throwable $e) {
     echo "Peringatan saat cache: " . $e->getMessage() . "\n";
+}
+
+// 4. Migrasi Database Baru secara Aman (Tanpa Menghapus Data Lama)
+if (isset($_GET['migrate']) || !empty($_GET['run_migrate'])) {
+    echo "\n--- [4/5] MENJALANKAN MIGRASI DATABASE (MIGRATE --FORCE) ---\n";
+    try {
+        Artisan::call('migrate', ['--force' => true]);
+        $migrateOutput = Artisan::output();
+        echo htmlspecialchars($migrateOutput ?: "Database sudah yang terbaru (Nothing to migrate).\n");
+    } catch (\Throwable $e) {
+        echo "Peringatan saat migrasi database: " . $e->getMessage() . "\n";
+    }
+} else {
+    echo "\n--- [4/5] MIGRASI DATABASE: Tambahkan &migrate=1 pada URL untuk mengeksekusi migrasi tabel/field baru ---\n";
 }
 
 // Tampilkan Konfigurasi Mail yang Terbaca oleh Laravel
@@ -69,9 +83,9 @@ echo "SMTP Username  : " . Config::get('mail.mailers.smtp.username') . "\n";
 echo "From Address   : " . Config::get('mail.from.address') . "\n";
 echo "From Name      : " . Config::get('mail.from.name') . "\n";
 
-// 4. Test Pengiriman Email SMTP
+// 5. Test Pengiriman Email SMTP
 $testEmail = $_GET['test_email'] ?? 'kamelianisaaa@gmail.com';
-echo "\n--- [4/4] MENGUJI KONEKSI & PENGIRIMAN EMAIL SMTP KE: {$testEmail} ---\n";
+echo "\n--- [5/5] MENGUJI KONEKSI & PENGIRIMAN EMAIL SMTP KE: {$testEmail} ---\n";
 try {
     Mail::raw(
         "Halo!\n\nIni adalah email uji coba dari sistem Website Resmi Perumda BPR Majalengka via Web Deployer.\nJika Anda menerima email ini, konfigurasi SMTP Gmail di server hosting CyberPanel telah aktif dan berfungsi normal!\n\nSalam,\nTim IT Bank Majalengka",
