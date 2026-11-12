@@ -42,7 +42,7 @@ class AdminEmailSettingsTest extends TestCase
         $this->actingAs($this->admin)
             ->get(route('admin.settings.index'))
             ->assertOk()
-            ->assertSee('Pemeriksaan Email & Log Pengiriman')
+            ->assertSee('Pemeriksaan Email & Log Pengiriman', false)
             ->assertSee('uji@example.com')
             ->assertSee('Uji pengiriman');
     }
