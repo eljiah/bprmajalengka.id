@@ -150,6 +150,19 @@ class PublicApiTest extends TestCase
             return $mail->loan->reference_code === $refCode
                 && $mail->hasTo('kontak@bankmajalengka.co.id');
         });
+
+        $this->assertDatabaseHas('email_logs', [
+            'recipient' => 'budi@example.com',
+            'type' => 'loan_receipt',
+            'reference' => $refCode,
+            'status' => 'sent',
+        ]);
+        $this->assertDatabaseHas('email_logs', [
+            'recipient' => 'kontak@bankmajalengka.co.id',
+            'type' => 'loan_notification',
+            'reference' => $refCode,
+            'status' => 'sent',
+        ]);
     }
 
     public function test_loan_receipt_email_uses_branded_confirmation_layout(): void

@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\PublicationReport;
 use App\Models\Setting;
 use App\Services\AntiFraudService;
+use App\Services\EmailDeliveryService;
 use App\Mail\ComplaintSubmittedMail;
 use App\Mail\ComplaintSubmittedNotificationMail;
 use App\Mail\LoanApplicationReceivedMail;
@@ -213,7 +214,7 @@ class PublicApiController extends Controller
         ]);
     }
 
-    public function submitLoan(Request $request): JsonResponse
+    public function submitLoan(Request $request, EmailDeliveryService $emailDelivery): JsonResponse
     {
         // Sanitize input
         $nominalClean = preg_replace('/[^0-9]/', '', (string)$request->input('nominal', 0));
@@ -288,25 +289,24 @@ class PublicApiController extends Controller
             'notes' => 'Pengajuan online via Website Portal BPR Majalengka.',
         ]);
 
-        $applicantEmailNotified = false;
-        try {
-            Mail::to($loan->email)->send(new LoanApplicationReceivedMail($loan));
-            $applicantEmailNotified = true;
-        } catch (\Throwable $e) {
-            Log::error("Failed to send loan application receipt to {$loan->email}: " . $e->getMessage());
-        }
+        $applicantEmailNotified = $emailDelivery->send(
+            $loan->email,
+            'loan_receipt',
+            fn () => Mail::to($loan->email)->send(new LoanApplicationReceivedMail($loan)),
+            $loan->reference_code
+        );
 
         $bankEmailNotified = false;
         $bankEmail = Setting::get('email_official');
         if (is_string($bankEmail) && filter_var($bankEmail, FILTER_VALIDATE_EMAIL)) {
-            try {
-                Mail::to($bankEmail)->send(new LoanApplicationSubmittedNotificationMail($loan));
-                $bankEmailNotified = true;
-            } catch (\Throwable $e) {
-                Log::error("Failed to send loan application notification to {$bankEmail}: " . $e->getMessage());
-            }
+            $bankEmailNotified = $emailDelivery->send(
+                $bankEmail,
+                'loan_notification',
+                fn () => Mail::to($bankEmail)->send(new LoanApplicationSubmittedNotificationMail($loan)),
+                $loan->reference_code
+            );
         } else {
-            Log::error("Unable to send loan application notification: valid email_official setting is missing for {$loan->reference_code}.");
+            $emailDelivery->recordFailure(null, 'loan_notification', 'Alamat email resmi tidak valid.', $loan->reference_code);
         }
 
         return response()->json([
@@ -348,7 +348,7 @@ class PublicApiController extends Controller
     /**
      * Submit Customer Complaint with complete Anti-Fraud verification and email dispatch.
      */
-    public function submitComplaint(Request $request, AntiFraudService $antiFraud): JsonResponse
+    public function submitComplaint(Request $request, AntiFraudService $antiFraud, EmailDeliveryService $emailDelivery): JsonResponse
     {
         // 1. Rate limiting per IP (Anti-DDoS / Anti-Flood)
         $ip = $request->ip();
@@ -450,25 +450,24 @@ class PublicApiController extends Controller
         ]);
 
         // 8. Send Email notification with unique code and status explanation
-        $emailSent = false;
-        try {
-            Mail::to($complaint->email)->send(new ComplaintSubmittedMail($complaint));
-            $emailSent = true;
-        } catch (\Throwable $e) {
-            Log::error("Failed to send complaint confirmation email to {$complaint->email}: " . $e->getMessage());
-        }
+        $emailSent = $emailDelivery->send(
+            $complaint->email,
+            'complaint_confirmation',
+            fn () => Mail::to($complaint->email)->send(new ComplaintSubmittedMail($complaint)),
+            $complaint->ticket_code
+        );
 
         $bankEmailNotified = false;
         $bankEmail = Setting::get('email_official');
         if (is_string($bankEmail) && filter_var($bankEmail, FILTER_VALIDATE_EMAIL)) {
-            try {
-                Mail::to($bankEmail)->send(new ComplaintSubmittedNotificationMail($complaint));
-                $bankEmailNotified = true;
-            } catch (\Throwable $e) {
-                Log::error("Failed to send complaint notification to {$bankEmail}: " . $e->getMessage());
-            }
+            $bankEmailNotified = $emailDelivery->send(
+                $bankEmail,
+                'complaint_notification',
+                fn () => Mail::to($bankEmail)->send(new ComplaintSubmittedNotificationMail($complaint)),
+                $complaint->ticket_code
+            );
         } else {
-            Log::error("Unable to send complaint notification: valid email_official setting is missing for {$complaint->ticket_code}.");
+            $emailDelivery->recordFailure(null, 'complaint_notification', 'Alamat email resmi tidak valid.', $complaint->ticket_code);
         }
 
         return response()->json([

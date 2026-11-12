@@ -196,6 +196,19 @@ class ComplaintTest extends TestCase
             return $mail->complaint->ticket_code === $ticketCode
                 && $mail->hasTo('kontak@bankmajalengka.co.id');
         });
+
+        $this->assertDatabaseHas('email_logs', [
+            'recipient' => 'ahmad.fauzi@example.com',
+            'type' => 'complaint_confirmation',
+            'reference' => $ticketCode,
+            'status' => 'sent',
+        ]);
+        $this->assertDatabaseHas('email_logs', [
+            'recipient' => 'kontak@bankmajalengka.co.id',
+            'type' => 'complaint_notification',
+            'reference' => $ticketCode,
+            'status' => 'sent',
+        ]);
     }
 
     public function test_can_check_complaint_status_with_valid_unique_code(): void
@@ -290,6 +303,12 @@ class ComplaintTest extends TestCase
             return $mail->complaint->status === 'selesai'
                 && $mail->hasTo('budi@example.com');
         });
+        $this->assertDatabaseHas('email_logs', [
+            'recipient' => 'budi@example.com',
+            'type' => 'complaint_status',
+            'reference' => $complaint->ticket_code,
+            'status' => 'sent',
+        ]);
     }
 
     public function test_complaint_emails_render_valid_branded_html_and_tracking_links(): void

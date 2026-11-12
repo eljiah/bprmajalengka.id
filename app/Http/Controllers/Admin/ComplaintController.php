@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\ComplaintStatusUpdatedMail;
 use App\Models\Complaint;
+use App\Services\EmailDeliveryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
@@ -65,7 +65,7 @@ class ComplaintController extends Controller
         return view('admin.complaints.show', compact('complaint'));
     }
 
-    public function updateStatus(Request $request, Complaint $complaint): RedirectResponse
+    public function updateStatus(Request $request, Complaint $complaint, EmailDeliveryService $emailDelivery): RedirectResponse
     {
         $validated = $request->validate([
             'status' => ['required', 'in:diproses,ditindaklanjuti,selesai,ditolak'],
@@ -93,11 +93,15 @@ class ComplaintController extends Controller
         // Optionally send email notification to complainant
         $emailNotice = '';
         if ($request->boolean('send_email', true) && $previousStatus !== $newStatus) {
-            try {
-                Mail::to($complaint->email)->send(new ComplaintStatusUpdatedMail($complaint, $previousStatus));
+            $sent = $emailDelivery->send(
+                $complaint->email,
+                'complaint_status',
+                fn () => Mail::to($complaint->email)->send(new ComplaintStatusUpdatedMail($complaint, $previousStatus)),
+                $complaint->ticket_code
+            );
+            if ($sent) {
                 $emailNotice = ' dan email notifikasi berhasil dikirimkan ke nasabah';
-            } catch (\Throwable $e) {
-                Log::error("Failed to send status update email to {$complaint->email}: " . $e->getMessage());
+            } else {
                 $emailNotice = ' (namun pengiriman email notifikasi mengalami kendala)';
             }
         }

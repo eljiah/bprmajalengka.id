@@ -80,6 +80,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Settings
         Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
         Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
+        Route::post('/settings/test-email', [SettingController::class, 'testEmail'])->middleware('throttle:5,1')->name('settings.testEmail');
 
         // Admin Profile & Change Password
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');

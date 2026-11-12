@@ -4,7 +4,7 @@
 @section('page-title', 'Konfigurasi Profil, Kontak & Regulasi BPR')
 
 @section('content')
-<div class="max-w-4xl mx-auto">
+<div class="max-w-6xl mx-auto space-y-6">
   <div class="bg-white rounded-2xl p-6 sm:p-8 card-shadow">
     <div class="pb-6 border-b border-slate-100 mb-6">
       <h3 class="text-base font-bold text-slate-800">Pengaturan Profil Perumda BPR Majalengka</h3>
@@ -142,5 +142,84 @@
       </div>
     </form>
   </div>
+
+  <section class="bg-white rounded-2xl p-6 sm:p-8 card-shadow space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 border-b border-slate-100 pb-5">
+      <div>
+        <h3 class="text-base font-bold text-slate-800">Pemeriksaan Email & Log Pengiriman</h3>
+        <p class="mt-1 text-xs text-slate-500">
+          Mailer aktif: <span class="font-bold text-slate-700">{{ $mailer }}</span>.
+          Konfigurasi SMTP dikelola melalui environment server (.env).
+        </p>
+        <p class="mt-1 text-xs text-amber-700">
+          Status berhasil berarti email diterima oleh mailer, bukan jaminan email masuk ke kotak masuk penerima.
+        </p>
+      </div>
+    </div>
+
+    <form method="POST" action="{{ route('admin.settings.testEmail') }}" class="flex flex-col sm:flex-row gap-3 sm:items-end">
+      @csrf
+      <div class="flex-1">
+        <label for="test-email" class="block text-xs font-bold text-slate-700 mb-1">Alamat tujuan uji</label>
+        <input id="test-email" type="email" name="email" value="{{ old('email', auth()->user()->email) }}" required maxlength="255"
+          class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-bpr-blue">
+      </div>
+      <button type="submit" class="px-5 py-2.5 bg-bpr-navy hover:bg-bpr-blue text-white font-bold text-xs rounded-xl shadow transition">
+        Kirim Email Uji
+      </button>
+    </form>
+
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <h4 class="text-sm font-bold text-slate-800">Riwayat Pengiriman Email</h4>
+        <span class="text-xs text-slate-400">{{ $emailLogs->total() }} catatan</span>
+      </div>
+
+      <div class="overflow-x-auto border border-slate-100 rounded-xl">
+        <table class="w-full min-w-[860px] text-left text-xs">
+          <thead class="bg-slate-50 text-slate-500 uppercase tracking-wider">
+            <tr>
+              <th class="px-4 py-3 font-bold">Waktu</th>
+              <th class="px-4 py-3 font-bold">Jenis</th>
+              <th class="px-4 py-3 font-bold">Referensi</th>
+              <th class="px-4 py-3 font-bold">Penerima</th>
+              <th class="px-4 py-3 font-bold">Mailer</th>
+              <th class="px-4 py-3 font-bold">Status</th>
+              <th class="px-4 py-3 font-bold">Keterangan</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            @forelse($emailLogs as $emailLog)
+              <tr class="align-top">
+                <td class="px-4 py-3 whitespace-nowrap text-slate-600">{{ $emailLog->created_at->format('d/m/Y H:i:s') }}</td>
+                <td class="px-4 py-3 text-slate-700">{{ $emailLog->typeLabel() }}</td>
+                <td class="px-4 py-3 text-slate-600">{{ $emailLog->reference ?? '-' }}</td>
+                <td class="px-4 py-3 text-slate-700">{{ $emailLog->recipient ?? 'Tidak tersedia' }}</td>
+                <td class="px-4 py-3 text-slate-600">{{ $emailLog->mailer }}</td>
+                <td class="px-4 py-3">
+                  @if($emailLog->status === 'sent')
+                    <span class="px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 font-bold">Berhasil</span>
+                  @elseif($emailLog->status === 'failed')
+                    <span class="px-2 py-1 rounded-full bg-red-50 text-red-700 font-bold">Gagal</span>
+                  @else
+                    <span class="px-2 py-1 rounded-full bg-amber-50 text-amber-700 font-bold">Diproses</span>
+                  @endif
+                </td>
+                <td class="px-4 py-3 max-w-sm break-words text-slate-500">{{ $emailLog->error ?: 'Diterima oleh mailer.' }}</td>
+              </tr>
+            @empty
+              <tr>
+                <td colspan="7" class="px-4 py-8 text-center text-slate-400">Belum ada riwayat pengiriman email.</td>
+              </tr>
+            @endforelse
+          </tbody>
+        </table>
+      </div>
+
+      @if($emailLogs->hasPages())
+        <div class="mt-4">{{ $emailLogs->links() }}</div>
+      @endif
+    </div>
+  </section>
 </div>
 @endsection

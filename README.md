@@ -155,11 +155,14 @@ Panel admin dirancang dengan antarmuka yang bersih, responsif, dan mudah digunak
    - Pengaturan kategori, ringkasan (excerpt), isi konten lengkap, dan status publikasi.
 5. **Laporan Publikasi & GCG (CRUD Dokumen)**
    - Pengelolaan berkas laporan keuangan triwulanan, laporan GCG tahunan, dan audit KAP independen.
-6. **Manajemen Pengajuan Pinjaman (Loan Application Inbox)**
+6. **Pengaturan & Log Email**
+   - Mengirim email uji dari panel admin dan melihat riwayat status email notifikasi aplikasi, termasuk kegagalan.
+   - Kredensial SMTP tetap dikelola aman melalui konfigurasi environment server; status berhasil menandakan mailer menerima email, bukan konfirmasi email sudah masuk ke inbox.
+7. **Manajemen Pengajuan Pinjaman (Loan Application Inbox)**
    - Melihat detail lengkap pengajuan: NIK 16 digit, Nama, No. WhatsApp, Pekerjaan, Nominal Pinjaman, Tenor, Keterangan Agunan.
    - Pengubahan status pengajuan: `pending` ➔ `contacted` ➔ `approved` / `rejected`.
    - Tombol shortcut untuk langsung menghubungi pemohon via WhatsApp resmi.
-7. **Pengaturan BPR (Corporate Settings)**
+8. **Pengaturan BPR (Corporate Settings)**
    - Mengubah informasi identitas bank, slogan, alamat kantor pusat operasional, nomor telepon, WhatsApp, email resmi, teks jaminan LPS, serta disclaimer pengawasan OJK tanpa perlu menyentuh kode.
 
 ---
