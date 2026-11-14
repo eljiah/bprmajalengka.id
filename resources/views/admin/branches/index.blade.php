@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Manajemen Kantor Kas')
-@section('page-title', 'Direktori 12 Jaringan Kantor Kas')
+@section('title', 'Manajemen Kantor Cabang')
+@section('page-title', 'Direktori 8 Jaringan Kantor Cabang')
 
 @section('content')
 <div class="space-y-6">
