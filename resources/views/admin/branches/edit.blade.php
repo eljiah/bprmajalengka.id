@@ -41,6 +41,16 @@
         </div>
 
         <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Latitude</label>
+          <input type="number" name="latitude" value="{{ old('latitude', $branch->latitude) }}" step="any" min="-90" max="90" placeholder="Contoh: -6.8281" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-bpr-blue">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Longitude</label>
+          <input type="number" name="longitude" value="{{ old('longitude', $branch->longitude) }}" step="any" min="-180" max="180" placeholder="Contoh: 108.2276" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-bpr-blue">
+        </div>
+
+        <div>
           <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nomor Telepon Kantor</label>
           <input type="text" name="phone" value="{{ old('phone', $branch->phone) }}" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-bpr-blue">
         </div>

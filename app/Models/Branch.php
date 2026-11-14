@@ -13,6 +13,8 @@ class Branch extends Model
         'name',
         'type',
         'address',
+        'latitude',
+        'longitude',
         'phone',
         'whatsapp',
         'hours',

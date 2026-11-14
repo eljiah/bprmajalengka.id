@@ -116,6 +116,8 @@ class AdminCrudTest extends TestCase
             'name' => 'Kantor Kas Bantarujeg',
             'type' => 'Kas',
             'address' => 'Jl. Raya Bantarujeg No. 12, Majalengka',
+            'latitude' => '-6.8281000',
+            'longitude' => '108.2276000',
             'phone' => '(0233) 890123',
             'whatsapp' => '0811-1111-6526',
             'hours' => 'Senin - Jumat: 08:00 - 15:30 WIB',
@@ -123,7 +125,11 @@ class AdminCrudTest extends TestCase
         ]);
 
         $createResponse->assertRedirect('/admin/branches');
-        $this->assertDatabaseHas('branches', ['name' => 'Kantor Kas Bantarujeg']);
+        $this->assertDatabaseHas('branches', [
+            'name' => 'Kantor Kas Bantarujeg',
+            'latitude' => '-6.8281000',
+            'longitude' => '108.2276000',
+        ]);
 
         $branch = Branch::where('name', 'Kantor Kas Bantarujeg')->first();
 
@@ -132,11 +138,17 @@ class AdminCrudTest extends TestCase
             'name' => 'Kantor Kas Bantarujeg Baru',
             'type' => 'Kas',
             'address' => 'Jl. Raya Bantarujeg Baru No. 15',
+            'latitude' => '-6.8290000',
+            'longitude' => '108.2280000',
             'hours' => 'Senin - Jumat: 08:00 - 15:30 WIB',
             'is_active' => '1',
         ]);
         $updateResponse->assertRedirect('/admin/branches');
-        $this->assertDatabaseHas('branches', ['name' => 'Kantor Kas Bantarujeg Baru']);
+        $this->assertDatabaseHas('branches', [
+            'name' => 'Kantor Kas Bantarujeg Baru',
+            'latitude' => '-6.8290000',
+            'longitude' => '108.2280000',
+        ]);
 
         // Delete branch
         $delResponse = $this->actingAs($this->admin)->delete("/admin/branches/{$branch->id}");
