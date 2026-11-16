@@ -31,15 +31,24 @@ class PublicApiTest extends TestCase
             ]);
     }
 
-    public function test_can_fetch_all_12_branches(): void
+    public function test_can_fetch_all_8_branches_and_head_office(): void
     {
         $response = $this->getJson('/api/branches');
 
         $response->assertStatus(200)
             ->assertJson([
                 'success' => true,
-                'total' => 12,
-            ]);
+                'total' => 9,
+            ])
+            ->assertJsonFragment(['name' => 'Kantor Pusat Operasional'])
+            ->assertJsonFragment(['name' => 'Kantor Cabang Kadipaten'])
+            ->assertJsonFragment(['name' => 'Kantor Cabang Jatitujuh'])
+            ->assertJsonFragment(['name' => 'Kantor Cabang Cikijing'])
+            ->assertJsonFragment(['name' => 'Kantor Cabang Rajagaluh'])
+            ->assertJsonFragment(['name' => 'Kantor Cabang Bantarujeg'])
+            ->assertJsonFragment(['name' => 'Kantor Cabang Sukahaji'])
+            ->assertJsonFragment(['name' => 'Kantor Cabang Kertajati'])
+            ->assertJsonFragment(['name' => 'Kantor Cabang Ligung']);
     }
 
     public function test_can_fetch_articles(): void

@@ -172,6 +172,32 @@ class AdminCrudTest extends TestCase
         ]);
     }
 
+    public function test_admin_can_save_branch_coordinates_without_losing_precision(): void
+    {
+        $latitude = '-6.7632246516128065';
+        $longitude = '108.1682402947551';
+
+        $response = $this->actingAs($this->admin)->post('/admin/branches', [
+            'name' => 'Kantor Cabang Presisi Test',
+            'type' => 'Cabang',
+            'address' => 'Jl. Raya Kadipaten',
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'hours' => 'Senin - Jumat: 08:00 - 15:30 WIB',
+            'is_active' => '1',
+        ]);
+
+        $response->assertRedirect('/admin/branches');
+        $this->assertDatabaseHas('branches', [
+            'name' => 'Kantor Cabang Presisi Test',
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+        ]);
+
+        $this->get('/')
+            ->assertSee('https://www.google.com/maps/search/?api=1&query=' . rawurlencode($latitude . ',' . $longitude));
+    }
+
     public function test_admin_can_crud_articles(): void
     {
         $response = $this->actingAs($this->admin)->get('/admin/articles');
