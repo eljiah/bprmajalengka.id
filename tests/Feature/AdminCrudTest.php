@@ -156,6 +156,22 @@ class AdminCrudTest extends TestCase
         $this->assertDatabaseMissing('branches', ['id' => $branch->id]);
     }
 
+    public function test_branch_coordinates_must_be_provided_together(): void
+    {
+        $response = $this->actingAs($this->admin)->post('/admin/branches', [
+            'name' => 'Kantor Kas Koordinat Tidak Lengkap',
+            'type' => 'Kas',
+            'address' => 'Jl. Raya Majalengka',
+            'latitude' => '-6.8281000',
+            'hours' => 'Senin - Jumat: 08:00 - 15:30 WIB',
+        ]);
+
+        $response->assertSessionHasErrors('longitude');
+        $this->assertDatabaseMissing('branches', [
+            'name' => 'Kantor Kas Koordinat Tidak Lengkap',
+        ]);
+    }
+
     public function test_admin_can_crud_articles(): void
     {
         $response = $this->actingAs($this->admin)->get('/admin/articles');

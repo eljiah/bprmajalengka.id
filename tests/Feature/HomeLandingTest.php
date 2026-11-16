@@ -61,6 +61,25 @@ class HomeLandingTest extends TestCase
         $response->assertSee('(0233) 999888');
     }
 
+    public function test_branch_map_links_use_cms_coordinates_when_available(): void
+    {
+        Branch::where('is_main', true)->firstOrFail()->update([
+            'latitude' => '-6.8281000',
+            'longitude' => '108.2276000',
+        ]);
+        Branch::where('name', 'Kantor Cabang Kadipaten')->firstOrFail()->update([
+            'latitude' => '-6.8290000',
+            'longitude' => '108.2280000',
+        ]);
+
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        $response->assertSee('https://www.google.com/maps?q=-6.8281,108.2276');
+        $response->assertSee('https://www.google.com/maps?q=-6.829,108.228');
+        $response->assertDontSee('https://www.google.com/maps/search/');
+    }
+
     public function test_home_page_reflects_new_article_dynamically(): void
     {
         Article::create([
