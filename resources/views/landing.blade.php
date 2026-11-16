@@ -77,7 +77,7 @@
     <div class="max-w-[1400px] mx-auto px-4 sm:px-6 h-20 flex items-center justify-between gap-2 lg:gap-4">
       
       <!-- Bank Brand Logo: Clean framed badge on Navy -->
-      <a href="{{ route('home') }}#beranda" class="flex items-center gap-2 group flex-shrink-0">
+      <a href="{{ route('home') }}" class="flex items-center gap-2 group flex-shrink-0">
         <div class="bg-white px-2.5 py-1 rounded-xl shadow-sm flex items-center justify-center">
           <img src="assets/img/logo.png" alt="Logo Perumda BPR Majalengka" class="h-8 sm:h-9 w-auto object-contain">
         </div>
@@ -85,7 +85,7 @@
 
       <!-- Desktop Navigation Menu (Single Line - whitespace-nowrap) -->
       <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
-        <a href="{{ route('home') }}#beranda" class="text-white hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Beranda</a>
+        <a href="{{ route('home') }}" class="text-white hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Beranda</a>
         <a href="{{ route('home') }}#simulasi-kredit" class="text-white/90 hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Simulasi Kredit</a>
         <a href="{{ route('home') }}#tentang-kami" class="text-white/90 hover:text-amber-400 font-semibold text-xs xl:text-[13px] px-2.5 xl:px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap">Tentang</a>
         
@@ -155,7 +155,7 @@
         </button>
       </div>
       <nav class="mt-6 flex flex-col gap-2">
-        <a href="{{ route('home') }}#beranda" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Beranda</a>
+        <a href="{{ route('home') }}" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Beranda</a>
         <a href="{{ route('home') }}#simulasi-kredit" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Simulasi Kredit</a>
         <a href="{{ route('home') }}#tentang-kami" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Tentang</a>
         <a href="javascript:void(0)" onclick="openProductCatalog('all')" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100 flex items-center justify-between">
