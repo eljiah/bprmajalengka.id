@@ -73,6 +73,39 @@ class HomeLandingTest extends TestCase
                 'name' => $name,
                 'image' => $image,
             ]);
+            $this->assertFileExists(public_path($image));
+            $response->assertSee($name);
+            $response->assertSee($image);
+        }
+    }
+
+    public function test_credit_catalog_keeps_product_names_and_images_synced(): void
+    {
+        $products = [
+            'KRD-01' => ['KREDIT PEGAWAI SWASTA (KAPESTA)', 'assets/img/produk/KAPESTA.png'],
+            'KRD-02' => ['KREDIT APARATUR NEGARA (KAN)', 'assets/img/produk/KAN.png'],
+            'KRD-03' => ['KREDIT PEMBIAYAAN KONSTRUKSI DAN PROYEK', 'assets/img/produk/ChatGPT Image 31 Jul 2026, 09.08.23.png'],
+            'KRD-04' => ['KREDIT PENSIUNAN', 'assets/img/produk/pensiunan.png'],
+            'KRD-05' => ['KREDIT MODAL KERJA', 'assets/img/produk/ChatGPT Image 24 Jul 2026, 11.48.02.png'],
+            'KRD-06' => ['KREDIT PERTANIAN', 'assets/img/produk/ChatGPT Image 24 Jul 2026, 15.09.13.png'],
+            'KRD-07' => ['KREDIT TALANGAN', 'assets/img/produk/ChatGPT Image 31 Jul 2026, 08.47.14.png'],
+            'KRD-08' => ['KREDIT PEMILIKAN KIOS DAN LOS', 'assets/img/produk/ChatGPT Image 31 Jul 2026, 10.11.00.png'],
+            'KRD-09' => ['KREDIT PERAK', 'assets/img/produk/perak.png'],
+            'KRD-10' => ['KSG – KREDIT SERTIFIKASI GURU', 'assets/img/produk/KSG.png'],
+            'KRD-11' => ['KREDIT NON ASN / PPPK', 'assets/img/produk/non asn.png'],
+            'KRD-12' => ['KREDIT MULTIGUNA', 'assets/img/produk/multiguna.png'],
+        ];
+        $response = $this->get('/');
+
+        $response->assertOk();
+
+        foreach ($products as $code => [$name, $image]) {
+            $this->assertDatabaseHas('products', [
+                'code' => $code,
+                'name' => $name,
+                'image' => $image,
+            ]);
+            $this->assertFileExists(public_path($image));
             $response->assertSee($name);
             $response->assertSee($image);
         }
