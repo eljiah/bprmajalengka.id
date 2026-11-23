@@ -251,9 +251,31 @@ function openProductCatalog(category = 'all') {
 function readArticle(id) {
   const modal = document.getElementById('modal-news-reader');
   if (!modal) return;
-  const article = ARTICLES_DATA.find(a => a.id == id || a.slug === id)
+  let article = ARTICLES_DATA.find(a => a.id == id || a.slug === id)
     || (id == 3 ? ARTICLES_DATA.find(a => (a.tag && a.tag.includes('AwasModus')) || (a.slug && a.slug.includes('kenali-pesan-mencurigakan'))) : null)
     || (id == 3 && ARTICLES_DATA.length >= 3 ? ARTICLES_DATA[2] : null);
+
+  if (!article && (id == 3 || id === '3')) {
+    article = {
+      id: 3,
+      tag: '#AwasModus',
+      title: 'Kenali Pesan Mencurigakan, Jaga Kerahasiaan Data Perbankan',
+      image: 'assets/img/pensiunan-hp.jpg',
+      date: '10 Oktober 2026',
+      readTime: '3 menit baca',
+      content: `
+        <p class="mb-4">Seiring berkembangnya transaksi digital, modus penipuan berkedok undian berhadiah, undangan pernikahan digital (file APK), dan pesan WhatsApp palsu yang mengatasnamakan bank kian marak mengincar masyarakat.</p>
+        <h4 class="font-bold text-slate-800 text-lg mb-2">Prinsip Aman Transaksi Bank Majalengka:</h4>
+        <ul class="list-disc pl-5 mb-4 space-y-2">
+          <li><strong>JANGAN PERNAH</strong> memberitahukan nomor PIN, password, atau kode OTP kepada siapa pun, termasuk oknum yang mengaku sebagai pegawai bank.</li>
+          <li><strong>JANGAN TRANSFER</strong> dana biaya administrasi pinjaman atau undian ke rekening bank atas nama perorangan atau nomor rekening pribadi petugas. Seluruh transaksi resmi disetorkan langsung di loket kantor kas atau rekening resmi Perumda BPR Majalengka.</li>
+          <li><strong>JANGAN KLIK</strong> tautan file unduhan dengan ekstensi <code>.APK</code> yang dikirimkan melalui nomor WhatsApp asing.</li>
+        </ul>
+        <p class="mb-4">Bila Anda mendapati aktivitas mencurigakan atau dihubungi nomor tidak dikenal, segera konfirmasi ke Call Center resmi Bank Majalengka di <strong>(0233) 281144</strong> atau WhatsApp resmi <strong>0811-1111-6526</strong>.</p>
+      `
+    };
+  }
+
   if (!article) return;
 
   const articleDate = article.date || (article.published_at ? new Date(article.published_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '');

@@ -29,18 +29,38 @@ echo "🚀 WEB DEPLOYMENT & MAINTENANCE RUNNER - BPR MAJALENGKA\n";
 echo "========================================================\n\n";
 
 // 1. Coba Git Pull jika didukung oleh server
+$appDir = dirname(__DIR__);
 if (function_exists('shell_exec')) {
-    echo "--- [1/4] GIT PULL DARI REPOSITORI GITHUB ---\n";
-    $appDir = dirname(__DIR__);
+    echo "--- [1/5] GIT PULL DARI REPOSITORI GITHUB ---\n";
     chdir($appDir);
     $gitOutput = shell_exec('git pull origin main 2>&1');
     echo htmlspecialchars($gitOutput ?: "Tidak ada output dari perintah git.\n");
 } else {
-    echo "--- [1/4] GIT PULL: shell_exec dinonaktifkan di server (dilewati) ---\n";
+    echo "--- [1/5] GIT PULL: shell_exec dinonaktifkan di server (dilewati) ---\n";
 }
 
-// 2. Clear Cache Laravel
-echo "\n--- [2/4] MEMBERSIHKAN CACHE APLIKASI (OPTIMIZE:CLEAR) ---\n";
+// 2. Auto-extract UPDATE-PRODUCTION.zip jika file zip terdeteksi
+$zipPaths = [
+    $appDir . '/UPDATE-PRODUCTION.zip',
+    __DIR__ . '/UPDATE-PRODUCTION.zip',
+];
+foreach ($zipPaths as $zipFile) {
+    if (file_exists($zipFile) && class_exists('ZipArchive')) {
+        echo "\n--- [2/5] AUTO-EXTRACT ZIP DITEMUKAN: " . basename($zipFile) . " ---\n";
+        $zip = new ZipArchive();
+        if ($zip->open($zipFile) === true) {
+            $zip->extractTo($appDir);
+            $zip->close();
+            echo "✅ Berhasil mengekstrak " . basename($zipFile) . " ke direktori aplikasi!\n";
+            break;
+        } else {
+            echo "⚠️ Gagal membuka file zip: {$zipFile}\n";
+        }
+    }
+}
+
+// 3. Clear Cache Laravel
+echo "\n--- [3/5] MEMBERSIHKAN CACHE APLIKASI (OPTIMIZE:CLEAR) ---\n";
 try {
     Artisan::call('optimize:clear');
     echo htmlspecialchars(Artisan::output());

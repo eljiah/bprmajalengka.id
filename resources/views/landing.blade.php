@@ -2179,21 +2179,30 @@
     <div class="modal-card bg-white rounded-3xl shadow-2xl max-w-2xl w-full my-8 overflow-hidden max-h-[92vh] flex flex-col">
       
       <div class="p-6 flex items-center justify-between flex-shrink-0">
-        <span id="news-modal-tag" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-blue-50 text-bpr-blue">Perencanaan Finansial</span>
-        <button id="modal-news-close" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+        <span id="news-modal-tag" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-red-50 text-red-600">#AwasModus</span>
+        <button id="modal-news-close" onclick="document.getElementById('modal-news-reader').classList.remove('active'); document.body.classList.remove('overflow-hidden');" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
         </button>
       </div>
 
       <div class="p-6 sm:p-8 space-y-4 overflow-y-auto">
-        <h3 id="news-modal-title" class="text-2xl font-extrabold text-slate-900 leading-snug">Judul Artikel</h3>
-        <p id="news-modal-date" class="text-xs text-slate-400">Tanggal</p>
+        <h3 id="news-modal-title" class="text-2xl font-extrabold text-slate-900 leading-snug">Kenali Pesan Mencurigakan, Jaga Kerahasiaan Data Perbankan</h3>
+        <p id="news-modal-date" class="text-xs text-slate-400">10 Oktober 2026 • 3 menit baca</p>
         
         <div class="rounded-2xl overflow-hidden h-60 my-4">
-          <img id="news-modal-img" src="" alt="Ilustrasi Berita" class="w-full h-full object-cover">
+          <img id="news-modal-img" src="{{ asset('assets/img/pensiunan-hp.jpg') }}" alt="Ilustrasi Berita" class="w-full h-full object-cover">
         </div>
 
-        <div id="news-modal-body" class="text-sm text-slate-700 leading-relaxed space-y-4"></div>
+        <div id="news-modal-body" class="text-sm text-slate-700 leading-relaxed space-y-4">
+          <p class="mb-4">Seiring berkembangnya transaksi digital, modus penipuan berkedok undian berhadiah, undangan pernikahan digital (file APK), dan pesan WhatsApp palsu yang mengatasnamakan bank kian marak mengincar masyarakat.</p>
+          <h4 class="font-bold text-slate-800 text-lg mb-2">Prinsip Aman Transaksi Bank Majalengka:</h4>
+          <ul class="list-disc pl-5 mb-4 space-y-2">
+            <li><strong>JANGAN PERNAH</strong> memberitahukan nomor PIN, password, atau kode OTP kepada siapa pun, termasuk oknum yang mengaku sebagai pegawai bank.</li>
+            <li><strong>JANGAN TRANSFER</strong> dana biaya administrasi pinjaman atau undian ke rekening bank atas nama perorangan atau nomor rekening pribadi petugas. Seluruh transaksi resmi disetorkan langsung di loket kantor kas atau rekening resmi Perumda BPR Majalengka.</li>
+            <li><strong>JANGAN KLIK</strong> tautan file unduhan dengan ekstensi <code>.APK</code> yang dikirimkan melalui nomor WhatsApp asing.</li>
+          </ul>
+          <p class="mb-4">Bila Anda mendapati aktivitas mencurigakan atau dihubungi nomor tidak dikenal, segera konfirmasi ke Call Center resmi Bank Majalengka di <strong>(0233) 281144</strong> atau WhatsApp resmi <strong>0811-1111-6526</strong>.</p>
+        </div>
       </div>
 
       <div class="p-4 bg-slate-50 text-right flex-shrink-0">
@@ -2496,6 +2505,32 @@
   </script>
 
   <!-- Application Logic -->
-  <script src="{{ asset('assets/js/app.js') }}"></script>
+  <script src="{{ asset('assets/js/app.js') }}?v={{ time() }}"></script>
+
+  <!-- Auto-open Peringatan #AwasModus Tiap Kali Buka Website -->
+  <script>
+    (function() {
+      function openAwasModusPopup() {
+        var activePage = document.body ? document.body.dataset.activePage : '';
+        if (activePage === 'pengaduan' || activePage === 'pengajuan-kredit') return;
+
+        var modal = document.getElementById('modal-news-reader');
+        if (!modal) return;
+        if (typeof readArticle === 'function') {
+          readArticle(3);
+        } else {
+          modal.classList.add('active');
+          document.body.classList.add('overflow-hidden');
+        }
+      }
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        setTimeout(openAwasModusPopup, 500);
+      } else {
+        document.addEventListener('DOMContentLoaded', function() {
+          setTimeout(openAwasModusPopup, 500);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
