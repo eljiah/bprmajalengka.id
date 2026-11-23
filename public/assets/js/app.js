@@ -369,19 +369,19 @@ const PRODUCTS_DATA = {
     {
       id: 'tiara',
       code: 'TAB-02',
-      name: 'Tabungan Idul Adha (TIARA)',
-      badge: 'Ibadah Terencana',
+      name: 'Tabungan Insan Sejahtera (TIARA)',
+      badge: 'Rencana Sejahtera',
       category: 'tabungan',
-      image: 'assets/img/produk/design_tabungan_tapaqur-removebg-preview.png',
+      image: 'assets/img/produk/IMG_2909.jpeg',
       heroImage: 'assets/img/hero-batik.jpg',
-      slogan: 'Wujudkan niat suci ibadah qurban setiap tahun dengan angsuran ringan teratur.',
-      shortDesc: 'Fasilitas tabungan terencana bagi individu, keluarga, maupun jamaah masjid untuk pengadaan hewan qurban sapi atau kambing saat Idul Adha.',
+      slogan: 'Wujudkan masa depan sejahtera, aman, dan penuh kepastian bersama Bank Majalengka.',
+      shortDesc: 'Fasilitas tabungan berencana bagi nasabah individu dan keluarga untuk mewujudkan rencana masa depan yang sejahtera, mandiri, dan terjamin.',
       ketentuan: [
-        'Jangka waktu simpanan fleksibel 12 bulan mengacu pada kalender Hijriah.',
-        'Pilihan paket tabungan setara nilai 1 ekor kambing atau 1/7 bagian sapi.',
-        'Bebas biaya pemeliharaan rekening bulanan.',
-        'Dapat disalurkan langsung melalui panitia kurban mitra BPR Majalengka atau dicairkan tunai.',
-        'Aman dan dijamin 100% oleh LPS.'
+        'Jangka waktu simpanan fleksibel sesuai target rencana keluarga.',
+        'Suku bunga kompetitif di atas tabungan biasa dan bebas biaya administrasi bulanan.',
+        'Setoran bulanan terjangkau dapat disesuaikan dengan kemampuan keuangan.',
+        'Dapat dijadikan jaminan kredit dengan proses persetujuan cepat.',
+        'Aman dan dijamin 100% oleh LPS hingga Rp 2 Miliar.'
       ],
       syarat: [
         'Fotokopi KTP/e-KTP pemohon yang masih berlaku.',
@@ -389,57 +389,57 @@ const PRODUCTS_DATA = {
         'Setoran awal ringan mulai Rp 100.000,-.',
         'Kartu Keluarga (jika atas nama perwakilan keluarga).'
       ],
-      ctaText: 'Daftar Tabungan TIARA',
+      ctaText: 'Buka Tabungan TIARA',
       ctaType: 'whatsapp'
     },
     {
       id: 'kotak-mas',
       code: 'TAB-03',
-      name: 'Tabungan KOTAK MAS',
-      badge: 'Berhadiah Langsung',
+      name: 'Tabungan Kotak Masyarakat (KOTAK MAS)',
+      badge: 'Mitra Usaha & Pasar',
       category: 'tabungan',
-      image: 'assets/img/produk/IMG_2909.jpeg',
+      image: 'assets/img/produk/IMG_2911.jpeg',
       heroImage: 'assets/img/hero-batik.jpg',
-      slogan: 'Kotak masa depan sejahtera dengan bunga optimal dan bonus hadiah peralatan usaha.',
-      shortDesc: 'Program tabungan spesial dengan saldo mengendap berhadiah langsung peralatan elektronik, peralatan usaha, atau logam mulia tanpa diundi.',
+      slogan: 'Kotak masa depan sejahtera dengan kemudahan menabung harian bagi masyarakat.',
+      shortDesc: 'Program tabungan praktis dengan celengan kotak khusus untuk pedagang pasar, pelaku usaha mikro, dan masyarakat umum dengan layanan jemput setoran rutin.',
       ketentuan: [
-        'Komitmen saldo mengendap dengan pilihan periode 1, 2, atau 3 tahun.',
-        'Hadiah langsung diserahkan di awal pembukaan rekening sesuai tier saldo.',
-        'Bunga tabungan tetap dibayarkan setiap bulan masuk ke rekening utama.',
-        'Tersedia untuk nasabah perorangan maupun lembaga swasta daerah.',
+        'Diberikan celengan kotak tabungan khusus yang terkunci aman.',
+        'Petugas BPR Majalengka siap menjemput setoran langsung ke lokasi usaha.',
+        'Bebas biaya administrasi bulanan dan bebas biaya penjemputan.',
+        'Saldo dapat ditarik sewaktu-waktu saat dibutuhkan untuk perputaran modal.',
         'Simpanan dijamin LPS sesuai ketentuan yang berlaku.'
       ],
       syarat: [
         'e-KTP asli & fotokopi pemohon.',
-        'NPWP (apabila ada).',
-        'Menandatangani surat perjanjian komitmen program KOTAK MAS.',
-        'Penempatan saldo awal sesuai paket hadiah yang dipilih.'
+        'Memiliki tempat usaha atau domisili di wilayah Majalengka.',
+        'Mengisi formulir pembukaan rekening KOTAK MAS.',
+        'Setoran awal ringan mulai dari Rp 20.000,-.'
       ],
-      ctaText: 'Pilih Hadiah KOTAK MAS',
+      ctaText: 'Buka Rekening KOTAK MAS',
       ctaType: 'whatsapp'
     },
     {
       id: 'sidasi',
       code: 'TAB-04',
-      name: 'Simpanan Dana Siaga (SIDASI)',
-      badge: 'Fleksibel Likuid',
+      name: 'Simpanan Dana Siswa (SIDASI)',
+      badge: 'Khusus Pelajar',
       category: 'tabungan',
-      image: 'assets/img/produk/IMG_2911.jpeg',
+      image: 'assets/img/produk/WhatsApp_Image_2026-06-08_at_13.43.08-removebg-preview.png',
       heroImage: 'assets/img/hero-batik.jpg',
-      slogan: 'Dana darurat keluarga yang likuid, aman, dan siap ditarik kapan saja dibutuhkan.',
-      shortDesc: 'Tabungan reguler serbaguna dengan perhitungan bunga harian. Setoran dan penarikan sangat mudah dilayani di seluruh 12 jaringan kantor kas dan via Pickup Service.',
+      slogan: 'Simpanan aman bagi para siswa untuk menyiapkan biaya pendidikan dan masa depan cerah.',
+      shortDesc: 'Tabungan khusus pelajar dan siswa sekolah dari jenjang PAUD hingga SMA/SMK dengan persyaratan mudah, setoran terjangkau, dan bebas biaya administrasi bulanan.',
       ketentuan: [
-        'Bebas setor dan tarik setiap hari kerja di semua kantor kas BPR Majalengka.',
-        'Tersedia layanan jemput tabungan langsung ke toko/rumah nasabah.',
-        'Perhitungan bunga harian dihitung berdasarkan saldo harian efektif.',
-        'Bebas biaya administrasi bulanan untuk saldo di atas ambang minimal.',
+        'Buku tabungan resmi diterbitkan atas nama siswa sendiri.',
+        'Bebas biaya administrasi bulanan seumur masa sekolah.',
+        'Tersedia layanan jemput tabungan langsung ke sekolah mitra BPR.',
+        'Setoran harian atau mingguan sangat fleksibel dan terjangkau.',
         'Dijamin LPS hingga Rp 2 Miliar.'
       ],
       syarat: [
-        'Fotokopi KTP / SIM yang masih berlaku.',
-        'Mengisi formulir pembukaan rekening perorangan.',
-        'Setoran awal sangat ringan, mulai Rp 20.000,-.',
-        'Setoran lanjutan minimal Rp 10.000,-.'
+        'Fotokopi Kartu Pelajar / Kartu Identitas Anak (KIA) / Akta Kelahiran.',
+        'Fotokopi KTP orang tua atau wali murid.',
+        'Mengisi formulir pembukaan rekening perorangan siswa.',
+        'Setoran awal sangat ringan, mulai Rp 10.000,-.'
       ],
       ctaText: 'Buka Simpanan SIDASI',
       ctaType: 'whatsapp'
@@ -472,78 +472,78 @@ const PRODUCTS_DATA = {
     {
       id: 'tada-bur',
       code: 'TAB-06',
-      name: 'Tabungan Pelajar (TADA BUR)',
-      badge: 'Generasi Cerdas',
+      name: 'Tabungan Dana Berangkat Umroh (TADABUR)',
+      badge: 'Ibadah Baitullah',
       category: 'tabungan',
       image: 'assets/img/produk/tadabur.png',
       heroImage: 'assets/img/hero-batik.jpg',
-      slogan: 'Membentuk karakter gemar menabung dan kemandirian finansial sejak dini.',
-      shortDesc: 'Tabungan khusus siswa PAUD, SD, SMP, hingga SMA di Kabupaten Majalengka dengan buku tabungan atas nama siswa sendiri didampingi orang tua.',
+      slogan: 'Wujudkan niat suci beribadah ke Baitullah dengan tabungan umroh terencana dan terpercaya.',
+      shortDesc: 'Tabungan khusus persiapan keberangkatan ibadah umroh reguler bagi perorangan maupun keluarga dengan kepastian jadwal keberangkatan dan travel mitra berizin resmi Kemenag.',
       ketentuan: [
-        'Buku tabungan resmi bertuliskan nama siswa pemegang rekening.',
-        'Bebas biaya administrasi bulanan seumur hidup siswa.',
-        'Kemudahan jemput setoran rutin ke sekolah-sekolah yang bekerjasama.',
-        'Sertifikat apresiasi penabung cilik berprestasi setiap akhir tahun ajaran.',
+        'Jangka waktu penempatan fleksibel 1 s/d 3 tahun sesuai paket umroh yang dipilih.',
+        'Bebas biaya administrasi bulanan dan suku bunga kompetitif.',
+        'Pilihan paket setoran bulanan tetap yang terjangkau dan terencana.',
+        'Kerjasama dengan biro perjalanan umroh resmi dan terakreditasi.',
         'Dijamin aman oleh LPS.'
       ],
       syarat: [
-        'Fotokopi Kartu Pelajar / Kartu Identitas Anak (KIA) / Akta Kelahiran.',
-        'Fotokopi KTP salah satu orang tua / wali.',
-        'Fotokopi Kartu Keluarga.',
-        'Setoran awal sangat terjangkau hanya Rp 10.000,-.'
+        'Fotokopi KTP/e-KTP dan Kartu Keluarga calon jamaah.',
+        'Fotokopi Paspor (apabila sudah memiliki).',
+        'Mengisi formulir pembukaan rekening TADABUR.',
+        'Setoran awal paket mulai Rp 500.000,-.'
       ],
-      ctaText: 'Buka Tabungan TADA BUR',
+      ctaText: 'Buka Tabungan TADABUR',
       ctaType: 'whatsapp'
     },
     {
-      id: 't-askara',
+      id: 't-asmara',
       code: 'TAB-07',
-      name: 'Tabungan T-ASKARA',
-      badge: 'Aparatur Desa',
+      name: 'Tabungan Arisan Masyarakat (T-ASMARA)',
+      badge: 'Arisan Warga',
       category: 'tabungan',
       image: 'assets/img/produk/IMG_2914.jpeg',
       heroImage: 'assets/img/hero-batik.jpg',
-      slogan: 'Kesejahteraan dan ketahanan masa depan bagi pamong desa dan RT/RW Majalengka.',
-      shortDesc: 'Fasilitas tabungan terintegrasi untuk penerimaan tunjangan, siltap, dan insentif perangkat desa serta pengurus lingkungan RT/RW se-Kabupaten Majalengka.',
+      slogan: 'Tabungan arisan masyarakat dengan kesempatan memperoleh tarikan dan doorprize menarik.',
+      shortDesc: 'Fasilitas tabungan arisan masyarakat Majalengka Raharja yang memadukan budaya arisan gotong royong dengan kepastian keamanan perbankan resmi BPR.',
       ketentuan: [
-        'Terhubung langsung dengan mekanisme penyaluran siltap desa.',
-        'Kemudahan fasilitas auto-debet untuk tabungan persiapan purna jabatan.',
-        'Bebas biaya administrasi pengelolaan rekening.',
-        'Akses prioritas pada fasilitas pembiayaan kredit lunak BPR Majalengka.',
-        'Dijamin LPS.'
+        'Periode arisan terjadwal dengan penarikan berkala yang transparan.',
+        'Hadiah tarikan dan doorprize menarik pada setiap periode penarikan.',
+        'Bebas biaya administrasi pengelolaan rekening arisan.',
+        'Dana pokok tabungan tetap aman dan kembali utuh.',
+        'Dijamin sepenuhnya oleh LPS.'
       ],
       syarat: [
-        'Fotokopi KTP / e-KTP pamong desa atau pengurus RT/RW.',
-        'Salinan Surat Keputusan (SK) Pengangkatan yang masih berlaku.',
-        'Surat rekomendasi dari Kepala Desa / Kelurahan setempat.',
-        'Setoran awal Rp 50.000,-.'
+        'Fotokopi KTP / e-KTP warga pemohon yang masih berlaku.',
+        'Mengisi formulir kepesertaan arisan T-ASMARA.',
+        'Setoran iuran arisan bulanan tetap sesuai kelompok paket yang dipilih.',
+        'Nomor kontak / WhatsApp aktif.'
       ],
-      ctaText: 'Informasi T-ASKARA',
+      ctaText: 'Daftar Arisan T-ASMARA',
       ctaType: 'whatsapp'
     },
     {
       id: 'ciremaiku',
       code: 'TAB-08',
-      name: 'Tabungan CIREMAIKU',
-      badge: 'Wisata Lokal',
+      name: 'Tabungan Bersama CIREMAIKU',
+      badge: 'Undian Akbar',
       category: 'tabungan',
       image: 'assets/img/produk/IMG_2922.jpeg',
       heroImage: 'assets/img/hero-batik.jpg',
-      slogan: 'Rencanakan liburan indah bersama keluarga menjelajahi eksotisme Tanah Sindangkasih.',
-      shortDesc: 'Tabungan tematik wisata untuk merencanakan liburan keluarga di destinasi unggulan Majalengka (Terasering Panyaweuyan, Curug Muara Jaya, Situ Cipanten) dengan bonus voucher tiket masuk.',
+      slogan: 'Tabungan bersama jaringan BPR Se-Ciayumajakuning dengan undian hadiah spektakuler.',
+      shortDesc: 'Tabungan bersama seluruh BPR di wilayah Cirebon, Indramayu, Majalengka, dan Kuningan dengan program undian berhadiah mobil, sepeda motor, dan aneka hadiah menarik setiap tahun.',
       ketentuan: [
-        'Target menabung fleksibel 6 s/d 12 bulan.',
-        'Mendapatkan voucher diskon tiket masuk objek wisata mitra BPR Majalengka.',
-        'Bebas biaya penarikan saat target waktu liburan tiba.',
-        'Suku bunga menarik dan terproteksi penjaminan LPS.',
-        'Setoran dapat diatur secara harian, mingguan, atau bulanan.'
+        'Setiap kelipatan saldo tertentu otomatis mendapatkan poin kupon undian resmi.',
+        'Penarikan undian diselenggarakan secara terbuka di hadapan notaris dan dinas sosial.',
+        'Suku bunga tabungan bersaing dan dihitung harian.',
+        'Dapat disetor dan ditarik di seluruh jaringan BPR anggota se-Ciayumajakuning.',
+        'Simpanan aman dan dijamin LPS.'
       ],
       syarat: [
-        'Fotokopi KTP pemohon.',
+        'Fotokopi KTP pemohon yang masih berlaku.',
         'Mengisi form pembukaan rekening CIREMAIKU.',
         'Setoran awal mulai Rp 50.000,-.'
       ],
-      ctaText: 'Mulai Tabungan Wisata',
+      ctaText: 'Buka Tabungan CIREMAIKU',
       ctaType: 'whatsapp'
     },
     {
@@ -552,7 +552,7 @@ const PRODUCTS_DATA = {
       name: 'Simpanan Pelajar (SimPel) OJK',
       badge: 'Program Nasional',
       category: 'tabungan',
-      image: 'assets/img/produk/tadabur.png',
+      image: 'assets/img/produk/IMG_2926.jpeg',
       heroImage: 'assets/img/hero-batik.jpg',
       slogan: 'Gerakan Indonesia Menabung resmi berstandar Otoritas Jasa Keuangan (OJK).',
       shortDesc: 'Produk tabungan nasional inisiasi OJK khusus siswa PAUD s/d SMA dengan fitur serba sederhana, syarat mudah, dan bebas biaya admin bulanan.',
@@ -572,27 +572,28 @@ const PRODUCTS_DATA = {
       ctaType: 'whatsapp'
     },
     {
-      id: 'simarmas-co',
+      id: 'simarmas-go',
       code: 'TAB-10',
-      name: 'SIMARMAS GO (Mitra Karyawan)',
-      badge: 'Payroll Industri',
+      name: 'Tabungan SIMARMAS GO (PERBAMIDA)',
+      badge: 'Nasional PERBAMIDA',
       category: 'tabungan',
-      image: 'assets/img/produk/IMG_2926.jpeg',
+      image: 'assets/img/produk/IMG_2928.jpeg',
       heroImage: 'assets/img/hero-batik.jpg',
-      slogan: 'Layanan payroll dan tabungan kolektif pekerja industri manufaktur Majalengka.',
-      shortDesc: 'Solusi pembayaran upah kerja (payroll) dan simpanan terencana bagi para karyawan pabrik garmen, industri aviasi Kertajati, dan perusahaan swasta di Majalengka.',
+      slogan: 'Simpanan Simpan Mas gerakan BPR Se-Indonesia bersama PERBAMIDA.',
+      shortDesc: 'Tabungan unggulan asosiasi BPR PERBAMIDA nasional dengan berbagai kemudahan transaksi, suku bunga menarik, dan peluang mengikuti program undian nasional.',
       ketentuan: [
-        'Penyaluran gaji tepat waktu zero-fee transfer.',
-        'Fasilitas penarikan tunai mudah di seluruh jaringan kantor kas.',
-        'Kemudahan pengajuan kredit pegawai (KAPESTA) dengan proses satu pintu.',
-        'Dijamin aman oleh LPS hingga Rp 2 Miliar per nasabah.'
+        'Kemudahan transaksi setoran dan penarikan di jaringan mitra BPR.',
+        'Bunga dihitung berdasarkan saldo harian dengan tiering kompetitif.',
+        'Peluang mengikuti undian berkala skala nasional BPR sahabat anak negeri.',
+        'Bebas biaya pemeliharaan rekening bulanan.',
+        'Dijamin sepenuhnya oleh LPS hingga Rp 2 Miliar.'
       ],
       syarat: [
-        'Perjanjian Kerjasama (PKS) antara perusahaan/HRD dengan BPR Majalengka.',
-        'Fotokopi KTP dan ID Card Karyawan.',
-        'Daftar nominatif karyawan dari perusahaan.'
+        'Fotokopi KTP / e-KTP pemohon yang masih berlaku.',
+        'Mengisi formulir permohonan rekening SIMARMAS GO.',
+        'Setoran awal ringan mulai Rp 50.000,-.'
       ],
-      ctaText: 'Kerjasama Payroll',
+      ctaText: 'Buka SIMARMAS GO',
       ctaType: 'whatsapp'
     }
   ],
