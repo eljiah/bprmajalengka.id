@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
             [
                 'slug' => 'tahara',
                 'code' => 'TAB-01',
-                'name' => 'Tabungan Hari Raya (TAHARA)',
+                'name' => 'TAHARA',
                 'badge' => 'Favorit Keluarga',
                 'category' => 'tabungan',
                 'image' => 'assets/img/produk/tahara.png',
@@ -44,7 +44,7 @@ class ProductSeeder extends Seeder
             [
                 'slug' => 'tiara',
                 'code' => 'TAB-02',
-                'name' => 'Tabungan Insan Sejahtera (TIARA)',
+                'name' => 'TIARA',
                 'badge' => 'Rencana Sejahtera',
                 'category' => 'tabungan',
                 'image' => 'assets/img/produk/IMG_2909.jpeg',
@@ -71,7 +71,7 @@ class ProductSeeder extends Seeder
             [
                 'slug' => 'kotak-mas',
                 'code' => 'TAB-03',
-                'name' => 'Tabungan Kotak Masyarakat (KOTAK MAS)',
+                'name' => 'KOTAK MAS',
                 'badge' => 'Mitra Usaha & Pasar',
                 'category' => 'tabungan',
                 'image' => 'assets/img/produk/IMG_2911.jpeg',
@@ -98,7 +98,7 @@ class ProductSeeder extends Seeder
             [
                 'slug' => 'sidasi',
                 'code' => 'TAB-04',
-                'name' => 'Simpanan Dana Siswa (SIDASI)',
+                'name' => 'SIDASI',
                 'badge' => 'Khusus Pelajar',
                 'category' => 'tabungan',
                 'image' => 'assets/img/produk/WhatsApp_Image_2026-06-08_at_13.43.08-removebg-preview.png',
@@ -125,7 +125,7 @@ class ProductSeeder extends Seeder
             [
                 'slug' => 'tapa-qur',
                 'code' => 'TAB-05',
-                'name' => 'Tabungan Paket Qurban (TAPA QUR)',
+                'name' => 'TAPAQUR',
                 'badge' => 'Kolektif & Masjid',
                 'category' => 'tabungan',
                 'image' => 'assets/img/produk/design_tabungan_tapaqur-removebg-preview.png',
@@ -151,7 +151,7 @@ class ProductSeeder extends Seeder
             [
                 'slug' => 'tada-bur',
                 'code' => 'TAB-06',
-                'name' => 'Tabungan Dana Berangkat Umroh (TADABUR)',
+                'name' => 'TADABUR',
                 'badge' => 'Ibadah Baitullah',
                 'category' => 'tabungan',
                 'image' => 'assets/img/produk/tadabur.png',
@@ -178,7 +178,7 @@ class ProductSeeder extends Seeder
             [
                 'slug' => 't-asmara',
                 'code' => 'TAB-07',
-                'name' => 'Tabungan Arisan Masyarakat (T-ASMARA)',
+                'name' => 'T-ASMARA',
                 'badge' => 'Arisan Warga',
                 'category' => 'tabungan',
                 'image' => 'assets/img/produk/IMG_2914.jpeg',
@@ -205,7 +205,7 @@ class ProductSeeder extends Seeder
             [
                 'slug' => 'ciremaiku',
                 'code' => 'TAB-08',
-                'name' => 'Tabungan Bersama CIREMAIKU',
+                'name' => 'CIREMAIKU',
                 'badge' => 'Undian Akbar',
                 'category' => 'tabungan',
                 'image' => 'assets/img/produk/IMG_2922.jpeg',
@@ -231,7 +231,7 @@ class ProductSeeder extends Seeder
             [
                 'slug' => 'simpel',
                 'code' => 'TAB-09',
-                'name' => 'Simpanan Pelajar (SimPel) OJK',
+                'name' => 'SIMPEL',
                 'badge' => 'Program Nasional',
                 'category' => 'tabungan',
                 'image' => 'assets/img/produk/IMG_2926.jpeg',
@@ -257,7 +257,7 @@ class ProductSeeder extends Seeder
             [
                 'slug' => 'simarmas-go',
                 'code' => 'TAB-10',
-                'name' => 'Tabungan SIMARMAS GO (PERBAMIDA)',
+                'name' => 'SIMARMAS GO',
                 'badge' => 'Nasional PERBAMIDA',
                 'category' => 'tabungan',
                 'image' => 'assets/img/produk/IMG_2928.jpeg',

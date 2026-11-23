@@ -474,7 +474,7 @@
           $badgeCategory = $isDeposito ? 'Deposito Berjangka' : ($isKredit ? 'Kredit Usaha' : 'Tabungan');
           $badgeClass = $isDeposito ? 'bg-amber-50 text-amber-700' : ($isKredit ? 'bg-emerald-50 text-emerald-700' : 'bg-blue-50 text-bpr-blue');
           
-          $benefit1 = !empty($product->ketentuan) && isset($product->ketentuan[0]) ? $product->ketentuan[0] : 'Layanan cepat dan proses mudah di 12 kantor kas';
+          $benefit1 = !empty($product->ketentuan) && isset($product->ketentuan[0]) ? $product->ketentuan[0] : 'Layanan cepat dan proses mudah di 8 kantor cabang';
           $benefit2 = !empty($product->ketentuan) && isset($product->ketentuan[1]) ? $product->ketentuan[1] : 'Aman dan dijamin Lembaga Penjamin Simpanan (LPS)';
           
           $waOfficial = preg_replace('/[^0-9]/', '', $settings['whatsapp_official'] ?? '6281111116526');
@@ -2253,7 +2253,7 @@
         <div class="p-4 rounded-2xl bg-blue-50/80 space-y-2">
           <h5 class="font-bold text-bpr-blue text-xs uppercase tracking-wider">Tonggak Sejarah Merger 8 BPR</h5>
           <p class="text-xs text-slate-600 leading-relaxed">
-            {{ $settings['sejarah_singkat'] ?? 'Sesuai regulasi Otoritas Jasa Keuangan (OJK) dan komitmen Pemkab Majalengka untuk memperkuat permodalan serta tata kelola, Bank Majalengka merupakan hasil penggabungan (merger) 8 BPR berintegritas di Kabupaten Majalengka. Penyatuan ini melahirkan institusi keuangan yang jauh lebih kokoh, profesional, efisien, dan memiliki daya jangkau yang luas melalui 12 kantor kas aktif.' }}
+            {{ $settings['sejarah_singkat'] ?? 'Sesuai regulasi Otoritas Jasa Keuangan (OJK) dan komitmen Pemkab Majalengka untuk memperkuat permodalan serta tata kelola, Bank Majalengka merupakan hasil penggabungan (merger) 8 BPR berintegritas di Kabupaten Majalengka. Penyatuan ini melahirkan institusi keuangan yang jauh lebih kokoh, profesional, efisien, dan memiliki daya jangkau yang luas melalui 8 kantor cabang aktif.' }}
           </p>
         </div>
 

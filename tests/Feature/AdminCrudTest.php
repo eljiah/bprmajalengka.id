@@ -30,7 +30,7 @@ class AdminCrudTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->get('/admin/products');
         $response->assertStatus(200);
-        $response->assertSee('Tabungan Hari Raya (TAHARA)');
+        $response->assertSee('TAHARA');
 
         $payload = [
             'name' => 'Tabungan Qurban Baru',

@@ -49,6 +49,35 @@ class HomeLandingTest extends TestCase
         $response->assertDontSee('form-pengaduan-nasabah');
     }
 
+    public function test_tabungan_catalog_keeps_product_names_and_images_synced(): void
+    {
+        $products = [
+            'TAB-01' => ['TAHARA', 'assets/img/produk/tahara.png'],
+            'TAB-02' => ['TIARA', 'assets/img/produk/IMG_2909.jpeg'],
+            'TAB-03' => ['KOTAK MAS', 'assets/img/produk/IMG_2911.jpeg'],
+            'TAB-04' => ['SIDASI', 'assets/img/produk/WhatsApp_Image_2026-06-08_at_13.43.08-removebg-preview.png'],
+            'TAB-05' => ['TAPAQUR', 'assets/img/produk/design_tabungan_tapaqur-removebg-preview.png'],
+            'TAB-06' => ['TADABUR', 'assets/img/produk/tadabur.png'],
+            'TAB-07' => ['T-ASMARA', 'assets/img/produk/IMG_2914.jpeg'],
+            'TAB-08' => ['CIREMAIKU', 'assets/img/produk/IMG_2922.jpeg'],
+            'TAB-09' => ['SIMPEL', 'assets/img/produk/IMG_2926.jpeg'],
+            'TAB-10' => ['SIMARMAS GO', 'assets/img/produk/IMG_2928.jpeg'],
+        ];
+        $response = $this->get('/');
+
+        $response->assertOk();
+
+        foreach ($products as $code => [$name, $image]) {
+            $this->assertDatabaseHas('products', [
+                'code' => $code,
+                'name' => $name,
+                'image' => $image,
+            ]);
+            $response->assertSee($name);
+            $response->assertSee($image);
+        }
+    }
+
     public function test_home_page_reflects_updated_settings_dynamically(): void
     {
         Setting::set('company_name', 'Bank BPR Majalengka Juara');
