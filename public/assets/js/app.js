@@ -962,6 +962,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Pusat Operasional',
     type: 'Pusat',
     address: 'Jl. Raya K.H. Abdul Halim No. 338, Majalengka Wetan, Kec. Majalengka, Jawa Barat 45411',
+    maps_url: 'https://maps.app.goo.gl/ETZSG6nud1KCrDDd9',
     phone: '(0233) 281144',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB',

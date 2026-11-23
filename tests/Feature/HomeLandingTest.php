@@ -80,6 +80,7 @@ class HomeLandingTest extends TestCase
     public function test_seeded_branch_map_links_are_saved_google_maps_urls(): void
     {
         $mapsUrls = [
+            'Kantor Pusat Operasional' => 'https://maps.app.goo.gl/ETZSG6nud1KCrDDd9',
             'Kantor Cabang Kadipaten' => 'https://maps.app.goo.gl/m1WY5x3bvt2rf74Z7',
             'Kantor Cabang Jatitujuh' => 'https://www.google.com/maps?q=-6.6439472368882635,108.2294895625247',
             'Kantor Cabang Cikijing' => 'https://maps.app.goo.gl/65yBz4rkPUPPYpBc9',
