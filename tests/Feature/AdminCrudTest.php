@@ -195,7 +195,7 @@ class AdminCrudTest extends TestCase
         ]);
 
         $this->get('/')
-            ->assertSee('https://www.google.com/maps/search/?api=1&query=' . rawurlencode($latitude . ',' . $longitude));
+            ->assertSee('https://www.google.com/maps?q=' . $latitude . ',' . $longitude);
     }
 
     public function test_admin_can_crud_articles(): void

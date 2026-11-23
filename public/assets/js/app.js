@@ -2133,8 +2133,8 @@ function initKantorKas() {
       const hasCoordinates = branch.latitude !== null && branch.latitude !== undefined && branch.latitude !== ''
         && branch.longitude !== null && branch.longitude !== undefined && branch.longitude !== '';
       const mapsUrl = hasCoordinates
-        ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branch.latitude + ',' + branch.longitude)}`
-        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branch.name + ' ' + branch.address)}`;
+        ? `https://www.google.com/maps?q=${branch.latitude},${branch.longitude}`
+        : `https://www.google.com/maps?q=${encodeURIComponent(branch.name + ' ' + branch.address)}`;
 
       const card = document.createElement('div');
       card.className = `kantor-kas-card bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group`;

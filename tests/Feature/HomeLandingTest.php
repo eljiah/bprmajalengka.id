@@ -75,9 +75,9 @@ class HomeLandingTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('https://www.google.com/maps/search/?api=1&query=-6.8281000%2C108.2276000');
-        $response->assertSee('https://www.google.com/maps/search/?api=1&query=-6.8290000%2C108.2280000');
-        $response->assertDontSee('https://www.google.com/maps?q=');
+        $response->assertSee('https://www.google.com/maps?q=-6.8281000,108.2276000');
+        $response->assertSee('https://www.google.com/maps?q=-6.8290000,108.2280000');
+        $response->assertDontSee('https://www.google.com/maps/search/');
     }
 
     public function test_seeded_branch_map_links_keep_the_supplied_coordinate_precision(): void
@@ -103,7 +103,7 @@ class HomeLandingTest extends TestCase
 
             $this->assertSame($latitude, $storedLatitude, "{$name} latitude precision changed.");
             $this->assertSame($longitude, $storedLongitude, "{$name} longitude precision changed.");
-            $response->assertSee('https://www.google.com/maps/search/?api=1&query=' . $mapQuery);
+            $response->assertSee('https://www.google.com/maps?q=' . $storedLatitude . ',' . $storedLongitude);
         }
     }
 
