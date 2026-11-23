@@ -11,6 +11,7 @@ use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class AdminCrudTest extends TestCase
@@ -196,6 +197,70 @@ class AdminCrudTest extends TestCase
 
         $this->get('/')
             ->assertSee('https://www.google.com/maps?q=' . $latitude . ',' . $longitude);
+    }
+
+    public function test_admin_can_update_branch_coordinates_from_google_maps_short_link(): void
+    {
+        $latitude = '-6.7632246516128065';
+        $longitude = '108.1682402947551';
+        $branch = Branch::where('name', 'Kantor Cabang Kadipaten')->firstOrFail();
+
+        Http::fake([
+            'https://maps.app.goo.gl/9iR6rH7Dqu2atgJW9' => Http::response('', 302, [
+                'Location' => "https://www.google.com/maps/place/Bank/@{$latitude},{$longitude},17z",
+            ]),
+            'https://www.google.com/maps/*' => Http::response('', 200),
+        ]);
+
+        $response = $this->actingAs($this->admin)->put("/admin/branches/{$branch->id}", [
+            'name' => $branch->name,
+            'type' => $branch->type,
+            'address' => $branch->address,
+            'maps_url' => 'https://maps.app.goo.gl/9iR6rH7Dqu2atgJW9',
+            'hours' => $branch->hours,
+            'is_active' => '1',
+            'sort_order' => $branch->sort_order,
+        ]);
+
+        $response->assertRedirect('/admin/branches');
+        $this->assertDatabaseHas('branches', [
+            'id' => $branch->id,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+        ]);
+        $this->assertArrayNotHasKey('maps_url', $branch->fresh()->getAttributes());
+        Http::assertSentCount(2);
+    }
+
+    public function test_google_maps_short_link_cannot_redirect_to_an_external_host(): void
+    {
+        $branch = Branch::where('name', 'Kantor Cabang Kadipaten')->firstOrFail();
+        $originalLatitude = $branch->latitude;
+        $originalLongitude = $branch->longitude;
+
+        Http::fake([
+            'https://maps.app.goo.gl/*' => Http::response('', 302, [
+                'Location' => 'http://127.0.0.1/internal',
+            ]),
+        ]);
+
+        $response = $this->actingAs($this->admin)->put("/admin/branches/{$branch->id}", [
+            'name' => $branch->name,
+            'type' => $branch->type,
+            'address' => $branch->address,
+            'maps_url' => 'https://maps.app.goo.gl/9iR6rH7Dqu2atgJW9',
+            'hours' => $branch->hours,
+            'is_active' => '1',
+            'sort_order' => $branch->sort_order,
+        ]);
+
+        $response->assertSessionHasErrors('maps_url');
+        $this->assertDatabaseHas('branches', [
+            'id' => $branch->id,
+            'latitude' => $originalLatitude,
+            'longitude' => $originalLongitude,
+        ]);
+        Http::assertSentCount(1);
     }
 
     public function test_admin_can_crud_articles(): void

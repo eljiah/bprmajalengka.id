@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use App\Services\GoogleMapsLinkResolver;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use RuntimeException;
 
 class BranchController extends Controller
 {
@@ -33,14 +36,15 @@ class BranchController extends Controller
         return view('admin.branches.create');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, GoogleMapsLinkResolver $mapsLinkResolver): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:50'],
             'address' => ['required', 'string'],
-            'latitude' => ['nullable', 'required_with:longitude', 'numeric', 'between:-90,90', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
-            'longitude' => ['nullable', 'required_with:latitude', 'numeric', 'between:-180,180', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
+            'maps_url' => ['nullable', 'url', 'max:2048'],
+            'latitude' => ['exclude_with:maps_url', 'nullable', 'required_with:longitude', 'numeric', 'between:-90,90', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
+            'longitude' => ['exclude_with:maps_url', 'nullable', 'required_with:latitude', 'numeric', 'between:-180,180', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
             'phone' => ['nullable', 'string', 'max:50'],
             'whatsapp' => ['nullable', 'string', 'max:50'],
             'hours' => ['required', 'string', 'max:100'],
@@ -49,6 +53,7 @@ class BranchController extends Controller
             'sort_order' => ['nullable', 'integer'],
         ]);
 
+        $this->applyMapsUrlCoordinates($request, $validated, $mapsLinkResolver);
         $validated['is_main'] = $request->has('is_main');
         $validated['is_active'] = $request->has('is_active');
         $validated['sort_order'] = $request->input('sort_order', 0);
@@ -64,14 +69,15 @@ class BranchController extends Controller
         return view('admin.branches.edit', compact('branch'));
     }
 
-    public function update(Request $request, Branch $branch): RedirectResponse
+    public function update(Request $request, Branch $branch, GoogleMapsLinkResolver $mapsLinkResolver): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:50'],
             'address' => ['required', 'string'],
-            'latitude' => ['nullable', 'required_with:longitude', 'numeric', 'between:-90,90', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
-            'longitude' => ['nullable', 'required_with:latitude', 'numeric', 'between:-180,180', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
+            'maps_url' => ['nullable', 'url', 'max:2048'],
+            'latitude' => ['exclude_with:maps_url', 'nullable', 'required_with:longitude', 'numeric', 'between:-90,90', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
+            'longitude' => ['exclude_with:maps_url', 'nullable', 'required_with:latitude', 'numeric', 'between:-180,180', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
             'phone' => ['nullable', 'string', 'max:50'],
             'whatsapp' => ['nullable', 'string', 'max:50'],
             'hours' => ['required', 'string', 'max:100'],
@@ -80,6 +86,7 @@ class BranchController extends Controller
             'sort_order' => ['nullable', 'integer'],
         ]);
 
+        $this->applyMapsUrlCoordinates($request, $validated, $mapsLinkResolver);
         $validated['is_main'] = $request->has('is_main');
         $validated['is_active'] = $request->has('is_active');
         $validated['sort_order'] = $request->input('sort_order', 0);
@@ -105,5 +112,29 @@ class BranchController extends Controller
 
         $statusText = $branch->is_active ? 'diaktifkan' : 'dinonaktifkan';
         return back()->with('success', "Status kantor kas '{$branch->name}' berhasil {$statusText}.");
+    }
+
+    /**
+     * @param array<string, mixed> $validated
+     */
+    private function applyMapsUrlCoordinates(
+        Request $request,
+        array &$validated,
+        GoogleMapsLinkResolver $mapsLinkResolver
+    ): void {
+        if (!$request->filled('maps_url')) {
+            unset($validated['maps_url']);
+            return;
+        }
+
+        try {
+            $coordinates = $mapsLinkResolver->resolve($request->string('maps_url')->toString());
+        } catch (RuntimeException $exception) {
+            throw ValidationException::withMessages(['maps_url' => $exception->getMessage()]);
+        }
+
+        $validated['latitude'] = $coordinates['latitude'];
+        $validated['longitude'] = $coordinates['longitude'];
+        unset($validated['maps_url']);
     }
 }

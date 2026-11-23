@@ -40,6 +40,13 @@
           <textarea name="address" rows="3" required class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-bpr-blue">{{ old('address', $branch->address) }}</textarea>
         </div>
 
+        <div class="md:col-span-2">
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tautan Google Maps</label>
+          <input type="url" name="maps_url" value="{{ old('maps_url') }}" placeholder="https://maps.app.goo.gl/..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-bpr-blue">
+          <p class="mt-1.5 text-[11px] text-slate-500">Tempel tautan pin Google Maps untuk mengambil dan menyimpan koordinat saat data disimpan, atau masukkan koordinat secara manual.</p>
+          @error('maps_url') <p class="mt-1.5 text-[11px] text-red-600">{{ $message }}</p> @enderror
+        </div>
+
         <div>
           <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Latitude</label>
           <input type="text" inputmode="decimal" maxlength="32" name="latitude" value="{{ old('latitude', $branch->latitude) }}" placeholder="Contoh: -6.8281" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-bpr-blue">
