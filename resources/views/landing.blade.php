@@ -1127,7 +1127,7 @@
           <div id="kantor-kas-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             @forelse($otherBranches as $branch)
               @php
-                $branchType = $branch->type ?? 'Kas';
+                $branchType = $branch->type ?? 'Cabang';
                 $branchHours = $branch->hours ?? 'Senin - Jumat: 08:00 - 15:30 WIB';
                 $branchPhone = $branch->phone ?? '(0233) 281144';
               @endphp
@@ -1156,7 +1156,7 @@
                 <div class="flex items-center gap-2 pt-2">
                   <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $branch->whatsapp ?? '081111116526') }}?text={{ urlencode('Halo ' . $branch->name . ', saya butuh informasi layanan BPR.') }}" target="_blank" class="flex-1 text-center py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors">
                     <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
-                    Hubungi Kas
+                    Hubungi Cabang
                   </a>
                   <a href="{{ $branch->latitude !== null && $branch->longitude !== null ? 'https://www.google.com/maps?q=' . $branch->latitude . ',' . $branch->longitude : 'https://www.google.com/maps?q=' . urlencode($branch->name . ' ' . $branch->address) }}" target="_blank" rel="noopener noreferrer" aria-label="Lihat lokasi {{ $branch->name }} di Google Maps" class="flex-1 py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors">
                     <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
@@ -1165,7 +1165,7 @@
                 </div>
               </div>
             @empty
-              <div class="col-span-3 text-center py-8 text-slate-400 text-xs">Belum ada kantor kas aktif.</div>
+              <div class="col-span-3 text-center py-8 text-slate-400 text-xs">Belum ada kantor cabang aktif.</div>
             @endforelse
           </div>
         </div>

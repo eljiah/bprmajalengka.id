@@ -930,7 +930,7 @@ const PRODUCTS_DATA = {
 };
 
 /* ==========================================================================
-   2. DATABASE KANTOR KAS & LOKASI (12 KANTOR KAS)
+   2. DATABASE KANTOR CABANG & LOKASI
    ========================================================================== */
 const BRANCHES_DATA = [
   {
@@ -943,93 +943,85 @@ const BRANCHES_DATA = [
     isMain: true
   },
   {
-    name: 'Kantor Kas Kadipaten',
-    type: 'Kas',
+    name: 'Kantor Cabang Kadipaten',
+    type: 'Cabang',
     address: 'Jl. Raya Kadipaten No. 45, Kec. Kadipaten (Dekat Pasar Kadipaten)',
+    latitude: '-6.7632246516128065',
+    longitude: '108.1682402947551',
     phone: '(0233) 282510',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Jatiwangi',
-    type: 'Kas',
-    address: 'Jl. Pos No. 12, Sutawangi, Kec. Jatiwangi (Kawasan Genteng & Keramik)',
-    phone: '(0233) 881230',
+    name: 'Kantor Cabang Jatitujuh',
+    type: 'Cabang',
+    address: 'Jl. Raya Utara No.113 Jatitujuh',
+    latitude: '-6.6439472368882635',
+    longitude: '108.2294895625247',
+    phone: '(0233) 8888211',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Talaga',
-    type: 'Kas',
-    address: 'Jl. Jenderal Ahmad Yani No. 88, Talaga Kulon, Kec. Talaga',
-    phone: '(0233) 811090',
-    whatsapp: '0811-1111-6526',
-    hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
-  },
-  {
-    name: 'Kantor Kas Cikijing',
-    type: 'Kas',
+    name: 'Kantor Cabang Cikijing',
+    type: 'Cabang',
     address: 'Jl. Raya Kasturi No. 15, Kec. Cikijing (Pusat Konveksi Celana Jeans)',
+    latitude: '-7.016916098244055',
+    longitude: '108.36454874491558',
     phone: '(0233) 891340',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Rajagaluh',
-    type: 'Kas',
+    name: 'Kantor Cabang Rajagaluh',
+    type: 'Cabang',
     address: 'Jl. Pangeran Muhamad No. 34, Kec. Rajagaluh (Sentra Anyaman Bambu)',
+    latitude: '-6.779398593568954',
+    longitude: '108.3447027455341',
     phone: '(0233) 511450',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Leuwimunding',
-    type: 'Kas',
-    address: 'Jl. Raya Mirat No. 22, Kec. Leuwimunding (Dekat Pertigaan Parapatan)',
-    phone: '(0233) 512670',
+    name: 'Kantor Cabang Bantarujeg',
+    type: 'Cabang',
+    address: 'Jl. Siliwangi No.91 Bantarujeg',
+    latitude: '-6.968736619525069',
+    longitude: '108.23936331773582',
+    phone: '(0233) 8316346',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Sukahaji',
-    type: 'Kas',
+    name: 'Kantor Cabang Sukahaji',
+    type: 'Cabang',
     address: 'Jl. Raya Sukahaji No. 10, Cikalong, Kec. Sukahaji',
+    latitude: '-6.8190775141653255',
+    longitude: '108.2807762434407',
     phone: '(0233) 882190',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Maja',
-    type: 'Kas',
-    address: 'Jl. Pasukan Sindangkasih No. 05, Kec. Maja (Akses Wisata Panyaweuyan)',
-    phone: '(0233) 283450',
-    whatsapp: '0811-1111-6526',
-    hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
-  },
-  {
-    name: 'Kantor Kas Kertajati',
-    type: 'Kas',
+    name: 'Kantor Cabang Kertajati',
+    type: 'Cabang',
     address: 'Jl. Kertajati-Kadipaten Km 3, Kec. Kertajati (Kawasan Bandara Internasional Kertajati)',
+    latitude: '-6.677302143150963',
+    longitude: '108.18905769385799',
     phone: '(0233) 883100',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
   {
-    name: 'Kantor Kas Ligung',
-    type: 'Kas',
+    name: 'Kantor Cabang Ligung',
+    type: 'Cabang',
     address: 'Jl. Raya Ligung No. 78, Kec. Ligung (Sentra Industri Pabrik)',
+    latitude: '-6.652526614832701',
+    longitude: '108.28211492563509',
     phone: '(0233) 884520',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
   },
-  {
-    name: 'Kantor Kas Sumberjaya',
-    type: 'Kas',
-    address: 'Jl. Raya Cirebon-Bandung Km 28, Kec. Sumberjaya (Gerbang Perbatasan Timur)',
-    phone: '(0233) 885670',
-    whatsapp: '0811-1111-6526',
-    hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
-  }
 ];
 
 /* ==========================================================================
@@ -2094,7 +2086,7 @@ function initKantorKas() {
         noResultsEl = document.createElement('div');
         noResultsEl.id = 'kantor-kas-no-results';
         noResultsEl.className = 'col-span-1 sm:col-span-2 lg:col-span-3 text-center py-12 text-slate-400 text-sm';
-        noResultsEl.textContent = 'Tidak ditemukan kantor kas untuk pencarian "' + query + '".';
+        noResultsEl.textContent = 'Tidak ditemukan kantor cabang untuk pencarian "' + query + '".';
         container.appendChild(noResultsEl);
       }
       noResultsEl.style.display = '';
@@ -2105,7 +2097,7 @@ function initKantorKas() {
 
   const renderFromData = (query = '') => {
     container.innerHTML = '';
-    // Kantor Pusat ditampilkan khusus di Headline, grid menampilkan 11 kantor kas cabang
+    // Kantor Pusat ditampilkan khusus di Headline; grid menampilkan kantor cabang lainnya.
     let branchesToRender = BRANCHES_DATA.filter(b => !(b.isMain || b.is_main));
     if (branchesToRender.length === 0) branchesToRender = BRANCHES_DATA;
 
@@ -2120,13 +2112,13 @@ function initKantorKas() {
     }
 
     if (filtered.length === 0) {
-      container.innerHTML = `<div class="col-span-1 sm:col-span-2 lg:col-span-3 text-center py-12 text-slate-400 text-sm">Tidak ditemukan kantor kas untuk pencarian "${query}".</div>`;
+      container.innerHTML = `<div class="col-span-1 sm:col-span-2 lg:col-span-3 text-center py-12 text-slate-400 text-sm">Tidak ditemukan kantor cabang untuk pencarian "${query}".</div>`;
       return;
     }
 
     filtered.forEach(branch => {
       const isMain = branch.isMain || branch.is_main || false;
-      const branchType = branch.type || (isMain ? 'Pusat' : 'Kas');
+      const branchType = branch.type || (isMain ? 'Pusat' : 'Cabang');
       const branchHours = branch.hours || branch.operational_hours || 'Senin - Jumat: 08:00 - 15:30 WIB';
       const branchPhone = branch.phone || '(0233) 281144';
       const waNumber = (branch.whatsapp || '081111116526').replace(/[^0-9]/g, '');

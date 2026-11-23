@@ -33,6 +33,17 @@ function bootstrapApp() {
   try { initKantorKas(); } catch (e) { console.warn('initKantorKas error:', e); }
   try { initLaporanPublikasi(); } catch (e) { console.warn('initLaporanPublikasi error:', e); }
   try { initGlobalModals(); } catch (e) { console.warn('initGlobalModals error:', e); }
+  try { openActivePublicPage(); } catch (e) { console.warn('openActivePublicPage error:', e); }
+}
+
+function openActivePublicPage() {
+  const activePage = document.body.dataset.activePage;
+
+  if (activePage === 'pengaduan') {
+    document.getElementById('pengaduan-nasabah')?.scrollIntoView();
+  } else if (activePage === 'pengajuan-kredit') {
+    openFormPengajuan();
+  }
 }
 
 if (document.readyState === 'loading') {
@@ -2123,7 +2134,7 @@ function initKantorKas() {
 
     filtered.forEach(branch => {
       const isMain = branch.isMain || branch.is_main || false;
-      const branchType = branch.type || (isMain ? 'Pusat' : 'Kas');
+      const branchType = branch.type || (isMain ? 'Pusat' : 'Cabang');
       const branchHours = branch.hours || branch.operational_hours || 'Senin - Jumat: 08:00 - 15:30 WIB';
       const branchPhone = branch.phone || '(0233) 281144';
       const waNumber = (branch.whatsapp || '081111116526').replace(/[^0-9]/g, '');
