@@ -971,6 +971,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Kadipaten',
     type: 'Cabang',
     address: 'Jl. Raya Kadipaten No. 45, Kec. Kadipaten (Dekat Pasar Kadipaten)',
+    maps_url: 'https://www.google.com/maps?q=-6.7632246516128065,108.1682402947551',
     phone: '(0233) 282510',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -979,6 +980,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Jatitujuh',
     type: 'Cabang',
     address: 'Jl. Raya Utara No.113 Jatitujuh',
+    maps_url: 'https://www.google.com/maps?q=-6.6439472368882635,108.2294895625247',
     phone: '(0233) 8888211',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -987,6 +989,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Cikijing',
     type: 'Cabang',
     address: 'Jl. Raya Kasturi No. 15, Kec. Cikijing (Pusat Konveksi Celana Jeans)',
+    maps_url: 'https://www.google.com/maps?q=-7.016916098244055,108.36454874491558',
     phone: '(0233) 891340',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -995,6 +998,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Rajagaluh',
     type: 'Cabang',
     address: 'Jl. Pangeran Muhamad No. 34, Kec. Rajagaluh (Sentra Anyaman Bambu)',
+    maps_url: 'https://www.google.com/maps?q=-6.779398593568954,108.3447027455341',
     phone: '(0233) 511450',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -1003,6 +1007,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Bantarujeg',
     type: 'Cabang',
     address: 'Jl. Siliwangi No.91 Bantarujeg',
+    maps_url: 'https://www.google.com/maps?q=-6.968736619525069,108.23936331773582',
     phone: '(0233) 8316346',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -1011,6 +1016,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Sukahaji',
     type: 'Cabang',
     address: 'Jl. Raya Sukahaji No. 10, Cikalong, Kec. Sukahaji',
+    maps_url: 'https://www.google.com/maps?q=-6.8190775141653255,108.2807762434407',
     phone: '(0233) 882190',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -1019,6 +1025,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Kertajati',
     type: 'Cabang',
     address: 'Jl. Kertajati-Kadipaten Km 3, Kec. Kertajati (Kawasan Bandara Internasional Kertajati)',
+    maps_url: 'https://www.google.com/maps?q=-6.677310235565713,108.1890547352578',
     phone: '(0233) 883100',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -1027,6 +1034,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Ligung',
     type: 'Cabang',
     address: 'Jl. Raya Ligung No. 78, Kec. Ligung (Sentra Industri Pabrik)',
+    maps_url: 'https://www.google.com/maps?q=-6.652526614832701,108.28211492563509',
     phone: '(0233) 884520',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -1296,11 +1304,27 @@ function initFormPengajuan() {
   let currentCaptchaResult = 0;
 
   const generateCaptcha = () => {
-    const num1 = Math.floor(Math.random() * 8) + 2; // 2 - 9
-    const num2 = Math.floor(Math.random() * 8) + 1; // 1 - 8
-    currentCaptchaResult = num1 + num2;
+    let num1 = Math.floor(Math.random() * 16) + 3;
+    let num2 = Math.floor(Math.random() * 11) + 2;
+    const operator = ['+', '-', '×', '÷'][Math.floor(Math.random() * 4)];
+
+    if (operator === '-') {
+      if (num1 < num2) [num1, num2] = [num2, num1];
+      currentCaptchaResult = num1 - num2;
+    } else if (operator === '×') {
+      num1 = Math.floor(Math.random() * 8) + 2;
+      num2 = Math.floor(Math.random() * 8) + 2;
+      currentCaptchaResult = num1 * num2;
+    } else if (operator === '÷') {
+      num2 = Math.floor(Math.random() * 8) + 2;
+      currentCaptchaResult = Math.floor(Math.random() * 8) + 2;
+      num1 = num2 * currentCaptchaResult;
+    } else {
+      currentCaptchaResult = num1 + num2;
+    }
+
     if (captchaQuestion) {
-      captchaQuestion.textContent = `${num1} + ${num2} = ?`;
+      captchaQuestion.textContent = `${num1} ${operator} ${num2} = ?`;
     }
     if (captchaAnswerInput) captchaAnswerInput.value = '';
   };
@@ -1487,7 +1511,7 @@ function showPengajuanSuccessModal(data, serverRefCode, emailStatus = {}) {
 }
 
 /* ==========================================================================
-   2B. HERO PRODUCT CAROUSEL (MENAMPILKAN SEMUA PRODUK)
+   2B. HERO PRODUCT CAROUSEL (PRODUK UNGGULAN)
    ========================================================================== */
 function initHeroCarousel() {
   const container = document.getElementById('hero-product-carousel');
@@ -2131,7 +2155,9 @@ function initKantorKas() {
       const branchHours = branch.hours || branch.operational_hours || 'Senin - Jumat: 08:00 - 15:30 WIB';
       const branchPhone = branch.phone || '(0233) 281144';
       const waNumber = (branch.whatsapp || '081111116526').replace(/[^0-9]/g, '');
-      const mapsUrl = branch.maps_url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branch.name + ' ' + branch.address)}`;
+      const mapsUrl = branch.maps_url || (branch.latitude && branch.longitude
+        ? `https://www.google.com/maps?q=${branch.latitude},${branch.longitude}`
+        : `https://www.google.com/maps?q=${encodeURIComponent(branch.name + ' ' + branch.address)}`);
 
       const card = document.createElement('div');
       card.className = `kantor-kas-card bg-white rounded-2xl p-5 border border-slate-200/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between group`;
@@ -2615,6 +2641,35 @@ function resolveArchiveGroup(keyOrId) {
   if (!keyOrId) return { group: REPORT_ARCHIVES_DATA.triwulan, defaultFileId: 'triwulan-2024-q3' };
   const str = String(keyOrId).toLowerCase().trim();
 
+  const dynamicReport = Array.isArray(window.DYNAMIC_REPORTS)
+    ? window.DYNAMIC_REPORTS.find(report => String(report.id) === str)
+    : null;
+  if (dynamicReport) {
+    const period = dynamicReport.period || dynamicReport.category || 'Periode tidak dicantumkan';
+    const year = period.match(/\b20\d{2}\b/)?.[0] || '';
+    return {
+      group: {
+        categoryName: dynamicReport.category || 'Laporan Publikasi',
+        badge: dynamicReport.category || 'Laporan Publikasi',
+        isDynamic: true,
+        files: [{
+          id: `report-${dynamicReport.id}`,
+          month: period,
+          quarter: period,
+          year,
+          title: dynamicReport.title,
+          period,
+          size: dynamicReport.size || 'Ukuran tidak diketahui',
+          filePath: dynamicReport.filePath || '',
+          pages: 'Format PDF Resmi',
+          datePublished: 'tanggal tidak dicantumkan',
+          summary: dynamicReport.summary || 'Ringkasan laporan belum tersedia.'
+        }]
+      },
+      defaultFileId: `report-${dynamicReport.id}`
+    };
+  }
+
   if (str === '1' || str.includes('september') || str.includes('triwulan iii') || str.includes('q3')) {
     return { group: REPORT_ARCHIVES_DATA.triwulan, defaultFileId: 'triwulan-2024-q3' };
   }
@@ -2653,6 +2708,8 @@ function openReportArchive(reportIdOrKey, specificFileId = null) {
   const mainTitle = document.getElementById('report-modal-main-title');
   if (catBadge) catBadge.textContent = currentArchiveGroup.badge;
   if (mainTitle) mainTitle.textContent = currentArchiveGroup.categoryName;
+  const yearFilter = document.getElementById('report-year-filter-tabs');
+  if (yearFilter) yearFilter.classList.toggle('hidden', Boolean(currentArchiveGroup.isDynamic));
 
   // Reset year filter tabs
   const tabs = document.querySelectorAll('.report-year-tab');
@@ -2793,6 +2850,7 @@ function selectReportArchiveFile(fileId, updateList = true) {
   const pDownloadBtn = document.getElementById('preview-download-btn');
   const pDownloadText = document.getElementById('preview-download-text');
   const pOpenTabBtn = document.getElementById('preview-open-tab-btn');
+  const pUnavailable = document.getElementById('preview-pdf-unavailable');
 
   if (pBadge) pBadge.textContent = file.period || file.quarter;
   if (pTitle) pTitle.textContent = file.title;
@@ -2801,12 +2859,14 @@ function selectReportArchiveFile(fileId, updateList = true) {
   if (pSummary) pSummary.textContent = file.summary;
   if (pPages) pPages.textContent = file.pages || 'Format PDF Resmi';
 
-  const docUrl = file.filePath.startsWith('/') ? file.filePath : '/' + file.filePath;
+  const docUrl = file.filePath ? new URL(file.filePath, window.location.origin).href : '';
   if (pIframe) {
-    pIframe.src = `${docUrl}#toolbar=0&navpanes=0`;
+    pIframe.src = docUrl ? `${docUrl}#toolbar=0&navpanes=0` : 'about:blank';
   }
+  if (pUnavailable) pUnavailable.classList.toggle('hidden', Boolean(docUrl));
   if (pDownloadBtn) {
     pDownloadBtn.href = docUrl;
+    pDownloadBtn.classList.toggle('hidden', !docUrl);
     pDownloadBtn.setAttribute('download', file.title.replace(/[^a-zA-Z0-9_-]/g, '_') + '.pdf');
   }
   if (pDownloadText) {
@@ -2814,6 +2874,7 @@ function selectReportArchiveFile(fileId, updateList = true) {
   }
   if (pOpenTabBtn) {
     pOpenTabBtn.href = docUrl;
+    pOpenTabBtn.classList.toggle('hidden', !docUrl);
   }
 }
 

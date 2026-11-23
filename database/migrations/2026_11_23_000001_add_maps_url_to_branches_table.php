@@ -9,9 +9,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('branches', function (Blueprint $table) {
-            $table->string('maps_url', 2048)->nullable()->after('address');
-        });
+        if (!Schema::hasColumn('branches', 'maps_url')) {
+            Schema::table('branches', function (Blueprint $table) {
+                $table->string('maps_url', 2048)->nullable()->after('address');
+            });
+        }
 
         DB::table('branches')
             ->whereNotNull('latitude')
@@ -19,18 +21,18 @@ return new class extends Migration
             ->orderBy('id')
             ->get(['id', 'latitude', 'longitude'])
             ->each(function (object $branch): void {
-                $query = rawurlencode((string) $branch->latitude . ',' . (string) $branch->longitude);
-
                 DB::table('branches')
                     ->where('id', $branch->id)
-                    ->update(['maps_url' => 'https://www.google.com/maps/search/?api=1&query=' . $query]);
+                    ->update(['maps_url' => 'https://www.google.com/maps?q=' . (string) $branch->latitude . ',' . (string) $branch->longitude]);
             });
     }
 
     public function down(): void
     {
-        Schema::table('branches', function (Blueprint $table) {
-            $table->dropColumn('maps_url');
-        });
+        if (Schema::hasColumn('branches', 'maps_url')) {
+            Schema::table('branches', function (Blueprint $table) {
+                $table->dropColumn('maps_url');
+            });
+        }
     }
 };

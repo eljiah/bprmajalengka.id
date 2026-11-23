@@ -80,14 +80,14 @@ class HomeLandingTest extends TestCase
     public function test_seeded_branch_map_links_are_saved_google_maps_urls(): void
     {
         $mapsUrls = [
-            'Kantor Cabang Kadipaten' => 'https://www.google.com/maps/search/?api=1&query=-6.7632246516128065%2C108.1682402947551',
-            'Kantor Cabang Jatitujuh' => 'https://www.google.com/maps/search/?api=1&query=-6.6439472368882635%2C108.2294895625247',
-            'Kantor Cabang Cikijing' => 'https://www.google.com/maps/search/?api=1&query=-7.016916098244055%2C108.36454874491558',
-            'Kantor Cabang Rajagaluh' => 'https://www.google.com/maps/search/?api=1&query=-6.779398593568954%2C108.3447027455341',
-            'Kantor Cabang Bantarujeg' => 'https://www.google.com/maps/search/?api=1&query=-6.968736619525069%2C108.23936331773582',
-            'Kantor Cabang Sukahaji' => 'https://www.google.com/maps/search/?api=1&query=-6.8190775141653255%2C108.2807762434407',
-            'Kantor Cabang Kertajati' => 'https://www.google.com/maps/search/?api=1&query=-6.677302143150963%2C108.18905769385799',
-            'Kantor Cabang Ligung' => 'https://www.google.com/maps/search/?api=1&query=-6.652526614832701%2C108.28211492563509',
+            'Kantor Cabang Kadipaten' => 'https://www.google.com/maps?q=-6.7632246516128065,108.1682402947551',
+            'Kantor Cabang Jatitujuh' => 'https://www.google.com/maps?q=-6.6439472368882635,108.2294895625247',
+            'Kantor Cabang Cikijing' => 'https://www.google.com/maps?q=-7.016916098244055,108.36454874491558',
+            'Kantor Cabang Rajagaluh' => 'https://www.google.com/maps?q=-6.779398593568954,108.3447027455341',
+            'Kantor Cabang Bantarujeg' => 'https://www.google.com/maps?q=-6.968736619525069,108.23936331773582',
+            'Kantor Cabang Sukahaji' => 'https://www.google.com/maps?q=-6.8190775141653255,108.2807762434407',
+            'Kantor Cabang Kertajati' => 'https://www.google.com/maps?q=-6.677310235565713,108.1890547352578',
+            'Kantor Cabang Ligung' => 'https://www.google.com/maps?q=-6.652526614832701,108.28211492563509',
         ];
 
         $response = $this->get('/');

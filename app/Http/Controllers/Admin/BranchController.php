@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
 use Closure;
 
@@ -49,9 +51,16 @@ class BranchController extends Controller
             'sort_order' => ['nullable', 'integer'],
         ]);
 
+        $this->ensureMapsUrlColumnExists();
+        $this->syncCoordinatesFromMapsUrl($validated);
+
         $validated['is_main'] = $request->has('is_main');
         $validated['is_active'] = $request->has('is_active');
         $validated['sort_order'] = $request->input('sort_order', 0);
+
+        if (!Schema::hasColumn('branches', 'maps_url')) {
+            unset($validated['maps_url']);
+        }
 
         Branch::create($validated);
 
@@ -79,9 +88,16 @@ class BranchController extends Controller
             'sort_order' => ['nullable', 'integer'],
         ]);
 
+        $this->ensureMapsUrlColumnExists();
+        $this->syncCoordinatesFromMapsUrl($validated);
+
         $validated['is_main'] = $request->has('is_main');
         $validated['is_active'] = $request->has('is_active');
         $validated['sort_order'] = $request->input('sort_order', 0);
+
+        if (!Schema::hasColumn('branches', 'maps_url')) {
+            unset($validated['maps_url']);
+        }
 
         $branch->update($validated);
 
@@ -104,6 +120,51 @@ class BranchController extends Controller
 
         $statusText = $branch->is_active ? 'diaktifkan' : 'dinonaktifkan';
         return back()->with('success', "Status kantor kas '{$branch->name}' berhasil {$statusText}.");
+    }
+
+    private function ensureMapsUrlColumnExists(): void
+    {
+        try {
+            if (!Schema::hasColumn('branches', 'maps_url')) {
+                Schema::table('branches', function (Blueprint $table) {
+                    $table->string('maps_url', 2048)->nullable()->after('address');
+                });
+            }
+        } catch (\Throwable $e) {
+            // Silently fall back if DDL operation cannot run in current request context
+        }
+    }
+
+    /**
+     * @param array<string, mixed> $validated
+     */
+    private function syncCoordinatesFromMapsUrl(array &$validated): void
+    {
+        if (empty($validated['maps_url'])) {
+            return;
+        }
+
+        $url = (string) $validated['maps_url'];
+
+        // Normalize Google Maps URLs containing coordinates (query or q param)
+        if (preg_match('/(?:google\.[a-z.]+|goo\.gl).*?[?&](?:query|q)=(-?\d+(?:\.\d+)?)(?:%2C|,)(-?\d+(?:\.\d+)?)/i', $url, $m)) {
+            $lat = $m[1];
+            $lng = $m[2];
+            $validated['latitude'] = $lat;
+            $validated['longitude'] = $lng;
+            $validated['maps_url'] = "https://www.google.com/maps?q={$lat},{$lng}";
+            return;
+        }
+
+        // Support @lat,lng format
+        if (preg_match('/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/', $url, $m)) {
+            $lat = $m[1];
+            $lng = $m[2];
+            $validated['latitude'] = $lat;
+            $validated['longitude'] = $lng;
+            $validated['maps_url'] = "https://www.google.com/maps?q={$lat},{$lng}";
+            return;
+        }
     }
 
     private function googleMapsUrlRule(): Closure

@@ -80,17 +80,13 @@ try {
 }
 
 // 4. Migrasi Database Baru secara Aman (Tanpa Menghapus Data Lama)
-if (isset($_GET['migrate']) || !empty($_GET['run_migrate'])) {
-    echo "\n--- [4/5] MENJALANKAN MIGRASI DATABASE (MIGRATE --FORCE) ---\n";
-    try {
-        Artisan::call('migrate', ['--force' => true]);
-        $migrateOutput = Artisan::output();
-        echo htmlspecialchars($migrateOutput ?: "Database sudah yang terbaru (Nothing to migrate).\n");
-    } catch (\Throwable $e) {
-        echo "Peringatan saat migrasi database: " . $e->getMessage() . "\n";
-    }
-} else {
-    echo "\n--- [4/5] MIGRASI DATABASE: Tambahkan &migrate=1 pada URL untuk mengeksekusi migrasi tabel/field baru ---\n";
+echo "\n--- [4/5] MENJALANKAN MIGRASI DATABASE (MIGRATE --FORCE) ---\n";
+try {
+    Artisan::call('migrate', ['--force' => true]);
+    $migrateOutput = Artisan::output();
+    echo htmlspecialchars($migrateOutput ?: "Database sudah yang terbaru (Nothing to migrate).\n");
+} catch (\Throwable $e) {
+    echo "Peringatan saat migrasi database: " . $e->getMessage() . "\n";
 }
 
 // Tampilkan Konfigurasi Mail yang Terbaca oleh Laravel
