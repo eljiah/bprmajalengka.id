@@ -146,6 +146,11 @@ class HomeLandingTest extends TestCase
         $response->assertSee("Kenali Deposito ({$depositoCount} Pilihan)");
         $response->assertSee("Kenali Kredit ({$kreditCount} Kategori)");
 
+        // Anti-fraud warning popup
+        $response->assertSee('id="modal-peringatan-penipuan"', false);
+        $response->assertSee('AWAS PENIPUAN MENGATASNAMAKAN PERUMDA BPR MAJALENGKA');
+        $response->assertSee('Petugas bank tidak pernah meminta kode OTP');
+
         // Download link for publication reports
         $response->assertSee('Unduh PDF');
         $response->assertSee('download');

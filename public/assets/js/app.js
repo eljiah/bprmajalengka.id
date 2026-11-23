@@ -33,6 +33,7 @@ function bootstrapApp() {
   try { initKantorKas(); } catch (e) { console.warn('initKantorKas error:', e); }
   try { initLaporanPublikasi(); } catch (e) { console.warn('initLaporanPublikasi error:', e); }
   try { initGlobalModals(); } catch (e) { console.warn('initGlobalModals error:', e); }
+  try { initFraudWarningModal(); } catch (e) { console.warn('initFraudWarningModal error:', e); }
   try { openActivePublicPage(); } catch (e) { console.warn('openActivePublicPage error:', e); }
 }
 
@@ -2902,6 +2903,82 @@ function initGlobalModals() {
     });
   }
 }
+
+/* ==========================================================================
+   14. POP-UP PERINGATAN WASPADA PENIPUAN (ANTI-FRAUD POPUP)
+   ========================================================================== */
+function initFraudWarningModal() {
+  const modal = document.getElementById('modal-peringatan-penipuan');
+  if (!modal) return;
+
+  const closeBtn = document.getElementById('modal-peringatan-close');
+  const dismissBtn = document.getElementById('modal-peringatan-dismiss');
+  const learnBtn = document.getElementById('modal-peringatan-learn');
+
+  const closeModal = () => {
+    modal.classList.remove('active');
+    const anyActive = document.querySelector('.modal-backdrop.active');
+    if (!anyActive) {
+      document.body.classList.remove('overflow-hidden');
+    }
+    try {
+      sessionStorage.setItem('bpr_fraud_modal_dismissed', 'true');
+    } catch (e) {}
+  };
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (dismissBtn) dismissBtn.addEventListener('click', closeModal);
+  if (learnBtn) {
+    learnBtn.addEventListener('click', () => {
+      closeModal();
+      if (typeof readArticle === 'function') {
+        readArticle(3);
+      }
+    });
+  }
+
+  // Cek apakah ada query param ?popup=1 atau ?warning=1 untuk pengetesan langsung
+  const urlParams = new URLSearchParams(window.location.search);
+  const forceShow = urlParams.has('popup') || urlParams.has('warning');
+
+  // Buka otomatis saat pertama kali dibuka pada sesi browsing
+  try {
+    const isDismissed = sessionStorage.getItem('bpr_fraud_modal_dismissed');
+    if (!isDismissed || forceShow) {
+      setTimeout(() => {
+        const activeModal = document.querySelector('.modal-backdrop.active');
+        if (!activeModal) {
+          modal.classList.add('active');
+          document.body.classList.add('overflow-hidden');
+        }
+      }, 700);
+    }
+  } catch (e) {
+    setTimeout(() => {
+      modal.classList.add('active');
+      document.body.classList.add('overflow-hidden');
+    }, 700);
+  }
+}
+
+window.openFraudWarningModal = function() {
+  const modal = document.getElementById('modal-peringatan-penipuan');
+  if (modal) {
+    modal.classList.add('active');
+    document.body.classList.add('overflow-hidden');
+  }
+};
+
+window.closeFraudWarningModal = function() {
+  const modal = document.getElementById('modal-peringatan-penipuan');
+  if (modal) {
+    modal.classList.remove('active');
+    const anyActive = document.querySelector('.modal-backdrop.active');
+    if (!anyActive) {
+      document.body.classList.remove('overflow-hidden');
+    }
+  }
+};
 
 // Global opener for BPR Profile modal (Sesuai Sketsa Halaman 11: "Kenali BPR ↗")
 function openProfilBpr() {
