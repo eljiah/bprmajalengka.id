@@ -971,7 +971,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Kadipaten',
     type: 'Cabang',
     address: 'Jl. Raya Kadipaten No. 45, Kec. Kadipaten (Dekat Pasar Kadipaten)',
-    maps_url: 'https://www.google.com/maps?q=-6.7632246516128065,108.1682402947551',
+    maps_url: 'https://maps.app.goo.gl/m1WY5x3bvt2rf74Z7',
     phone: '(0233) 282510',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -989,7 +989,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Cikijing',
     type: 'Cabang',
     address: 'Jl. Raya Kasturi No. 15, Kec. Cikijing (Pusat Konveksi Celana Jeans)',
-    maps_url: 'https://www.google.com/maps?q=-7.016916098244055,108.36454874491558',
+    maps_url: 'https://maps.app.goo.gl/65yBz4rkPUPPYpBc9',
     phone: '(0233) 891340',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -998,7 +998,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Rajagaluh',
     type: 'Cabang',
     address: 'Jl. Pangeran Muhamad No. 34, Kec. Rajagaluh (Sentra Anyaman Bambu)',
-    maps_url: 'https://www.google.com/maps?q=-6.779398593568954,108.3447027455341',
+    maps_url: 'https://maps.app.goo.gl/dzKqbWBpxUZiqkR37',
     phone: '(0233) 511450',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -1007,7 +1007,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Bantarujeg',
     type: 'Cabang',
     address: 'Jl. Siliwangi No.91 Bantarujeg',
-    maps_url: 'https://www.google.com/maps?q=-6.968736619525069,108.23936331773582',
+    maps_url: 'https://maps.app.goo.gl/cRU3vjddyqW6uQx38',
     phone: '(0233) 8316346',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -1016,7 +1016,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Sukahaji',
     type: 'Cabang',
     address: 'Jl. Raya Sukahaji No. 10, Cikalong, Kec. Sukahaji',
-    maps_url: 'https://www.google.com/maps?q=-6.8190775141653255,108.2807762434407',
+    maps_url: 'https://maps.app.goo.gl/FUDyUFCGK9qBppsJ7',
     phone: '(0233) 882190',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -1025,7 +1025,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Kertajati',
     type: 'Cabang',
     address: 'Jl. Kertajati-Kadipaten Km 3, Kec. Kertajati (Kawasan Bandara Internasional Kertajati)',
-    maps_url: 'https://www.google.com/maps?q=-6.677310235565713,108.1890547352578',
+    maps_url: 'https://maps.app.goo.gl/oDvA7PDcnVTPNZWi7',
     phone: '(0233) 883100',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
@@ -1034,7 +1034,7 @@ const BRANCHES_DATA = [
     name: 'Kantor Cabang Ligung',
     type: 'Cabang',
     address: 'Jl. Raya Ligung No. 78, Kec. Ligung (Sentra Industri Pabrik)',
-    maps_url: 'https://www.google.com/maps?q=-6.652526614832701,108.28211492563509',
+    maps_url: 'https://maps.app.goo.gl/vezobnU4cMSMgH7L6',
     phone: '(0233) 884520',
     whatsapp: '0811-1111-6526',
     hours: 'Senin - Jumat: 08:00 - 15:30 WIB'
