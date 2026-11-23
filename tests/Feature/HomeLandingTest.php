@@ -89,7 +89,7 @@ class HomeLandingTest extends TestCase
             'Kantor Cabang Rajagaluh' => ['-6.779398593568954', '108.3447027455341'],
             'Kantor Cabang Bantarujeg' => ['-6.968736619525069', '108.23936331773582'],
             'Kantor Cabang Sukahaji' => ['-6.8190775141653255', '108.2807762434407'],
-            'Kantor Cabang Kertajati' => ['-6.677302143150963', '108.18905769385799'],
+            'Kantor Cabang Kertajati' => ['-6.677310235565713', '108.1890547352578'],
             'Kantor Cabang Ligung' => ['-6.652526614832701', '108.28211492563509'],
         ];
 
