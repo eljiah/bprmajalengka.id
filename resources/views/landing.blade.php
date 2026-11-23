@@ -1335,11 +1335,11 @@
       <!-- Full-Width Warning Ribbon (!) Sesuai Sketsa Halaman 13 -->
       <div class="p-4 rounded-2xl bg-red-950/50 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="flex items-center gap-3">
-          <div onclick="openFraudWarningModal()" class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center font-bold text-xl flex-shrink-0 cursor-pointer hover:bg-red-500 transition-colors" title="Buka Detail Peringatan">
+          <div onclick="readArticle(3)" class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center font-bold text-xl flex-shrink-0 cursor-pointer hover:bg-red-500 transition-colors" title="Buka Detail Peringatan">
             !
           </div>
           <div>
-            <h4 onclick="openFraudWarningModal()" class="text-sm font-bold text-red-200 uppercase tracking-wide cursor-pointer hover:underline" title="Buka Detail Peringatan">AWAS PENIPUAN MENGATASNAMAKAN PERUMDA BPR MAJALENGKA:</h4>
+            <h4 onclick="readArticle(3)" class="text-sm font-bold text-red-200 uppercase tracking-wide cursor-pointer hover:underline" title="Buka Detail Peringatan">AWAS PENIPUAN MENGATASNAMAKAN PERUMDA BPR MAJALENGKA:</h4>
             <p class="text-xs text-red-300">
               Petugas bank tidak pernah meminta kode OTP, PIN rekening, password, ataupun transfer biaya administrasi pinjaman ke nomor rekening pribadi.
             </p>
@@ -2479,72 +2479,6 @@
 
       </div>
 
-    </div>
-  </div>
-
-  <!-- =====================================================================
-       MODAL: POP-UP PERINGATAN WASPADA PENIPUAN (ANTI-FRAUD POPUP)
-       Muncul otomatis saat website pertama kali dibuka
-       ===================================================================== -->
-  <div id="modal-peringatan-penipuan" class="modal-backdrop fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-    <div class="modal-card bg-slate-900 text-white rounded-3xl max-w-lg w-full p-6 sm:p-8 border border-red-500/40 shadow-2xl relative overflow-hidden my-auto">
-      <!-- Glow effect aksen merah -->
-      <div class="absolute -top-24 -right-24 w-60 h-60 bg-red-600/20 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-24 -left-24 w-60 h-60 bg-red-800/15 rounded-full blur-3xl pointer-events-none"></div>
-
-      <!-- Close Button (X) -->
-      <button id="modal-peringatan-close" type="button" aria-label="Tutup Peringatan" class="absolute top-4 right-4 sm:top-5 sm:right-5 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white flex items-center justify-center transition-colors z-10">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-
-      <div class="relative z-10">
-        <!-- Top Badge & Icon -->
-        <div class="flex items-start gap-3.5 mb-4">
-          <div class="w-12 h-12 rounded-2xl bg-red-600 text-white flex items-center justify-center font-extrabold text-2xl flex-shrink-0 shadow-lg shadow-red-600/40 animate-pulse">
-            !
-          </div>
-          <div>
-            <span class="inline-block px-2.5 py-0.5 rounded-md bg-red-500/20 border border-red-500/30 text-red-300 font-bold text-[10px] sm:text-xs tracking-wider uppercase mb-1">
-              Peringatan Keamanan Nasabah
-            </span>
-            <h3 class="text-base sm:text-lg font-extrabold text-white leading-snug tracking-tight">
-              AWAS PENIPUAN MENGATASNAMAKAN PERUMDA BPR MAJALENGKA
-            </h3>
-          </div>
-        </div>
-
-        <!-- Warning Message -->
-        <div class="p-3.5 sm:p-4 rounded-2xl bg-red-950/60 border border-red-900/60 text-xs sm:text-sm text-red-200 leading-relaxed mb-4">
-          Petugas bank <strong>tidak pernah</strong> meminta kode OTP, PIN rekening, password, ataupun transfer biaya administrasi pinjaman ke nomor rekening pribadi.
-        </div>
-
-        <!-- Safety Checklist -->
-        <div class="space-y-2 mb-6 text-xs sm:text-[13px] text-slate-300">
-          <div class="flex items-start gap-2">
-            <span class="text-red-400 font-bold">✕</span>
-            <span><strong>Jangan Berikan</strong> kode OTP, PIN, password, atau data kartu kepada siapa pun.</span>
-          </div>
-          <div class="flex items-start gap-2">
-            <span class="text-red-400 font-bold">✕</span>
-            <span><strong>Jangan Transfer</strong> biaya provisi/admin kredit ke rekening pribadi/perorangan.</span>
-          </div>
-          <div class="flex items-start gap-2">
-            <span class="text-emerald-400 font-bold">✓</span>
-            <span>Konfirmasi selalu ke nomor resmi: WA <strong>0811-1111-6526</strong> atau Telp <strong>(0233) 281144</strong>.</span>
-          </div>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
-          <button id="modal-peringatan-learn" type="button" class="flex-1 py-2.5 px-4 bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-red-600/30 transition-all flex items-center justify-center gap-1.5 text-center">
-            <span>Pelajari Modus</span>
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-          </button>
-          <button id="modal-peringatan-dismiss" type="button" class="py-2.5 px-5 bg-white/10 hover:bg-white/20 text-white font-semibold text-xs sm:text-sm rounded-xl border border-white/15 transition-all text-center">
-            Saya Mengerti
-          </button>
-        </div>
-      </div>
     </div>
   </div>
 
