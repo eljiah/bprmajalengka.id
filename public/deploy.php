@@ -31,12 +31,12 @@ echo "========================================================\n\n";
 // 1. Coba Git Pull jika didukung oleh server
 $appDir = dirname(__DIR__);
 if (function_exists('shell_exec')) {
-    echo "--- [1/5] GIT PULL DARI REPOSITORI GITHUB ---\n";
+    echo "--- [1/5] SINKRONISASI REPOSITORI GITHUB (FETCH & RESET HARD) ---\n";
     chdir($appDir);
-    $gitOutput = shell_exec('git pull origin main 2>&1');
+    $gitOutput = shell_exec('git fetch origin main 2>&1 && git reset --hard origin/main 2>&1');
     echo htmlspecialchars($gitOutput ?: "Tidak ada output dari perintah git.\n");
 } else {
-    echo "--- [1/5] GIT PULL: shell_exec dinonaktifkan di server (dilewati) ---\n";
+    echo "--- [1/5] GIT: shell_exec dinonaktifkan di server (dilewati) ---\n";
 }
 
 // 2. Auto-extract UPDATE-PRODUCTION.zip jika file zip terdeteksi

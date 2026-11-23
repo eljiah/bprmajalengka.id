@@ -31,6 +31,7 @@ Route::post('/pengaduan/status', [PublicApiController::class, 'checkComplaintSta
 
 // Fallback alias for default auth redirect
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::redirect('/cms', '/admin');
 
 /*
 |--------------------------------------------------------------------------
