@@ -42,20 +42,9 @@
         <div class="md:col-span-2">
           <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Tautan Google Maps</label>
           <input type="url" name="maps_url" value="{{ old('maps_url') }}" placeholder="https://maps.app.goo.gl/..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-bpr-blue">
-          <p class="mt-1.5 text-[11px] text-slate-500">Tempel tautan pin Google Maps untuk mengambil dan menyimpan koordinat saat data disimpan, atau masukkan koordinat secara manual.</p>
+          <p class="mt-1.5 text-[11px] text-slate-500">Tempel tautan lokasi Google Maps. Tautan ini akan disimpan dan dibuka langsung saat nasabah memilih Lihat Peta.</p>
           @error('maps_url') <p class="mt-1.5 text-[11px] text-red-600">{{ $message }}</p> @enderror
         </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Latitude</label>
-          <input type="text" inputmode="decimal" maxlength="32" name="latitude" value="{{ old('latitude') }}" placeholder="Contoh: -6.8281" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-bpr-blue">
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Longitude</label>
-          <input type="text" inputmode="decimal" maxlength="32" name="longitude" value="{{ old('longitude') }}" placeholder="Contoh: 108.2276" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-bpr-blue">
-        </div>
-        <p class="md:col-span-2 -mt-3 text-[11px] text-slate-500">Isi latitude dan longitude bersamaan agar tombol peta menuju titik lokasi yang tepat.</p>
 
         <div>
           <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Nomor Telepon Kantor</label>

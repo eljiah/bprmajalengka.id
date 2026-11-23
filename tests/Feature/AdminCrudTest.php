@@ -11,7 +11,6 @@ use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class AdminCrudTest extends TestCase
@@ -117,8 +116,7 @@ class AdminCrudTest extends TestCase
             'name' => 'Kantor Kas Bantarujeg',
             'type' => 'Kas',
             'address' => 'Jl. Raya Bantarujeg No. 12, Majalengka',
-            'latitude' => '-6.8281000',
-            'longitude' => '108.2276000',
+            'maps_url' => 'https://maps.app.goo.gl/bantarujeg-pin',
             'phone' => '(0233) 890123',
             'whatsapp' => '0811-1111-6526',
             'hours' => 'Senin - Jumat: 08:00 - 15:30 WIB',
@@ -128,8 +126,7 @@ class AdminCrudTest extends TestCase
         $createResponse->assertRedirect('/admin/branches');
         $this->assertDatabaseHas('branches', [
             'name' => 'Kantor Kas Bantarujeg',
-            'latitude' => '-6.8281000',
-            'longitude' => '108.2276000',
+            'maps_url' => 'https://maps.app.goo.gl/bantarujeg-pin',
         ]);
 
         $branch = Branch::where('name', 'Kantor Kas Bantarujeg')->first();
@@ -139,16 +136,14 @@ class AdminCrudTest extends TestCase
             'name' => 'Kantor Kas Bantarujeg Baru',
             'type' => 'Kas',
             'address' => 'Jl. Raya Bantarujeg Baru No. 15',
-            'latitude' => '-6.8290000',
-            'longitude' => '108.2280000',
+            'maps_url' => 'https://maps.app.goo.gl/bantarujeg-new-pin',
             'hours' => 'Senin - Jumat: 08:00 - 15:30 WIB',
             'is_active' => '1',
         ]);
         $updateResponse->assertRedirect('/admin/branches');
         $this->assertDatabaseHas('branches', [
             'name' => 'Kantor Kas Bantarujeg Baru',
-            'latitude' => '-6.8290000',
-            'longitude' => '108.2280000',
+            'maps_url' => 'https://maps.app.goo.gl/bantarujeg-new-pin',
         ]);
 
         // Delete branch
@@ -157,110 +152,61 @@ class AdminCrudTest extends TestCase
         $this->assertDatabaseMissing('branches', ['id' => $branch->id]);
     }
 
-    public function test_branch_coordinates_must_be_provided_together(): void
+    public function test_branch_forms_use_map_url_instead_of_coordinate_fields(): void
     {
-        $response = $this->actingAs($this->admin)->post('/admin/branches', [
-            'name' => 'Kantor Kas Koordinat Tidak Lengkap',
-            'type' => 'Kas',
-            'address' => 'Jl. Raya Majalengka',
-            'latitude' => '-6.8281000',
-            'hours' => 'Senin - Jumat: 08:00 - 15:30 WIB',
-        ]);
+        $createResponse = $this->actingAs($this->admin)->get('/admin/branches/create');
+        $createResponse->assertOk()
+            ->assertSee('name="maps_url"', false)
+            ->assertDontSee('name="latitude"', false)
+            ->assertDontSee('name="longitude"', false);
 
-        $response->assertSessionHasErrors('longitude');
-        $this->assertDatabaseMissing('branches', [
-            'name' => 'Kantor Kas Koordinat Tidak Lengkap',
-        ]);
+        $branch = Branch::where('name', 'Kantor Cabang Kadipaten')->firstOrFail();
+        $editResponse = $this->actingAs($this->admin)->get("/admin/branches/{$branch->id}/edit");
+
+        $editResponse->assertOk()
+            ->assertSee('name="maps_url"', false)
+            ->assertDontSee('name="latitude"', false)
+            ->assertDontSee('name="longitude"', false);
     }
 
-    public function test_admin_can_save_branch_coordinates_without_losing_precision(): void
+    public function test_admin_saves_google_maps_short_link_directly_and_rejects_other_hosts(): void
     {
-        $latitude = '-6.7632246516128065';
-        $longitude = '108.1682402947551';
+        $branch = Branch::where('name', 'Kantor Cabang Kadipaten')->firstOrFail();
+        $mapsUrl = 'https://maps.app.goo.gl/9iR6rH7Dqu2atgJW9';
 
-        $response = $this->actingAs($this->admin)->post('/admin/branches', [
-            'name' => 'Kantor Cabang Presisi Test',
-            'type' => 'Cabang',
-            'address' => 'Jl. Raya Kadipaten',
-            'latitude' => $latitude,
-            'longitude' => $longitude,
-            'hours' => 'Senin - Jumat: 08:00 - 15:30 WIB',
+        $response = $this->actingAs($this->admin)->put("/admin/branches/{$branch->id}", [
+            'name' => $branch->name,
+            'type' => $branch->type,
+            'address' => $branch->address,
+            'maps_url' => $mapsUrl,
+            'hours' => $branch->hours,
             'is_active' => '1',
+            'sort_order' => $branch->sort_order,
         ]);
 
         $response->assertRedirect('/admin/branches');
         $this->assertDatabaseHas('branches', [
-            'name' => 'Kantor Cabang Presisi Test',
-            'latitude' => $latitude,
-            'longitude' => $longitude,
+            'id' => $branch->id,
+            'maps_url' => $mapsUrl,
         ]);
-
         $this->get('/')
-            ->assertSee('https://www.google.com/maps?q=' . $latitude . ',' . $longitude);
-    }
+            ->assertSee($mapsUrl);
 
-    public function test_admin_can_update_branch_coordinates_from_google_maps_short_link(): void
-    {
-        $latitude = '-6.7632246516128065';
-        $longitude = '108.1682402947551';
-        $branch = Branch::where('name', 'Kantor Cabang Kadipaten')->firstOrFail();
-
-        Http::fake([
-            'https://maps.app.goo.gl/9iR6rH7Dqu2atgJW9' => Http::response('', 302, [
-                'Location' => "https://www.google.com/maps/place/Bank/@{$latitude},{$longitude},17z",
-            ]),
-            'https://www.google.com/maps/*' => Http::response('', 200),
-        ]);
-
-        $response = $this->actingAs($this->admin)->put("/admin/branches/{$branch->id}", [
+        $invalidUrlResponse = $this->actingAs($this->admin)->put("/admin/branches/{$branch->id}", [
             'name' => $branch->name,
             'type' => $branch->type,
             'address' => $branch->address,
-            'maps_url' => 'https://maps.app.goo.gl/9iR6rH7Dqu2atgJW9',
+            'maps_url' => 'https://example.com/not-a-google-map',
             'hours' => $branch->hours,
             'is_active' => '1',
             'sort_order' => $branch->sort_order,
         ]);
 
-        $response->assertRedirect('/admin/branches');
+        $invalidUrlResponse->assertSessionHasErrors('maps_url');
         $this->assertDatabaseHas('branches', [
             'id' => $branch->id,
-            'latitude' => $latitude,
-            'longitude' => $longitude,
+            'maps_url' => $mapsUrl,
         ]);
-        $this->assertArrayNotHasKey('maps_url', $branch->fresh()->getAttributes());
-        Http::assertSentCount(2);
-    }
-
-    public function test_google_maps_short_link_cannot_redirect_to_an_external_host(): void
-    {
-        $branch = Branch::where('name', 'Kantor Cabang Kadipaten')->firstOrFail();
-        $originalLatitude = $branch->latitude;
-        $originalLongitude = $branch->longitude;
-
-        Http::fake([
-            'https://maps.app.goo.gl/*' => Http::response('', 302, [
-                'Location' => 'http://127.0.0.1/internal',
-            ]),
-        ]);
-
-        $response = $this->actingAs($this->admin)->put("/admin/branches/{$branch->id}", [
-            'name' => $branch->name,
-            'type' => $branch->type,
-            'address' => $branch->address,
-            'maps_url' => 'https://maps.app.goo.gl/9iR6rH7Dqu2atgJW9',
-            'hours' => $branch->hours,
-            'is_active' => '1',
-            'sort_order' => $branch->sort_order,
-        ]);
-
-        $response->assertSessionHasErrors('maps_url');
-        $this->assertDatabaseHas('branches', [
-            'id' => $branch->id,
-            'latitude' => $originalLatitude,
-            'longitude' => $originalLongitude,
-        ]);
-        Http::assertSentCount(1);
     }
 
     public function test_admin_can_crud_articles(): void

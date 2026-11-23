@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
-use App\Services\GoogleMapsLinkResolver;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use RuntimeException;
+use Closure;
 
 class BranchController extends Controller
 {
@@ -36,15 +34,13 @@ class BranchController extends Controller
         return view('admin.branches.create');
     }
 
-    public function store(Request $request, GoogleMapsLinkResolver $mapsLinkResolver): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:50'],
             'address' => ['required', 'string'],
-            'maps_url' => ['nullable', 'url', 'max:2048'],
-            'latitude' => ['exclude_with:maps_url', 'nullable', 'required_with:longitude', 'numeric', 'between:-90,90', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
-            'longitude' => ['exclude_with:maps_url', 'nullable', 'required_with:latitude', 'numeric', 'between:-180,180', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
+            'maps_url' => ['nullable', 'url', 'max:2048', $this->googleMapsUrlRule()],
             'phone' => ['nullable', 'string', 'max:50'],
             'whatsapp' => ['nullable', 'string', 'max:50'],
             'hours' => ['required', 'string', 'max:100'],
@@ -53,7 +49,6 @@ class BranchController extends Controller
             'sort_order' => ['nullable', 'integer'],
         ]);
 
-        $this->applyMapsUrlCoordinates($request, $validated, $mapsLinkResolver);
         $validated['is_main'] = $request->has('is_main');
         $validated['is_active'] = $request->has('is_active');
         $validated['sort_order'] = $request->input('sort_order', 0);
@@ -69,15 +64,13 @@ class BranchController extends Controller
         return view('admin.branches.edit', compact('branch'));
     }
 
-    public function update(Request $request, Branch $branch, GoogleMapsLinkResolver $mapsLinkResolver): RedirectResponse
+    public function update(Request $request, Branch $branch): RedirectResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:50'],
             'address' => ['required', 'string'],
-            'maps_url' => ['nullable', 'url', 'max:2048'],
-            'latitude' => ['exclude_with:maps_url', 'nullable', 'required_with:longitude', 'numeric', 'between:-90,90', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
-            'longitude' => ['exclude_with:maps_url', 'nullable', 'required_with:latitude', 'numeric', 'between:-180,180', 'regex:/^-?\d{1,3}(?:\.\d{1,16})?$/'],
+            'maps_url' => ['nullable', 'url', 'max:2048', $this->googleMapsUrlRule()],
             'phone' => ['nullable', 'string', 'max:50'],
             'whatsapp' => ['nullable', 'string', 'max:50'],
             'hours' => ['required', 'string', 'max:100'],
@@ -86,7 +79,6 @@ class BranchController extends Controller
             'sort_order' => ['nullable', 'integer'],
         ]);
 
-        $this->applyMapsUrlCoordinates($request, $validated, $mapsLinkResolver);
         $validated['is_main'] = $request->has('is_main');
         $validated['is_active'] = $request->has('is_active');
         $validated['sort_order'] = $request->input('sort_order', 0);
@@ -114,27 +106,39 @@ class BranchController extends Controller
         return back()->with('success', "Status kantor kas '{$branch->name}' berhasil {$statusText}.");
     }
 
-    /**
-     * @param array<string, mixed> $validated
-     */
-    private function applyMapsUrlCoordinates(
-        Request $request,
-        array &$validated,
-        GoogleMapsLinkResolver $mapsLinkResolver
-    ): void {
-        if (!$request->filled('maps_url')) {
-            unset($validated['maps_url']);
-            return;
-        }
+    private function googleMapsUrlRule(): Closure
+    {
+        return static function (string $attribute, mixed $value, Closure $fail): void {
+            if (!is_string($value)) {
+                $fail('Gunakan tautan HTTPS Google Maps atau maps.app.goo.gl.');
+                return;
+            }
 
-        try {
-            $coordinates = $mapsLinkResolver->resolve($request->string('maps_url')->toString());
-        } catch (RuntimeException $exception) {
-            throw ValidationException::withMessages(['maps_url' => $exception->getMessage()]);
-        }
+            $parts = parse_url($value);
+            if (!is_array($parts)) {
+                $fail('Gunakan tautan HTTPS Google Maps atau maps.app.goo.gl.');
+                return;
+            }
 
-        $validated['latitude'] = $coordinates['latitude'];
-        $validated['longitude'] = $coordinates['longitude'];
-        unset($validated['maps_url']);
+            $host = strtolower($parts['host'] ?? '');
+            $allowedHosts = [
+                'goo.gl',
+                'maps.app.goo.gl',
+                'google.com',
+                'www.google.com',
+                'maps.google.com',
+                'google.co.id',
+                'www.google.co.id',
+                'maps.google.co.id',
+            ];
+
+            if (($parts['scheme'] ?? '') !== 'https'
+                || isset($parts['user'])
+                || isset($parts['pass'])
+                || (isset($parts['port']) && $parts['port'] !== 443)
+                || !in_array($host, $allowedHosts, true)) {
+                $fail('Gunakan tautan HTTPS Google Maps atau maps.app.goo.gl.');
+            }
+        };
     }
 }

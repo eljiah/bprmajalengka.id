@@ -164,7 +164,7 @@
         </a>
         <a href="{{ route('home') }}#informasi-berita" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Informasi Berita</a>
         <a href="{{ route('home') }}#laporan-publikasi" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Laporan</a>
-        <a href="{{ route('home') }}#kantor-kas" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Jaringan 12 Kantor Kas</a>
+        <a href="{{ route('home') }}#kantor-kas" class="mobile-nav-link py-2.5 px-3 rounded-lg text-slate-800 font-semibold hover:bg-slate-100">Jaringan 8 Kantor Cabang</a>
         <a href="{{ route('pengaduan.page') }}" class="mobile-nav-link py-2.5 px-3 rounded-lg text-amber-900 bg-amber-50 font-bold hover:bg-amber-100 flex items-center justify-between">
           <span>Pengaduan Nasabah</span>
           <span class="text-[10px] bg-amber-500 text-slate-900 px-2 py-0.5 rounded font-extrabold uppercase">Online</span>
@@ -1010,9 +1010,7 @@
         $mainPhone = $mainBranch->phone ?? ($settings['phone_central'] ?? '(0233) 281144');
         $mainWa = $mainBranch->whatsapp ?? ($settings['whatsapp_official'] ?? '0811-1111-6526');
         $mainAddress = $mainBranch->address ?? ($settings['address_central'] ?? 'Jl. Raya K.H. Abdul Halim No. 338, Majalengka Wetan, Kec. Majalengka, Jawa Barat 45411');
-        $mainCoordinates = $mainBranch && $mainBranch->latitude !== null && $mainBranch->longitude !== null
-          ? $mainBranch->latitude . ',' . $mainBranch->longitude
-          : null;
+        $mainMapsUrl = $mainBranch->maps_url ?? 'https://www.google.com/maps/search/?api=1&query=' . urlencode($mainAddress);
         $mainHours = $mainBranch->hours ?? ($settings['operational_hours'] ?? 'Senin - Jumat: 08:00 - 15:30 WIB');
       @endphp
 
@@ -1065,7 +1063,7 @@
               <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
               <span>Hubungi Kantor Pusat (WA)</span>
             </a>
-            <a href="{{ $mainCoordinates ? 'https://www.google.com/maps?q=' . $mainCoordinates : 'https://www.google.com/maps?q=' . urlencode($mainAddress) }}" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center justify-center gap-2 border border-white/15 text-center">
+            <a href="{{ $mainMapsUrl }}" target="_blank" rel="noopener noreferrer" class="w-full py-3 px-5 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm rounded-xl transition-all flex items-center justify-center gap-2 border border-white/15 text-center">
               <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
               <span>Buka di Google Maps</span>
             </a>
@@ -1158,7 +1156,7 @@
                     <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                     Hubungi Cabang
                   </a>
-                  <a href="{{ $branch->latitude !== null && $branch->longitude !== null ? 'https://www.google.com/maps?q=' . $branch->latitude . ',' . $branch->longitude : 'https://www.google.com/maps?q=' . urlencode($branch->name . ' ' . $branch->address) }}" target="_blank" rel="noopener noreferrer" aria-label="Lihat lokasi {{ $branch->name }} di Google Maps" class="flex-1 py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors">
+                  <a href="{{ $branch->maps_url ?: 'https://www.google.com/maps/search/?api=1&query=' . urlencode($branch->name . ' ' . $branch->address) }}" target="_blank" rel="noopener noreferrer" aria-label="Lihat lokasi {{ $branch->name }} di Google Maps" class="flex-1 py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors">
                     <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                     <span>Lihat Peta</span>
                   </a>
@@ -1303,12 +1301,12 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
               </div>
               <div>
-                <h4 class="font-bold text-white text-base">Lokasi Jaringan Kantor Kas</h4>
-                <p class="text-xs text-slate-300 mt-0.5">12 Kantor Kas resmi melayani seluruh wilayah kecamatan di Majalengka.</p>
+                <h4 class="font-bold text-white text-base">Lokasi 8 Kantor Cabang</h4>
+                <p class="text-xs text-slate-300 mt-0.5">8 Kantor Cabang resmi melayani seluruh wilayah Kabupaten Majalengka.</p>
               </div>
             </div>
             <a href="#kantor-kas" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl flex-shrink-0 transition-colors">
-              12 Kantor Kas
+              8 Kantor Cabang
             </a>
           </div>
 

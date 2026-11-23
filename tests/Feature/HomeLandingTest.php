@@ -61,49 +61,42 @@ class HomeLandingTest extends TestCase
         $response->assertSee('(0233) 999888');
     }
 
-    public function test_branch_map_links_use_cms_coordinates_when_available(): void
+    public function test_branch_map_links_use_saved_google_maps_urls(): void
     {
         Branch::where('is_main', true)->firstOrFail()->update([
-            'latitude' => '-6.8281000',
-            'longitude' => '108.2276000',
+            'maps_url' => 'https://maps.app.goo.gl/main-office-pin',
         ]);
         Branch::where('name', 'Kantor Cabang Kadipaten')->firstOrFail()->update([
-            'latitude' => '-6.8290000',
-            'longitude' => '108.2280000',
+            'maps_url' => 'https://maps.app.goo.gl/kadipaten-pin',
         ]);
 
         $response = $this->get('/');
 
         $response->assertStatus(200);
-        $response->assertSee('https://www.google.com/maps?q=-6.8281000,108.2276000');
-        $response->assertSee('https://www.google.com/maps?q=-6.8290000,108.2280000');
-        $response->assertDontSee('https://www.google.com/maps/search/');
+        $response->assertSee('https://maps.app.goo.gl/main-office-pin');
+        $response->assertSee('https://maps.app.goo.gl/kadipaten-pin');
     }
 
-    public function test_seeded_branch_map_links_keep_the_supplied_coordinate_precision(): void
+    public function test_seeded_branch_map_links_are_saved_google_maps_urls(): void
     {
-        $coordinates = [
-            'Kantor Cabang Kadipaten' => ['-6.7632246516128065', '108.1682402947551'],
-            'Kantor Cabang Jatitujuh' => ['-6.6439472368882635', '108.2294895625247'],
-            'Kantor Cabang Cikijing' => ['-7.016916098244055', '108.36454874491558'],
-            'Kantor Cabang Rajagaluh' => ['-6.779398593568954', '108.3447027455341'],
-            'Kantor Cabang Bantarujeg' => ['-6.968736619525069', '108.23936331773582'],
-            'Kantor Cabang Sukahaji' => ['-6.8190775141653255', '108.2807762434407'],
-            'Kantor Cabang Kertajati' => ['-6.677310235565713', '108.1890547352578'],
-            'Kantor Cabang Ligung' => ['-6.652526614832701', '108.28211492563509'],
+        $mapsUrls = [
+            'Kantor Cabang Kadipaten' => 'https://www.google.com/maps/search/?api=1&query=-6.7632246516128065%2C108.1682402947551',
+            'Kantor Cabang Jatitujuh' => 'https://www.google.com/maps/search/?api=1&query=-6.6439472368882635%2C108.2294895625247',
+            'Kantor Cabang Cikijing' => 'https://www.google.com/maps/search/?api=1&query=-7.016916098244055%2C108.36454874491558',
+            'Kantor Cabang Rajagaluh' => 'https://www.google.com/maps/search/?api=1&query=-6.779398593568954%2C108.3447027455341',
+            'Kantor Cabang Bantarujeg' => 'https://www.google.com/maps/search/?api=1&query=-6.968736619525069%2C108.23936331773582',
+            'Kantor Cabang Sukahaji' => 'https://www.google.com/maps/search/?api=1&query=-6.8190775141653255%2C108.2807762434407',
+            'Kantor Cabang Kertajati' => 'https://www.google.com/maps/search/?api=1&query=-6.677302143150963%2C108.18905769385799',
+            'Kantor Cabang Ligung' => 'https://www.google.com/maps/search/?api=1&query=-6.652526614832701%2C108.28211492563509',
         ];
 
         $response = $this->get('/');
 
-        foreach ($coordinates as $name => [$latitude, $longitude]) {
+        foreach ($mapsUrls as $name => $mapsUrl) {
             $branch = Branch::where('name', $name)->firstOrFail();
-            $storedLatitude = rtrim(rtrim((string) $branch->latitude, '0'), '.');
-            $storedLongitude = rtrim(rtrim((string) $branch->longitude, '0'), '.');
-            $mapQuery = rawurlencode($storedLatitude . ',' . $storedLongitude);
 
-            $this->assertSame($latitude, $storedLatitude, "{$name} latitude precision changed.");
-            $this->assertSame($longitude, $storedLongitude, "{$name} longitude precision changed.");
-            $response->assertSee('https://www.google.com/maps?q=' . $storedLatitude . ',' . $storedLongitude);
+            $this->assertSame($mapsUrl, $branch->maps_url, "{$name} map URL changed.");
+            $response->assertSee($mapsUrl);
         }
     }
 
