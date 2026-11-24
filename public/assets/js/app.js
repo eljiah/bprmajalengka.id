@@ -1228,10 +1228,25 @@ function initSimulator() {
     }
   };
 
+  // Sync Preset Buttons Active State Helper
+  const syncPresetButtons = (amount) => {
+    presetButtons.forEach(btn => {
+      const btnAmount = parseInt(btn.dataset.amount, 10);
+      if (btnAmount === amount) {
+        btn.classList.remove('bg-slate-100', 'text-slate-700');
+        btn.classList.add('bg-bpr-blue', 'text-white', 'shadow-sm');
+      } else {
+        btn.classList.remove('bg-bpr-blue', 'text-white', 'shadow-sm');
+        btn.classList.add('bg-slate-100', 'text-slate-700');
+      }
+    });
+  };
+
   // Sync inputs
   plafondRange.addEventListener('input', (e) => {
     currentPlafond = parseInt(e.target.value, 10);
     plafondInput.value = formatRupiah(currentPlafond);
+    syncPresetButtons(currentPlafond);
     calculateLoan();
   });
 
@@ -1240,17 +1255,17 @@ function initSimulator() {
     currentPlafond = Math.min(Math.max(rawVal, 1000000), 100000000);
     plafondRange.value = currentPlafond;
     plafondInput.value = formatRupiah(currentPlafond);
+    syncPresetButtons(currentPlafond);
     calculateLoan();
   });
 
   // Preset Buttons
   presetButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      presetButtons.forEach(b => b.classList.remove('bg-bpr-blue', 'text-white'));
-      btn.classList.add('bg-bpr-blue', 'text-white');
       currentPlafond = parseInt(btn.dataset.amount, 10);
       plafondRange.value = currentPlafond;
       plafondInput.value = formatRupiah(currentPlafond);
+      syncPresetButtons(currentPlafond);
       calculateLoan();
     });
   });
@@ -1259,11 +1274,11 @@ function initSimulator() {
   tenorButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       tenorButtons.forEach(b => {
-        b.classList.remove('bg-bpr-navy', 'text-white', 'shadow-sm');
+        b.classList.remove('bg-bpr-blue', 'text-white', 'shadow-sm');
         b.classList.add('bg-slate-100', 'text-slate-700');
       });
       btn.classList.remove('bg-slate-100', 'text-slate-700');
-      btn.classList.add('bg-bpr-navy', 'text-white', 'shadow-sm');
+      btn.classList.add('bg-bpr-blue', 'text-white', 'shadow-sm');
       currentTenor = parseInt(btn.dataset.tenor, 10);
       calculateLoan();
     });
