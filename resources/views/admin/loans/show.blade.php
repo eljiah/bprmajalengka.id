@@ -163,6 +163,19 @@
             <textarea name="notes" rows="4" placeholder="Tuliskan catatan verifikasi, hasil survei, atau alasan penolakan..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-bpr-blue">{{ old('notes', $loan->notes) }}</textarea>
           </div>
 
+          @if($loan->email)
+          <div class="p-3 bg-blue-50/70 rounded-xl border border-blue-100 flex items-start gap-2.5">
+            <input type="checkbox" name="send_email" id="send_email" value="1" checked class="mt-0.5 rounded text-bpr-blue focus:ring-bpr-blue">
+            <label for="send_email" class="text-xs text-slate-700 leading-snug cursor-pointer select-none">
+              <strong>Kirim Email Notifikasi Otomatis</strong> ke pemohon ({{ $loan->email }}) memberitahukan perubahan status ini.
+            </label>
+          </div>
+          @else
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-400">
+            Pemohon tidak menyertakan alamat email saat pengajuan.
+          </div>
+          @endif
+
           <button type="submit" class="w-full py-2.5 px-4 bg-bpr-navy hover:bg-bpr-blue text-white font-bold text-xs rounded-xl shadow transition">
             Perbarui Status Pengajuan
           </button>

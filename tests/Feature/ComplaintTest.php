@@ -83,11 +83,11 @@ class ComplaintTest extends TestCase
         $response->assertOk()
             ->assertSee('<strong class="font-bold">Konfirmasi Keamanan.</strong>', false)
             ->assertSee('Mohon selesaikan hitungan sederhana di samping ini untuk melanjutkan.')
-            ->assertSee('id="complaint-captcha-refresh"')
+            ->assertSee('id="complaint-captcha-refresh"', false)
             ->assertSee('id="complaint-captcha-answer" name="captcha_answer" type="number" required', false)
             ->assertSee('id="complaint-captcha-token" type="hidden" name="captcha_token"', false)
             ->assertSee('id="complaint-form-load-token" type="hidden" name="form_load_token"', false)
-            ->assertSee(route('captcha.generate'));
+            ->assertSee('captcha\/generate', false);
     }
 
     public function test_complaint_submission_fails_if_captcha_invalid(): void

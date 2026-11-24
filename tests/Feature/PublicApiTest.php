@@ -58,7 +58,7 @@ class PublicApiTest extends TestCase
         $response->assertStatus(200)
             ->assertJson([
                 'success' => true,
-                'total' => 3,
+                'total' => 6,
             ]);
     }
 

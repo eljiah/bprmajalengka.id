@@ -38,6 +38,17 @@ class LoanApplication extends Model
         ];
     }
 
+    public function getStatusLabelAttribute(): string
+    {
+        return match ($this->status) {
+            'pending' => 'Pending (Menunggu Verifikasi)',
+            'contacted' => 'Dihubungi (Contacted)',
+            'approved' => 'Disetujui (Approved)',
+            'rejected' => 'Ditolak (Rejected)',
+            default => ucfirst((string) $this->status),
+        };
+    }
+
     public static function generateReferenceCode(): string
     {
         $date = now()->format('Ymd');

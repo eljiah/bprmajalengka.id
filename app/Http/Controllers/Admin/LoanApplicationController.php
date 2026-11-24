@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\LoanStatusUpdatedMail;
 use App\Models\LoanApplication;
+use App\Services\EmailDeliveryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 class LoanApplicationController extends Controller
@@ -46,19 +49,38 @@ class LoanApplicationController extends Controller
         return view('admin.loans.show', compact('loan'));
     }
 
-    public function updateStatus(Request $request, LoanApplication $loan): RedirectResponse
+    public function updateStatus(Request $request, LoanApplication $loan, EmailDeliveryService $emailDelivery): RedirectResponse
     {
         $validated = $request->validate([
             'status' => ['required', 'in:pending,contacted,approved,rejected'],
             'notes' => ['nullable', 'string'],
+            'send_email' => ['nullable', 'boolean'],
         ]);
 
+        $previousStatus = $loan->status;
+        $newStatus = $validated['status'];
+
         $loan->update([
-            'status' => $validated['status'],
+            'status' => $newStatus,
             'notes' => $validated['notes'],
         ]);
 
-        return back()->with('success', "Status pengajuan pinjaman '{$loan->reference_code}' berhasil diperbarui ke: " . strtoupper($validated['status']));
+        $emailNotice = '';
+        if ($request->boolean('send_email', true) && !empty($loan->email) && ($previousStatus !== $newStatus || !empty($validated['notes']))) {
+            $sent = $emailDelivery->send(
+                $loan->email,
+                'loan_status',
+                fn () => Mail::to($loan->email)->send(new LoanStatusUpdatedMail($loan, $previousStatus)),
+                $loan->reference_code
+            );
+            if ($sent) {
+                $emailNotice = ' dan email notifikasi berhasil dikirimkan ke pemohon';
+            } else {
+                $emailNotice = ' (namun pengiriman email notifikasi mengalami kendala)';
+            }
+        }
+
+        return back()->with('success', "Status pengajuan pinjaman '{$loan->reference_code}' berhasil diperbarui ke: " . strtoupper($newStatus) . $emailNotice);
     }
 
     public function destroy(LoanApplication $loan): RedirectResponse
