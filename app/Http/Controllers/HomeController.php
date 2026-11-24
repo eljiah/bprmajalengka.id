@@ -53,7 +53,7 @@ class HomeController extends Controller
         ];
 
         $branches = Branch::active()->get();
-        $articles = Article::published()->take(6)->get();
+        $articles = Article::published()->get();
         $reports = PublicationReport::active()->get();
         $publicReports = $reports->map(fn (PublicationReport $report) => [
             'id' => (string) $report->id,

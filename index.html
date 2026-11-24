@@ -2220,6 +2220,88 @@
           </div>
         </div>
 
+        <!-- Article Card 4 (Extra) -->
+        <div class="article-card article-extra hidden bg-white rounded-2xl overflow-hidden card-shadow card-shadow-hover flex flex-col justify-between transition-all duration-300">
+          <div>
+            <div class="h-48 overflow-hidden relative">
+              <img src="assets/img/umkm-anyaman.jpg" alt="Kredit Pertanian BPR Majalengka" class="w-full h-full object-cover">
+              <span class="absolute top-3 left-3 px-3 py-1 bg-emerald-600 text-white font-bold text-[11px] rounded-lg uppercase tracking-wider">Ekonomi Daerah</span>
+            </div>
+            <div class="p-6">
+              <p class="text-slate-400 text-xs mb-2">14 November 2026 • 4 menit baca</p>
+              <h3 class="font-bold text-slate-900 text-lg leading-snug mb-2 hover:text-bpr-blue transition-colors cursor-pointer" onclick="readArticle(4)">
+                Sinergi BPR Majalengka Dorong Ketahanan Pangan Melalui Kredit Pertanian
+              </h3>
+              <p class="text-slate-500 text-xs sm:text-sm line-clamp-3 leading-relaxed">
+                Memperkuat produktivitas petani bawang merah dan padi di Majalengka dengan skema pembayaran fleksibel Yarnen (Bayar Setelah Panen).
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2">
+            <button onclick="readArticle(4)" class="text-xs font-bold text-bpr-blue hover:underline">
+              Baca Selengkapnya
+            </button>
+          </div>
+        </div>
+
+        <!-- Article Card 5 (Extra) -->
+        <div class="article-card article-extra hidden bg-white rounded-2xl overflow-hidden card-shadow card-shadow-hover flex flex-col justify-between transition-all duration-300">
+          <div>
+            <div class="h-48 overflow-hidden relative">
+              <img src="assets/img/hero-batik.jpg" alt="Layanan Pickup Service BPR" class="w-full h-full object-cover">
+              <span class="absolute top-3 left-3 px-3 py-1 bg-bpr-blue text-white font-bold text-[11px] rounded-lg uppercase tracking-wider">Transformasi BPR</span>
+            </div>
+            <div class="p-6">
+              <p class="text-slate-400 text-xs mb-2">12 November 2026 • 5 menit baca</p>
+              <h3 class="font-bold text-slate-900 text-lg leading-snug mb-2 hover:text-bpr-blue transition-colors cursor-pointer" onclick="readArticle(5)">
+                Transformasi Layanan BPR: Sentuhan Personal Hadapi Era Digitalisasi
+              </h3>
+              <p class="text-slate-500 text-xs sm:text-sm line-clamp-3 leading-relaxed">
+                Mengapa perbankan daerah tetap menjadi pilihan utama masyarakat berkat layanan jemput bola (Pickup Service) yang dipadukan transparansi sistem.
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2">
+            <button onclick="readArticle(5)" class="text-xs font-bold text-bpr-blue hover:underline">
+              Baca Selengkapnya
+            </button>
+          </div>
+        </div>
+
+        <!-- Article Card 6 (Extra) -->
+        <div class="article-card article-extra hidden bg-white rounded-2xl overflow-hidden card-shadow card-shadow-hover flex flex-col justify-between transition-all duration-300">
+          <div>
+            <div class="h-48 overflow-hidden relative">
+              <img src="assets/img/pensiunan-hp.jpg" alt="Deposito Berjangka LPS" class="w-full h-full object-cover">
+              <span class="absolute top-3 left-3 px-3 py-1 bg-purple-600 text-white font-bold text-[11px] rounded-lg uppercase tracking-wider">Literasi Investasi</span>
+            </div>
+            <div class="p-6">
+              <p class="text-slate-400 text-xs mb-2">10 November 2026 • 4 menit baca</p>
+              <h3 class="font-bold text-slate-900 text-lg leading-snug mb-2 hover:text-bpr-blue transition-colors cursor-pointer" onclick="readArticle(6)">
+                Memilih Investasi Simpanan yang Cerdas: Keunggulan Deposito BPR Bergaransi LPS
+              </h3>
+              <p class="text-slate-500 text-xs sm:text-sm line-clamp-3 leading-relaxed">
+                Strategi mengamankan dana masa depan dengan imbal hasil suku bunga optimal dan proteksi penjaminan 100% dari Lembaga Penjamin Simpanan (LPS).
+              </p>
+            </div>
+          </div>
+          <div class="px-6 pb-6 pt-2">
+            <button onclick="readArticle(6)" class="text-xs font-bold text-bpr-blue hover:underline">
+              Baca Selengkapnya
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pintasan Tampilkan Lebih Banyak Artikel & Berita -->
+      <div class="text-center mt-10" id="articles-toggle-container">
+        <button type="button" id="btn-toggle-articles" onclick="toggleMoreArticles()" class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-white hover:bg-slate-50 text-bpr-blue border border-slate-200/90 font-bold text-xs sm:text-sm card-shadow hover:shadow-md transition-all duration-200 group active:scale-95">
+          <span id="btn-toggle-articles-text">Tampilkan Lebih Banyak Artikel & Berita</span>
+          <svg id="btn-toggle-articles-icon" class="w-4 h-4 transition-transform duration-300 text-bpr-blue group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
       </div>
 
     </div>
@@ -3652,6 +3734,60 @@
             </div>
             <div class="p-5 pt-0">
               <button onclick="document.getElementById('modal-all-news').classList.remove('active'); readArticle(3);" class="w-full py-2 bg-blue-50/60 hover:bg-blue-100/70 text-bpr-blue text-xs font-bold rounded-xl transition-colors">
+                Baca Artikel Lengkap
+              </button>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="bg-white rounded-2xl overflow-hidden card-shadow flex flex-col justify-between">
+            <div>
+              <img src="assets/img/umkm-anyaman.jpg" alt="Kredit Pertanian BPR" class="w-full h-40 object-cover">
+              <div class="p-5">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 uppercase">Ekonomi Daerah</span>
+                <p class="text-[11px] text-slate-400 mt-2">14 November 2026</p>
+                <h4 class="font-bold text-slate-900 text-base mt-1">Sinergi BPR Majalengka Dorong Ketahanan Pangan Melalui Kredit Pertanian</h4>
+                <p class="text-xs text-slate-600 mt-1.5 line-clamp-2">Memperkuat produktivitas petani bawang merah dan padi di Majalengka dengan skema pembayaran fleksibel Yarnen.</p>
+              </div>
+            </div>
+            <div class="p-5 pt-0">
+              <button onclick="document.getElementById('modal-all-news').classList.remove('active'); readArticle(4);" class="w-full py-2 bg-blue-50/60 hover:bg-blue-100/70 text-bpr-blue text-xs font-bold rounded-xl transition-colors">
+                Baca Artikel Lengkap
+              </button>
+            </div>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="bg-white rounded-2xl overflow-hidden card-shadow flex flex-col justify-between">
+            <div>
+              <img src="assets/img/hero-batik.jpg" alt="Transformasi Layanan BPR" class="w-full h-40 object-cover">
+              <div class="p-5">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-50 text-bpr-blue uppercase">Transformasi BPR</span>
+                <p class="text-[11px] text-slate-400 mt-2">12 November 2026</p>
+                <h4 class="font-bold text-slate-900 text-base mt-1">Transformasi Layanan BPR: Sentuhan Personal Hadapi Era Digitalisasi</h4>
+                <p class="text-xs text-slate-600 mt-1.5 line-clamp-2">Mengapa perbankan daerah tetap menjadi pilihan utama masyarakat berkat layanan jemput bola (Pickup Service).</p>
+              </div>
+            </div>
+            <div class="p-5 pt-0">
+              <button onclick="document.getElementById('modal-all-news').classList.remove('active'); readArticle(5);" class="w-full py-2 bg-blue-50/60 hover:bg-blue-100/70 text-bpr-blue text-xs font-bold rounded-xl transition-colors">
+                Baca Artikel Lengkap
+              </button>
+            </div>
+          </div>
+
+          <!-- Item 6 -->
+          <div class="bg-white rounded-2xl overflow-hidden card-shadow flex flex-col justify-between">
+            <div>
+              <img src="assets/img/pensiunan-hp.jpg" alt="Deposito Berjangka LPS" class="w-full h-40 object-cover">
+              <div class="p-5">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-purple-50 text-purple-700 uppercase">Literasi Investasi</span>
+                <p class="text-[11px] text-slate-400 mt-2">10 November 2026</p>
+                <h4 class="font-bold text-slate-900 text-base mt-1">Memilih Investasi Simpanan yang Cerdas: Keunggulan Deposito BPR Bergaransi LPS</h4>
+                <p class="text-xs text-slate-600 mt-1.5 line-clamp-2">Strategi mengamankan dana masa depan dengan imbal hasil suku bunga optimal dan proteksi penjaminan 100% dari LPS.</p>
+              </div>
+            </div>
+            <div class="p-5 pt-0">
+              <button onclick="document.getElementById('modal-all-news').classList.remove('active'); readArticle(6);" class="w-full py-2 bg-blue-50/60 hover:bg-blue-100/70 text-bpr-blue text-xs font-bold rounded-xl transition-colors">
                 Baca Artikel Lengkap
               </button>
             </div>

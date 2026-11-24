@@ -903,12 +903,13 @@
         </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        @forelse($articles as $art)
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="articles-grid">
+        @forelse($articles as $index => $art)
           @php
             $colorClass = $art->tag_color === 'amber' ? 'bg-amber-500' : ($art->tag_color === 'red' ? 'bg-red-600' : ($art->tag_color === 'emerald' ? 'bg-emerald-600' : ($art->tag_color === 'purple' ? 'bg-purple-600' : 'bg-bpr-blue')));
+            $isExtra = $index >= 3;
           @endphp
-          <div class="bg-white rounded-2xl overflow-hidden card-shadow card-shadow-hover flex flex-col justify-between">
+          <div class="article-card {{ $isExtra ? 'article-extra hidden' : '' }} bg-white rounded-2xl overflow-hidden card-shadow card-shadow-hover flex flex-col justify-between transition-all duration-300">
             <div>
               <div class="h-48 overflow-hidden relative">
                 <img src="{{ asset($art->image ?: 'assets/img/perencanaan-keluarga.jpg') }}" alt="{{ $art->title }}" class="w-full h-full object-cover">
@@ -934,6 +935,18 @@
           <div class="col-span-3 text-center py-8 text-slate-400 text-sm">Belum ada artikel publikasi.</div>
         @endforelse
       </div>
+
+      @if(count($articles) > 3)
+      <!-- Pintasan Tampilkan Lebih Banyak Artikel & Berita -->
+      <div class="text-center mt-10" id="articles-toggle-container">
+        <button type="button" id="btn-toggle-articles" onclick="toggleMoreArticles()" class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl bg-white hover:bg-slate-50 text-bpr-blue border border-slate-200/90 font-bold text-xs sm:text-sm card-shadow hover:shadow-md transition-all duration-200 group active:scale-95">
+          <span id="btn-toggle-articles-text">Tampilkan Lebih Banyak Artikel & Berita</span>
+          <svg id="btn-toggle-articles-icon" class="w-4 h-4 transition-transform duration-300 text-bpr-blue group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+      </div>
+      @endif
 
     </div>
   </section>
@@ -2307,9 +2320,9 @@
           @forelse($articles as $art)
           <div class="bg-white rounded-2xl overflow-hidden card-shadow flex flex-col justify-between">
             <div>
-              <img src="{{ $art->thumbnail ? asset($art->thumbnail) : asset('assets/img/perencanaan-keluarga.jpg') }}" alt="{{ $art->title }}" class="w-full h-40 object-cover">
+              <img src="{{ $art->image ? asset($art->image) : asset('assets/img/perencanaan-keluarga.jpg') }}" alt="{{ $art->title }}" class="w-full h-40 object-cover">
               <div class="p-5">
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-50 text-bpr-blue uppercase">{{ $art->category }}</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-50 text-bpr-blue uppercase">{{ $art->tag }}</span>
                 <p class="text-[11px] text-slate-400 mt-2">{{ $art->published_at ? $art->published_at->translatedFormat('d F Y') : $art->created_at->format('d M Y') }}</p>
                 <h4 class="font-bold text-slate-900 text-base mt-1">{{ $art->title }}</h4>
                 <p class="text-xs text-slate-600 mt-1.5 line-clamp-2">{{ $art->excerpt }}</p>
