@@ -1880,7 +1880,7 @@ function initProductShowcase() {
       matchingCards.forEach(card => card.classList.remove('hidden'));
     }
 
-    // Update tombol toggle "Tampilkan Semua Produk"
+    // Update tombol toggle "Tampilkan Lebih Banyak Produk" / "Tampilkan Lebih Sedikit"
     if (toggleContainer && toggleBtn) {
       if (totalMatching > 3) {
         toggleContainer.classList.remove('hidden');
@@ -1889,10 +1889,10 @@ function initProductShowcase() {
           if (activeCategory === 'tabungan') catLabel = 'Tabungan ';
           else if (activeCategory === 'deposito') catLabel = 'Deposito ';
           else if (activeCategory === 'kredit') catLabel = 'Kredit ';
-          if (toggleText) toggleText.textContent = `Tampilkan Semua Produk ${catLabel}(${totalMatching} Produk)`.replace(/\s+/g, ' ');
+          if (toggleText) toggleText.textContent = `Tampilkan Lebih Banyak Produk ${catLabel}(${totalMatching} Produk)`.replace(/\s+/g, ' ');
           if (toggleIcon) toggleIcon.classList.remove('rotate-180');
         } else {
-          if (toggleText) toggleText.textContent = 'Tampilkan Lebih Sedikit (3 Produk Unggulan)';
+          if (toggleText) toggleText.textContent = 'Tampilkan Lebih Sedikit';
           if (toggleIcon) toggleIcon.classList.add('rotate-180');
         }
       } else {
@@ -1991,6 +1991,9 @@ function initProductShowcase() {
   window.filterProductShowcase = function(category = 'all') {
     window.applyShowcaseCategoryTab(category, false);
   };
+
+  // Initial filtering: pastikan hanya 3 produk yang muncul saat pertama kali dibuka
+  filterCards();
 }
 
 /* ==========================================================================

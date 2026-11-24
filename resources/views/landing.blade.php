@@ -423,7 +423,7 @@
        SECTION 3: BCA-STYLE INTERACTIVE PRODUCT SHOWCASE
        (Tabungan, Deposito, Kredit - Mengacu pada Desain Produk Resmi BCA)
        ===================================================================== -->
-  <section id="produk" class="py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="produk" class="scroll-mt-20 py-16 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="text-center max-w-3xl mx-auto mb-10">
       <span class="text-xs font-bold text-bpr-blue uppercase tracking-wider bg-blue-50 px-3.5 py-1.5 rounded-full inline-block mb-2">Solusi Perbankan Terpadu</span>
       <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Pilihan Produk Sesuai Rencana Anda</h2>
@@ -467,7 +467,7 @@
 
     <!-- 2. BCA-Style Product Card Grid (3 Kolom di Desktop) -->
     <div id="product-showcase-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      @foreach($allProducts as $product)
+      @foreach($allProducts as $index => $product)
         @php
           $isKredit = $product->category === 'kredit';
           $isDeposito = $product->category === 'deposito';
@@ -483,7 +483,7 @@
         @endphp
 
         <!-- Card Container BCA-Style -->
-        <div class="product-showcase-card bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-bpr-blue/50 transition-all flex flex-col justify-between group"
+        <div class="product-showcase-card {{ $index >= 3 ? 'hidden' : '' }} bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm hover:shadow-xl hover:border-bpr-blue/50 transition-all flex flex-col justify-between group"
              data-category="{{ $product->category }}"
              data-name="{{ strtolower($product->name . ' ' . $product->code . ' ' . $product->short_desc) }}">
           <div>
@@ -543,10 +543,10 @@
       @endforeach
     </div>
 
-    <!-- Tombol Tampilkan Semua Produk / Lihat Selengkapnya (3 Produk Unggulan Default) -->
+    <!-- Tombol Tampilkan Lebih Banyak Produk / Tampilkan Lebih Sedikit -->
     <div id="product-showcase-toggle-container" class="mt-10 text-center">
-      <button type="button" id="product-showcase-toggle-btn" class="inline-flex items-center gap-2.5 px-8 py-3.5 bg-white hover:bg-blue-50/50 text-bpr-blue border-2 border-bpr-blue/30 hover:border-bpr-blue font-bold text-xs sm:text-sm rounded-xl shadow-sm hover:shadow-md transition-all group">
-        <span id="product-showcase-toggle-text">Tampilkan Semua Produk ({{ count($allProducts) }} Produk)</span>
+      <button type="button" id="product-showcase-toggle-btn" class="inline-flex items-center gap-2.5 px-8 py-3.5 bg-white hover:bg-blue-50/50 text-bpr-blue border-2 border-bpr-blue/30 hover:border-bpr-blue font-bold text-xs sm:text-sm rounded-xl shadow-sm hover:shadow-md transition-all group active:scale-95">
+        <span id="product-showcase-toggle-text">Tampilkan Lebih Banyak Produk ({{ count($allProducts) }} Produk)</span>
         <svg id="product-showcase-toggle-icon" class="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
       </button>
     </div>
