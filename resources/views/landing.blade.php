@@ -428,7 +428,7 @@
       <span class="text-xs font-bold text-bpr-blue uppercase tracking-wider bg-blue-50 px-3.5 py-1.5 rounded-full inline-block mb-2">Solusi Perbankan Terpadu</span>
       <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Pilihan Produk Sesuai Rencana Anda</h2>
       <p class="text-slate-600 text-sm sm:text-base mt-2.5 leading-relaxed">
-        Ketahui pilihan produk simpanan dan pinjaman resmi secara transparan. Didampingi petugas profesional di 12 kantor kas se-Kabupaten Majalengka.
+        Ketahui pilihan produk simpanan dan pinjaman resmi secara transparan. Didampingi petugas profesional di 8 kantor cabang se-Kabupaten Majalengka.
       </p>
     </div>
 

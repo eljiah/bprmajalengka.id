@@ -1633,7 +1633,7 @@ function initProductShowcase() {
     
     const benefit1 = Array.isArray(prod.ketentuan) && prod.ketentuan[0] 
       ? prod.ketentuan[0] 
-      : 'Layanan cepat dan proses mudah di 12 kantor kas';
+      : 'Layanan cepat dan proses mudah di 8 kantor cabang';
     const benefit2 = Array.isArray(prod.ketentuan) && prod.ketentuan[1] 
       ? prod.ketentuan[1] 
       : 'Aman dan dijamin Lembaga Penjamin Simpanan (LPS)';
