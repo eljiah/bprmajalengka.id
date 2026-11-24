@@ -25,4 +25,13 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+        $exceptions->render(function (\Illuminate\Database\Eloquent\ModelNotFoundException $e, Request $request) {
+            if ($request->is('admin/loans*')) {
+                return redirect()->route('admin.loans.index')->with('warning', 'Berkas pengajuan pinjaman tidak ditemukan atau sudah dihapus sebelumnya.');
+            }
+            if ($request->is('admin/complaints*')) {
+                return redirect()->route('admin.complaints.index')->with('warning', 'Data pengaduan nasabah tidak ditemukan atau sudah dihapus sebelumnya.');
+            }
+        });
     })->create();

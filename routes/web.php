@@ -52,9 +52,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Customer Complaints Management (Pengaduan Nasabah & Anti-Fraud)
         Route::get('/complaints', [ComplaintController::class, 'index'])->name('complaints.index');
-        Route::get('/complaints/{complaint}', [ComplaintController::class, 'show'])->name('complaints.show');
-        Route::put('/complaints/{complaint}/status', [ComplaintController::class, 'updateStatus'])->name('complaints.updateStatus');
-        Route::delete('/complaints/{complaint}', [ComplaintController::class, 'destroy'])->name('complaints.destroy');
+        Route::get('/complaints/{complaint}', [ComplaintController::class, 'show'])
+            ->name('complaints.show')
+            ->missing(fn () => redirect()->route('admin.complaints.index')->with('warning', 'Data pengaduan nasabah tidak ditemukan atau sudah dihapus sebelumnya.'));
+        Route::put('/complaints/{complaint}/status', [ComplaintController::class, 'updateStatus'])
+            ->name('complaints.updateStatus')
+            ->missing(fn () => redirect()->route('admin.complaints.index')->with('warning', 'Data pengaduan nasabah tidak ditemukan.'));
+        Route::delete('/complaints/{complaint}', [ComplaintController::class, 'destroy'])
+            ->name('complaints.destroy')
+            ->missing(fn () => redirect()->route('admin.complaints.index')->with('info', 'Data pengaduan nasabah sudah tidak ada atau telah dihapus sebelumnya.'));
 
         // Products CRUD
         Route::patch('/products/{product}/toggle', [ProductController::class, 'toggleStatus'])->name('products.toggle');
@@ -74,9 +80,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Loan Applications Management
         Route::get('/loans', [LoanApplicationController::class, 'index'])->name('loans.index');
-        Route::get('/loans/{loan}', [LoanApplicationController::class, 'show'])->name('loans.show');
-        Route::put('/loans/{loan}/status', [LoanApplicationController::class, 'updateStatus'])->name('loans.updateStatus');
-        Route::delete('/loans/{loan}', [LoanApplicationController::class, 'destroy'])->name('loans.destroy');
+        Route::get('/loans/{loan}', [LoanApplicationController::class, 'show'])
+            ->name('loans.show')
+            ->missing(fn () => redirect()->route('admin.loans.index')->with('warning', 'Berkas pengajuan pinjaman tidak ditemukan atau sudah dihapus sebelumnya.'));
+        Route::put('/loans/{loan}/status', [LoanApplicationController::class, 'updateStatus'])
+            ->name('loans.updateStatus')
+            ->missing(fn () => redirect()->route('admin.loans.index')->with('warning', 'Berkas pengajuan pinjaman tidak ditemukan.'));
+        Route::delete('/loans/{loan}', [LoanApplicationController::class, 'destroy'])
+            ->name('loans.destroy')
+            ->missing(fn () => redirect()->route('admin.loans.index')->with('info', 'Berkas pengajuan pinjaman sudah tidak ada atau telah dihapus sebelumnya.'));
 
         // Settings
         Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');

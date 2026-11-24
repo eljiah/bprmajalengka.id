@@ -185,7 +185,7 @@
       <!-- Action Box -->
       <div class="bg-white rounded-2xl p-6 card-shadow">
         <h4 class="font-bold text-slate-800 text-sm mb-3">Tindakan Lain</h4>
-        <form method="POST" action="{{ route('admin.loans.destroy', $loan) }}" onsubmit="return confirm('Peringatan: Berkas pengajuan {{ $loan->reference_code }} akan dihapus permanen. Lanjutkan?')">
+        <form method="POST" action="{{ route('admin.loans.destroy', $loan) }}" onsubmit="if(confirm('Peringatan: Berkas pengajuan {{ $loan->reference_code }} akan dihapus permanen. Lanjutkan?')){ this.querySelector('button[type=submit]').disabled=true; return true; } return false;">
           @csrf
           @method('DELETE')
           <button type="submit" class="w-full py-2.5 px-4 bg-red-50 hover:bg-red-100 text-red-600 font-bold text-xs rounded-xl border border-red-200 transition flex items-center justify-center gap-2">

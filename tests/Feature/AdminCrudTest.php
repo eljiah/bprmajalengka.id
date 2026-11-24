@@ -266,6 +266,23 @@ class AdminCrudTest extends TestCase
         $statusResponse->assertStatus(302);
         $this->assertEquals('approved', $loan->fresh()->status);
         $this->assertEquals('Telah disetujui oleh Kepala Cabang.', $loan->fresh()->notes);
+
+        // Delete loan
+        $deleteResponse = $this->actingAs($this->admin)->delete("/admin/loans/{$loan->id}");
+        $deleteResponse->assertStatus(302);
+        $deleteResponse->assertRedirect(route('admin.loans.index'));
+        $this->assertDatabaseMissing('loan_applications', ['id' => $loan->id]);
+
+        // Accessing deleted loan redirects gracefully to index instead of 404
+        $missingResponse = $this->actingAs($this->admin)->get("/admin/loans/{$loan->id}");
+        $missingResponse->assertStatus(302);
+        $missingResponse->assertRedirect(route('admin.loans.index'));
+        $missingResponse->assertSessionHas('warning');
+
+        // Deleting already deleted loan redirects gracefully
+        $deleteMissingResponse = $this->actingAs($this->admin)->delete("/admin/loans/{$loan->id}");
+        $deleteMissingResponse->assertStatus(302);
+        $deleteMissingResponse->assertRedirect(route('admin.loans.index'));
     }
 
     public function test_admin_can_update_settings(): void

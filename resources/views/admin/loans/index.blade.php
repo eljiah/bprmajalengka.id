@@ -107,7 +107,7 @@
                   <a href="{{ route('admin.loans.show', $loan) }}" class="px-3 py-1.5 rounded-lg bg-bpr-navy hover:bg-bpr-blue text-white font-bold text-[11px] transition shadow-sm">
                     Tinjau Berkas
                   </a>
-                  <form method="POST" action="{{ route('admin.loans.destroy', $loan) }}" onsubmit="return confirm('Hapus berkas pengajuan {{ $loan->reference_code }}?')" class="inline">
+                  <form method="POST" action="{{ route('admin.loans.destroy', $loan) }}" onsubmit="if(confirm('Hapus berkas pengajuan {{ $loan->reference_code }}?')){ this.querySelector('button[type=submit]').disabled=true; return true; } return false;" class="inline">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition" title="Hapus Berkas">

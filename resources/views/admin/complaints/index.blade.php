@@ -158,7 +158,7 @@
                     <span>Kelola</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                   </a>
-                  <form method="POST" action="{{ route('admin.complaints.destroy', $c) }}" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pengaduan ini secara permanen?')">
+                  <form method="POST" action="{{ route('admin.complaints.destroy', $c) }}" onsubmit="if(confirm('Apakah Anda yakin ingin menghapus data pengaduan ini secara permanen?')){ this.querySelector('button[type=submit]').disabled=true; return true; } return false;">
                     @csrf
                     @method('DELETE')
                     <button type="submit" title="Hapus Pengaduan" class="p-1.5 text-slate-400 hover:text-red-600 rounded-lg transition hover:bg-red-50">
