@@ -650,11 +650,11 @@
               
               <!-- Quick Preset Buttons -->
               <div class="flex flex-wrap items-center gap-2 pt-1">
-                <button type="button" data-amount="5000000" class="sim-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">Rp 5 Juta</button>
-                <button type="button" data-amount="10000000" class="sim-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">Rp 10 Juta</button>
-                <button type="button" data-amount="25000000" class="sim-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-bpr-blue text-white shadow-sm transition-colors">Rp 25 Juta</button>
-                <button type="button" data-amount="50000000" class="sim-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">Rp 50 Juta</button>
-                <button type="button" data-amount="100000000" class="sim-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">Rp 100 Juta</button>
+                <button type="button" data-amount="5000000" class="sim-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer select-none active:scale-95 transition-transform duration-75">Rp 5 Juta</button>
+                <button type="button" data-amount="10000000" class="sim-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer select-none active:scale-95 transition-transform duration-75">Rp 10 Juta</button>
+                <button type="button" data-amount="25000000" class="sim-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-bpr-blue text-white shadow-sm cursor-pointer select-none active:scale-95 transition-transform duration-75">Rp 25 Juta</button>
+                <button type="button" data-amount="50000000" class="sim-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer select-none active:scale-95 transition-transform duration-75">Rp 50 Juta</button>
+                <button type="button" data-amount="100000000" class="sim-preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 cursor-pointer select-none active:scale-95 transition-transform duration-75">Rp 100 Juta</button>
               </div>
             </div>
 
@@ -665,11 +665,11 @@
                 <span class="text-xs text-slate-500 font-medium">Bulan</span>
               </div>
               <div class="grid grid-cols-3 sm:grid-cols-5 gap-2.5">
-                <button type="button" data-tenor="12" class="sim-tenor-btn py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">12 Bulan</button>
-                <button type="button" data-tenor="24" class="sim-tenor-btn py-3 rounded-xl bg-bpr-blue text-white font-bold text-xs shadow-sm transition-colors">24 Bulan</button>
-                <button type="button" data-tenor="36" class="sim-tenor-btn py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">36 Bulan</button>
-                <button type="button" data-tenor="48" class="sim-tenor-btn py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">48 Bulan</button>
-                <button type="button" data-tenor="60" class="sim-tenor-btn py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">60 Bulan</button>
+                <button type="button" data-tenor="12" class="sim-tenor-btn py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer select-none active:scale-95 transition-transform duration-75">12 Bulan</button>
+                <button type="button" data-tenor="24" class="sim-tenor-btn py-3 rounded-xl bg-bpr-blue text-white font-bold text-xs shadow-sm cursor-pointer select-none active:scale-95 transition-transform duration-75">24 Bulan</button>
+                <button type="button" data-tenor="36" class="sim-tenor-btn py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer select-none active:scale-95 transition-transform duration-75">36 Bulan</button>
+                <button type="button" data-tenor="48" class="sim-tenor-btn py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer select-none active:scale-95 transition-transform duration-75">48 Bulan</button>
+                <button type="button" data-tenor="60" class="sim-tenor-btn py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer select-none active:scale-95 transition-transform duration-75">60 Bulan</button>
               </div>
             </div>
 

@@ -1242,6 +1242,20 @@ function initSimulator() {
     });
   };
 
+  // Sync Tenor Buttons Active State Helper
+  const syncTenorButtons = (tenor) => {
+    tenorButtons.forEach(btn => {
+      const btnTenor = parseInt(btn.dataset.tenor, 10);
+      if (btnTenor === tenor) {
+        btn.classList.remove('bg-slate-100', 'text-slate-700');
+        btn.classList.add('bg-bpr-blue', 'text-white', 'shadow-sm');
+      } else {
+        btn.classList.remove('bg-bpr-blue', 'text-white', 'shadow-sm');
+        btn.classList.add('bg-slate-100', 'text-slate-700');
+      }
+    });
+  };
+
   // Sync inputs
   plafondRange.addEventListener('input', (e) => {
     currentPlafond = parseInt(e.target.value, 10);
@@ -1259,28 +1273,37 @@ function initSimulator() {
     calculateLoan();
   });
 
-  // Preset Buttons
+  // Preset Buttons (Instant responsive handler on pointerdown & click)
   presetButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      currentPlafond = parseInt(btn.dataset.amount, 10);
+    const handlePreset = (e) => {
+      const targetAmount = parseInt(btn.dataset.amount, 10);
+      currentPlafond = targetAmount;
+      syncPresetButtons(currentPlafond);
       plafondRange.value = currentPlafond;
       plafondInput.value = formatRupiah(currentPlafond);
-      syncPresetButtons(currentPlafond);
       calculateLoan();
+    };
+
+    btn.addEventListener('pointerdown', handlePreset);
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handlePreset(e);
     });
   });
 
-  // Tenor Buttons
+  // Tenor Buttons (Instant responsive handler on pointerdown & click)
   tenorButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tenorButtons.forEach(b => {
-        b.classList.remove('bg-bpr-blue', 'text-white', 'shadow-sm');
-        b.classList.add('bg-slate-100', 'text-slate-700');
-      });
-      btn.classList.remove('bg-slate-100', 'text-slate-700');
-      btn.classList.add('bg-bpr-blue', 'text-white', 'shadow-sm');
-      currentTenor = parseInt(btn.dataset.tenor, 10);
+    const handleTenor = (e) => {
+      const targetTenor = parseInt(btn.dataset.tenor, 10);
+      currentTenor = targetTenor;
+      syncTenorButtons(currentTenor);
       calculateLoan();
+    };
+
+    btn.addEventListener('pointerdown', handleTenor);
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      handleTenor(e);
     });
   });
 
